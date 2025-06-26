@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.56-alpha] - 2025-06-27
+
+### Changed
+- refactor: Dynamische Anzeige von Layout-Komponenten basierend auf dem aktuell...
+
+
 ## [0.1.55-alpha] - 2025-06-27
 
 ### Fixed
