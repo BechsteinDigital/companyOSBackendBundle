@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.48-alpha] - 2025-06-26
+
+### Added
+- feat: Enable Sass loader in webpack configuration
+
+
 ## [0.1.47-alpha] - 2025-06-26
 
 ### Fixed

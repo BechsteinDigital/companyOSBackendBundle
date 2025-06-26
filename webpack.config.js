@@ -66,6 +66,7 @@ Encore
         version: 3,
         runtimeCompilerBuild: false,
         useJsx: false
-    });
+    })
+    .enableSassLoader();
 
 module.exports = Encore.getWebpackConfig(); 
