@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.53-alpha] - 2025-06-27
+
+### Maintenance
+- chore: Update composer require version to ^0.1.52-alpha in README.md
+
+
 ## [0.1.52-alpha] - 2025-06-26
 
 ### Added
