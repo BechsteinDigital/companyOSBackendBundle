@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.33-alpha] - 2025-06-26
+
+### Added
+- feat: Hinzufügen von CompanyOSBackendExtension für die Erweiterung des Bundles
+
+
 ## [0.1.32-alpha] - 2025-06-26
 
 ### Added
