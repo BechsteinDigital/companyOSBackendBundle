@@ -25,9 +25,8 @@ Encore
     .setOutputPath('Resources/public/build/')
     // public path used by the web server to access the output path
     .setPublicPath('/bundles/companyosbackend/build')
-
-    // only needed for CDN's or subdirectory deploy
-    //.setManifestKeyPrefix('build/')
+    // manifest key prefix for the manifest.json file
+    .setManifestKeyPrefix('build/')
 
     /*
      * ENTRY CONFIG

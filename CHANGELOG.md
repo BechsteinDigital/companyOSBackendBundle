@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.10-alpha] - 2025-06-26
+
+### Added
+- feat: Set manifest key prefix in webpack config for CompanyOS Backend Bundle
+
+
 ## [0.1.9-alpha] - 2025-06-26
 
 ### Maintenance
