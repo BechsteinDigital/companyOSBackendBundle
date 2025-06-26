@@ -1,13 +1,8 @@
 <template>
-  <div v-if="isLoading">
-    <div class="loading-screen">
-      <div class="loading-spinner"></div>
-    </div>
-  </div>
-  <div v-else-if="loggedIn">
-    <AppHeader />
+  <div>
+    <AppSidebar />
     <div class="wrapper d-flex flex-column min-vh-100">
-      <AppSidebar />
+      <AppHeader />
       <div class="body flex-grow-1">
         <CContainer class="px-4" lg>
           <router-view />
@@ -15,9 +10,6 @@
       </div>
       <AppFooter />
     </div>
-  </div>
-  <div v-else>
-    <router-view />
   </div>
 </template>
 
