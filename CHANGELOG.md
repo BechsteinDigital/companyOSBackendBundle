@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.28-alpha] - 2025-06-26
+
+### Maintenance
+- chore: Update @symfony/webpack-encore to version 5.1.0 in package.json
+
+
 ## [0.1.27-alpha] - 2025-06-26
 
 ### Maintenance
