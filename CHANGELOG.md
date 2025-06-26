@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.21-alpha] - 2025-06-26
+
+### Added
+- feat(routes): Update CompanyOS Backend Bundle routes for Vue.js SPA.
+
+
 ## [0.1.20-alpha] - 2025-06-26
 
 ### Added

@@ -1,5 +1,8 @@
-# CompanyOS Backend Bundle Routes
+# CompanyOS Backend Bundle Routes - Catch All für Vue.js SPA
 companyos_backend:
-    path: /
+    path: /{route}
     controller: CompanyOS\BackendBundle\Controller\BackendController::index
-    methods: [GET] 
+    requirements:
+        route: .*
+    defaults:
+        route: '' 
