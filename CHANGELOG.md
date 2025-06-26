@@ -7,6 +7,15 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.4-alpha] - 2025-06-26
+
+### Changed
+- 
+[1;33mrefactor: Update service configuration paths for better organization.[0m
+
+refactor: Update service configuration paths for better organization.
+
+
 ### Geplant
 - Vollständige CRUD-Implementierungen für alle Module
 - Plugin-System-Integration
@@ -48,4 +57,3 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Modulare Komponenten-Struktur
 - Plugin-System vorbereitet
 - Responsive Design
-- Theme-System integriert 
