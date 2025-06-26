@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.57-alpha] - 2025-06-27
+
+### Fixed
+- fix: Behebe fehlenden Zeilenumbruch am Ende der Datei App.vue
+
+
 ## [0.1.56-alpha] - 2025-06-27
 
 ### Changed
