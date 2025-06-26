@@ -3,7 +3,7 @@ services:
         autowire: true
         autoconfigure: true
 
-    CompanyOS\BackendBundle\:
+    CompanyOS\Bundle\BackendBundle\:
         resource: '%kernel.project_dir%/vendor/companyos/backend/src/'
         exclude:
             - '%kernel.project_dir%/vendor/companyos/backend/src/DependencyInjection/'

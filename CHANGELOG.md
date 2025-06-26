@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.36-alpha] - 2025-06-26
+
+### Changed
+- refactor: Update namespace in services.yaml for consistency with bundle namin...
+
+
 ## [0.1.35-alpha] - 2025-06-26
 
 ### Changed
