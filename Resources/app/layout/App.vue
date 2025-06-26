@@ -20,6 +20,5 @@ import AppFooter from '../components/AppFooter.vue'
 </script>
 
 <style lang="scss">
-@use '@coreui/coreui/scss/coreui' as *;
-@use 'vendors/simplebar';
+@use 'styles/style';
 </style> 
