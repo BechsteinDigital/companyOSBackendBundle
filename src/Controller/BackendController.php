@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdminController extends AbstractController
+class BackendController extends AbstractController
 {
-    #[Route('/admin', name: 'companyos_admin')]
+    #[Route('/', name: 'companyos_backend')]
     public function index(): Response
     {
-        return $this->render('@CompanyOSBackend/admin.html.twig');
+        return $this->render('@CompanyOSBackend/backend.html.twig');
     }
 } 

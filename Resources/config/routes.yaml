@@ -1,0 +1,5 @@
+# CompanyOS Backend Bundle Routes
+companyos_backend:
+    path: /
+    controller: CompanyOS\BackendBundle\Controller\BackendController::index
+    methods: [GET] 
