@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.50-alpha] - 2025-06-26
+
+### Changed
+- refactor: Verwendung von externen Styles in App.vue aktualisiert
+
+
 ## [0.1.49-alpha] - 2025-06-26
 
 ### Changed

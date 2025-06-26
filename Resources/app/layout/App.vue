@@ -20,5 +20,5 @@ import AppFooter from '../components/AppFooter.vue'
 </script>
 
 <style lang="scss">
-@use 'styles/style';
+@use '../styles/style' as *;
 </style> 
