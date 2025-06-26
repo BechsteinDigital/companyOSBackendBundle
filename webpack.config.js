@@ -66,30 +66,6 @@ Encore
         version: 3,
         runtimeCompilerBuild: false,
         useJsx: false
-    })
-
-    // Copy CoreUI icons
-    .copyFiles({
-        from: './node_modules/@coreui/icons/sprites/',
-        to: 'icons/[path][name].[ext]'
-    })
-
-    // Copy CoreUI brand assets
-    .copyFiles({
-        from: './node_modules/@coreui/coreui/dist/img/',
-        to: 'img/[path][name].[ext]'
-    })
-
-    // Copy CoreUI CSS
-    .copyFiles({
-        from: './node_modules/@coreui/coreui/dist/css/',
-        to: 'css/[path][name].[ext]'
-    })
-
-    // Copy CoreUI JS
-    .copyFiles({
-        from: './node_modules/@coreui/coreui/dist/js/',
-        to: 'js/[path][name].[ext]'
     });
 
 module.exports = Encore.getWebpackConfig(); 
