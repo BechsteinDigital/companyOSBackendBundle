@@ -7,6 +7,15 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.5-alpha] - 2025-06-26
+
+### Changed
+- 
+[1;33mrefactor: Update Pfad für Bundle-Ressourcen in services.yaml[0m
+
+refactor: Update Pfad für Bundle-Ressourcen in services.yaml
+
+
 ## [0.1.4-alpha] - 2025-06-26
 
 ### Changed

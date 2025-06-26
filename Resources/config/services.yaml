@@ -4,7 +4,7 @@ services:
         autoconfigure: true
 
     CompanyOS\BackendBundle\:
-        resource: '%kernel.project_dir%/vendor/companyos/backend-bundle/src/'
+        resource: '../src/'
         exclude:
-            - '%kernel.project_dir%/vendor/companyos/backend-bundle/src/DependencyInjection/'
-            - '%kernel.project_dir%/vendor/companyos/backend-bundle/src/Resources/' 
+            - '../src/DependencyInjection/'
+            - '../src/Resources/' 
