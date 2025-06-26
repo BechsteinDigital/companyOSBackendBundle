@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.43-alpha] - 2025-06-26
+
+### Added
+- feat: Add piniaPluginPersistedstate and simplebar-vue dependencies, update Ap...
+
+
 ## [0.1.42-alpha] - 2025-06-26
 
 ### Added

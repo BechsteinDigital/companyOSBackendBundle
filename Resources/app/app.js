@@ -3,6 +3,7 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import axios from 'axios'
 
 // CoreUI Icons
@@ -173,6 +174,9 @@ axios.interceptors.response.use(
 // App erstellen
 const app = createApp(App)
 const pinia = createPinia()
+
+// Pinia persistent state plugin hinzufügen
+pinia.use(piniaPluginPersistedstate)
 
 app.use(router)
 app.use(pinia)
