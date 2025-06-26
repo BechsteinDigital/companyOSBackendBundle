@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.18-alpha] - 2025-06-26
+
+### Added
+- refactor(views): Update CSS and JS loading in backend.html.twig
+
+
 ## [0.1.17-alpha] - 2025-06-26
 
 ### Added
