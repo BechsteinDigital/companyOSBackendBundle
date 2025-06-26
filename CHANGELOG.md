@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.26-alpha] - 2025-06-26
+
+### Maintenance
+- chore: Update devDependencies in package.json for CompanyOS Backend Bundle
+
+
 ## [0.1.25-alpha] - 2025-06-26
 
 ### Maintenance
