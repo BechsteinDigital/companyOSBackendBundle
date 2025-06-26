@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.29-alpha] - 2025-06-26
+
+### Fixed
+- fix: Update sass-loader version to 16.0.1 in package.json
+
+
 ## [0.1.28-alpha] - 2025-06-26
 
 ### Maintenance
