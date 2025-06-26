@@ -5,6 +5,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import axios from 'axios'
+import { useColorModes } from '@coreui/vue'
+import { useThemeStore } from './stores/theme.js'
 
 // CoreUI Icons
 import { iconsSet } from './icons'
@@ -178,8 +180,30 @@ const pinia = createPinia()
 // Pinia persistent state plugin hinzufügen
 pinia.use(piniaPluginPersistedstate)
 
+// Theme-Color-Mode Handling wie im CoreUIAdminTemplate
+const { isColorModeSet, setColorMode } = useColorModes('companyos-admin-theme')
+const currentTheme = useThemeStore()
+
 app.use(router)
 app.use(pinia)
+
+app.mixin({
+  beforeMount() {
+    const urlParams = new URLSearchParams(window.location.href.split('?')[1])
+    let theme = urlParams.get('theme')
+    if (theme !== null && theme.match(/^[A-Za-z0-9\s]+/)) {
+      theme = theme.match(/^[A-Za-z0-9\s]+/)[0]
+    }
+    if (theme) {
+      setColorMode(theme)
+      return
+    }
+    if (isColorModeSet()) {
+      return
+    }
+    setColorMode(currentTheme.theme)
+  }
+})
 
 // CoreUI Icons global verfügbar machen
 app.component('CIcon', CIcon)

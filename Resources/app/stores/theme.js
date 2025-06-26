@@ -1,17 +1,12 @@
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useThemeStore = defineStore('theme', {
-  state: () => ({
-    theme: 'auto',
-  }),
-  actions: {
-    setTheme(theme) {
-      this.theme = theme
-    },
-  },
-  persist: {
-    key: 'theme-state',
-    storage: localStorage,
-    paths: ['theme'],
-  },
+export const useThemeStore = defineStore('theme', () => {
+  const theme = ref('light')
+
+  const toggleTheme = (_theme) => {
+    theme.value = _theme
+  }
+
+  return { theme, toggleTheme }
 }) 
