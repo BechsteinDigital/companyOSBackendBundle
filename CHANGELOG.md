@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.37-alpha] - 2025-06-26
+
+### Changed
+- refactor: Ändere Namespace in CompanyOS\Bundle\BackendBundle\Controller.
+
+
 ## [0.1.36-alpha] - 2025-06-26
 
 ### Changed
