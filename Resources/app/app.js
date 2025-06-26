@@ -180,12 +180,12 @@ const pinia = createPinia()
 // Pinia persistent state plugin hinzufügen
 pinia.use(piniaPluginPersistedstate)
 
-// Theme-Color-Mode Handling wie im CoreUIAdminTemplate
-const { isColorModeSet, setColorMode } = useColorModes('companyos-admin-theme')
-const currentTheme = useThemeStore()
-
 app.use(router)
 app.use(pinia)
+
+// Theme-Color-Mode Handling wie im CoreUIAdminTemplate (jetzt nach app.use(pinia))
+const { isColorModeSet, setColorMode } = useColorModes('companyos-admin-theme')
+const currentTheme = useThemeStore()
 
 app.mixin({
   beforeMount() {
