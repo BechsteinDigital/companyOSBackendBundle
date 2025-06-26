@@ -8,7 +8,7 @@ Ein vollständiges Symfony-Bundle für das CompanyOS Backend-Frontend mit VueJS,
 
 ## ⚠️ Alpha Version
 
-**Dies ist eine Alpha-Version (0.1.0-alpha) und ist NICHT für den Produktiveinsatz geeignet.**
+**Dies ist eine Alpha-Version (0.1.6-alpha) und ist NICHT für den Produktiveinsatz geeignet.**
 
 ### Was funktioniert:
 - ✅ Vollständiges CoreUI-Admin-Template
@@ -51,7 +51,7 @@ Das BackendBundle ist ein **reines Frontend-Bundle**:
 ### ⚠️ Nur für Entwickler und Tester
 
 ```bash
-composer require companyos/backend-bundle:^0.1.0-alpha
+composer require companyos/backend:^0.1.6-alpha
 ```
 
 ### Bundle registrieren
@@ -67,7 +67,7 @@ return [
 ### Frontend-Dependencies installieren
 
 ```bash
-cd vendor/companyos/backend-bundle
+cd vendor/companyos/backend
 npm install
 ```
 
@@ -118,7 +118,7 @@ Das Bundle unterstützt automatisch:
 
 ```bash
 # Im Bundle-Verzeichnis
-cd vendor/companyos/backend-bundle
+cd vendor/companyos/backend
 
 # Dependencies installieren
 npm install
@@ -269,4 +269,4 @@ Dieses Bundle ist unter der MIT-Lizenz lizenziert. Siehe [LICENSE](LICENSE) für
 
 ## Changelog
 
-Siehe [CHANGELOG.md](CHANGELOG.md) für eine Liste der Änderungen. 
+Siehe [CHANGELOG.md](CHANGELOG.md) für eine Liste der Änderungen.
