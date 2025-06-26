@@ -1,6 +1,6 @@
 <?php
 
-namespace CompanyOS\BackendBundle;
+namespace CompanyOS\Bundle\BackendBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -9,6 +9,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class CompanyOSBackendExtension extends Extension
 {
+    public function getAlias(): string
+    {
+        return 'company_os_backend';
+    }
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__, 2) . '/Resources/config'));
