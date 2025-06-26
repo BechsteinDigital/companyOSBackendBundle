@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.17-alpha] - 2025-06-26
+
+### Added
+- feat: Hinzufügen von symfony/asset als Abhängigkeit für das CompanyOS Back...
+
+
 ## [0.1.16-alpha] - 2025-06-26
 
 ### Added
