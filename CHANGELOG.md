@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.16-alpha] - 2025-06-26
+
+### Added
+- feat: Add getPath method to retrieve bundle path in CompanyOS Backend Bundle
+
+
 ## [0.1.15-alpha] - 2025-06-26
 
 ### Changed
