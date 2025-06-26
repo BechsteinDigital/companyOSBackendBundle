@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.11-alpha] - 2025-06-26
+
+### Added
+- feat: Hinzufügen von file-loader zur Unterstützung des Datei-Handlings in S...
+
+
 ## [0.1.10-alpha] - 2025-06-26
 
 ### Added
