@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.42-alpha] - 2025-06-26
+
+### Added
+- feat: Hinzufügen von CSidebarNav zu AppSidebarNav-Komponente
+
+
 ## [0.1.41-alpha] - 2025-06-26
 
 ### Added

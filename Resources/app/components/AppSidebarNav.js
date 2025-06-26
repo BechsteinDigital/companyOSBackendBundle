@@ -1,7 +1,7 @@
 import { h, resolveComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/vue'
+import { CNavGroup, CNavItem, CNavTitle, CSidebarNav } from '@coreui/vue'
 
 import nav from '../_nav.js'
 
@@ -10,10 +10,6 @@ function item(component, props, ...children) {
 }
 
 function link(component, props, ...children) {
-  return h(resolveComponent(component), props, () => children)
-}
-
-function simpleWrapper(component, props, ...children) {
   return h(resolveComponent(component), props, () => children)
 }
 
@@ -67,5 +63,5 @@ export function AppSidebarNav() {
       )
     })
 
-  return simpleWrapper(CSidebarNav, { id: 'sidebar-nav' }, navItems(nav))
+  return h(CSidebarNav, { id: 'sidebar-nav' }, () => navItems(nav))
 } 
