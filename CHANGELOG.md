@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.39-alpha] - 2025-06-26
+
+### Fixed
+- fix: Update postcss-simple-vars and postcss-nested versions in package.json
+
+
 ## [0.1.38-alpha] - 2025-06-26
 
 ### Fixed
