@@ -6,7 +6,7 @@
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
-                <CForm @submit.prevent="handleLogin">
+                <CForm @submit.prevent="onLogin">
                   <h1>Login</h1>
                   <p class="text-medium-emphasis">Anmelden bei CompanyOS</p>
                   <CInputGroup class="mb-3">
@@ -32,26 +32,29 @@
                       required
                     />
                   </CInputGroup>
+                  <CInputGroup class="mb-3">
+                    <CFormCheck v-model="form.remember" label="Angemeldet bleiben" />
+                  </CInputGroup>
                   <CRow>
                     <CCol xs="6">
                       <CButton
                         type="submit"
                         color="primary"
                         class="px-4"
-                        :disabled="loading"
+                        :disabled="auth.loading"
                       >
-                        <CSpinner v-if="loading" size="sm" class="me-2" />
-                        {{ loading ? 'Anmelden...' : 'Anmelden' }}
+                        <CSpinner v-if="auth.loading" size="sm" class="me-2" />
+                        {{ auth.loading ? 'Anmelden...' : 'Anmelden' }}
                       </CButton>
                     </CCol>
                   </CRow>
                   <CAlert
-                    v-if="error"
+                    v-if="auth.error"
                     color="danger"
                     dismissible
-                    @close="error = ''"
+                    @close="auth.error = ''"
                   >
-                    {{ error }}
+                    {{ auth.error }}
                   </CAlert>
                 </CForm>
               </CCardBody>
@@ -84,38 +87,21 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
-const loading = ref(false)
-const error = ref('')
+const auth = useAuthStore()
 
 const form = ref({
   email: '',
-  password: ''
+  password: '',
+  remember: false
 })
 
-const handleLogin = async () => {
-  loading.value = true
-  error.value = ''
-
-  try {
-    const response = await axios.post('/auth/login', {
-      email: form.value.email,
-      password: form.value.password
-    })
-
-    const { access_token, refresh_token, user } = response.data
-
-    localStorage.setItem('auth_token', access_token)
-    localStorage.setItem('refresh_token', refresh_token)
-    localStorage.setItem('user', JSON.stringify(user))
-
+const onLogin = async () => {
+  const ok = await auth.login({ username: form.value.email, password: form.value.password, remember: form.value.remember })
+  if (ok) {
     router.push('/dashboard')
-  } catch (err) {
-    error.value = err.response?.data?.message || 'Anmeldung fehlgeschlagen'
-  } finally {
-    loading.value = false
   }
 }
 </script> 

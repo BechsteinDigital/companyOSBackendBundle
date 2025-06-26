@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.54-alpha] - 2025-06-27
+
+### Added
+- feat: Implementiere Authentifizierung mit Store und Axios-Interceptor
+
+
 ## [0.1.53-alpha] - 2025-06-27
 
 ### Maintenance

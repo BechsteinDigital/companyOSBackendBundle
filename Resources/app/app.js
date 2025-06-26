@@ -7,6 +7,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import axios from 'axios'
 import { useColorModes } from '@coreui/vue'
 import { useThemeStore } from './stores/theme.js'
+import { useAuthStore, setupAutoRefresh } from './stores/auth.js'
 
 // CoreUI Icons
 import { iconsSet } from './icons'
@@ -138,50 +139,53 @@ const router = createRouter({
   routes
 })
 
-// Auth Guard
+// App erstellen
+const app = createApp(App)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(router)
+app.use(pinia)
+
+// Auth-Store initialisieren
+const auth = useAuthStore()
+auth.loadTokens()
+setupAutoRefresh()
+
+// Router-Guard mit Store
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('auth_token')
-  if (to.meta.requiresAuth && !token) {
+  if (to.meta.requiresAuth && !auth.accessToken) {
     next('/login')
-  } else if (to.path === '/login' && token) {
+  } else if (to.path === '/login' && auth.accessToken) {
     next('/dashboard')
   } else {
     next()
   }
 })
 
-// Axios global konfigurieren
-axios.defaults.baseURL = '/api'
+// Axios Interceptor mit Store
 axios.interceptors.request.use(config => {
-  const token = localStorage.getItem('auth_token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+  if (auth.accessToken) {
+    config.headers.Authorization = `Bearer ${auth.accessToken}`
   }
   return config
 })
 
 axios.interceptors.response.use(
   res => res,
-  err => {
-    if (err.response?.status === 401) {
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('refresh_token')
-      localStorage.removeItem('user')
-      router.push('/login')
+  async err => {
+    if (err.response?.status === 401 && auth.refreshToken) {
+      const refreshed = await auth.refresh()
+      if (refreshed) {
+        err.config.headers.Authorization = `Bearer ${auth.accessToken}`
+        return axios(err.config)
+      } else {
+        auth.logout()
+        router.push('/login')
+      }
     }
     return Promise.reject(err)
   }
 )
-
-// App erstellen
-const app = createApp(App)
-const pinia = createPinia()
-
-// Pinia persistent state plugin hinzufügen
-pinia.use(piniaPluginPersistedstate)
-
-app.use(router)
-app.use(pinia)
 
 // Theme-Color-Mode Handling wie im CoreUIAdminTemplate (jetzt nach app.use(pinia))
 const { isColorModeSet, setColorMode } = useColorModes('companyos-admin-theme')
