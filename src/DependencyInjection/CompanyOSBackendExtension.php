@@ -18,5 +18,10 @@ class CompanyOSBackendExtension extends Extension
         $container->autowire('CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener')
             ->setArgument('$environment', '%kernel.environment%')
             ->addTag('kernel.event_subscriber');
+
+        // Controller als Service registrieren
+        $container->autowire('CompanyOS\Bundle\BackendBundle\Controller\BackendController')
+            ->addTag('controller.service_arguments')
+            ->addTag('container.service_subscriber');
     }
 } 
