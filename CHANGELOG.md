@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.89-alpha] - 2025-06-28
+
+### Changed
+- refactor: Remove unused Twig extension for Encore integration
+
+
 ## [0.1.88-alpha] - 2025-06-28
 
 ### Added
