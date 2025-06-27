@@ -102,7 +102,14 @@ export const useAuthStore = defineStore('auth', {
           throw new Error('Passwort muss mindestens 8 Zeichen lang sein')
         }
         
-        const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(sanitizedEmail)}&password=${encodeURIComponent(password)}`
+        // URLSearchParams für korrektes Encoding verwenden
+        const formData = new URLSearchParams({
+          grant_type: 'password',
+          client_id: 'backend',
+          username: sanitizedEmail,
+          password: password
+        })
+        
         const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -161,7 +168,13 @@ export const useAuthStore = defineStore('auth', {
     async refresh() {
       if (!this.refreshToken) return false
       try {
-        const formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
+        // URLSearchParams für korrektes Encoding verwenden
+        const formData = new URLSearchParams({
+          grant_type: 'refresh_token',
+          client_id: 'backend',
+          refresh_token: this.refreshToken
+        })
+        
         const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
