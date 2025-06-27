@@ -2,7 +2,7 @@ import { defineComponent, h, onMounted, ref, resolveComponent, computed } from '
 import { RouterLink, useRoute } from 'vue-router'
 
 import { CBadge, CSidebarNav, CNavItem, CNavGroup, CNavTitle } from '@coreui/vue'
-import { getNavigation } from '../_nav.js'
+import { allNavigationItems } from '../_nav.js'
 import { useAuthStore } from '../stores/auth'
 
 import simplebar from 'simplebar-vue'
@@ -58,7 +58,16 @@ const AppSidebarNav = defineComponent({
 
     // Rollenbasierte Navigation berechnen
     const navigation = computed(() => {
-      return getNavigation()
+      if (!auth.user) {
+        // Fallback: Nur Dashboard anzeigen
+        return allNavigationItems.filter(item => item.permission === 'dashboard')
+      }
+      
+      // Navigation basierend auf Berechtigungen filtern
+      return allNavigationItems.filter(item => {
+        if (!item.permission) return true
+        return auth.canAccess(item.permission)
+      })
     })
 
     const renderItem = (item) => {

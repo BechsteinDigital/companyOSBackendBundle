@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.77-alpha] - 2025-06-27
+
+### Changed
+- refactor: Aktualisiere die Navigation auf rollenbasierte Berechtigungen
+
+
 ## [0.1.76-alpha] - 2025-06-27
 
 ### Maintenance
