@@ -24,17 +24,12 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       this.remember = remember
       try {
-        const params = new URLSearchParams()
-        params.append('grant_type', 'password')
-        params.append('client_id', 'backend')
-        params.append('username', username)
-        params.append('password', password)
+        const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
 
-        const { data } = await axios.post('/api/oauth2/token', params, {
+        const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          transformRequest: [(data) => data] // Verhindert Axios-Transformation
+          }
         })
         this.setTokens(data, remember)
         await this.fetchProfile()
@@ -84,15 +79,12 @@ export const useAuthStore = defineStore('auth', {
     async refresh() {
       if (!this.refreshToken) return false
       try {
-        const params = new URLSearchParams()
-        params.append('grant_type', 'refresh_token')
-        params.append('client_id', 'backend')
-        params.append('refresh_token', this.refreshToken)
-        const { data } = await axios.post('/api/oauth2/token', params, {
+        const formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
+        
+        const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          transformRequest: [(data) => data] // Verhindert Axios-Transformation
+          }
         })
         this.setTokens(data, this.remember)
         return true

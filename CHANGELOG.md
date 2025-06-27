@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.61-alpha] - 2025-06-27
+
+### Added
+- feat(auth): Verwende FormData für OAuth2 Token-Anforderungen
+
+
 ## [0.1.60-alpha] - 2025-06-27
 
 ### Fixed
