@@ -93,8 +93,8 @@ export const useAuthStore = defineStore('auth', {
     },
     async fetchProfile() {
       try {
-        const { data } = await axios.get('/api/auth/profile')
-        this.user = data
+        const { data } = await axios.get('/api/users/profile')
+        this.user = data.data
       } catch {
         this.user = null
       }
