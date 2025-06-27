@@ -33,6 +33,59 @@ export const useAuthStore = defineStore('auth', {
     remember: false,
     csrfToken: null,
   }),
+  
+  getters: {
+    // Rollenprüfung
+    hasRole: (state) => (role) => {
+      if (!state.user || !state.user.roles) return false
+      return state.user.roles.includes(role)
+    },
+    
+    // Berechtigungsprüfung für Navigation
+    canAccess: (state) => (permission) => {
+      if (!state.user || !state.user.roles) return false
+      
+      const userRoles = state.user.roles
+      
+      // Admin hat alle Berechtigungen
+      if (userRoles.includes('ROLE_ADMIN')) return true
+      
+      // Spezifische Berechtigungen
+      switch (permission) {
+        case 'dashboard':
+          return userRoles.includes('ROLE_CUSTOMER') || 
+                 userRoles.includes('ROLE_EMPLOYEE') || 
+                 userRoles.includes('ROLE_ADMIN')
+        
+        case 'administration':
+          return userRoles.includes('ROLE_ADMIN')
+        
+        case 'system':
+          return userRoles.includes('ROLE_ADMIN')
+        
+        case 'development':
+          return userRoles.includes('ROLE_ADMIN')
+        
+        case 'profile':
+          return userRoles.includes('ROLE_CUSTOMER') || 
+                 userRoles.includes('ROLE_EMPLOYEE') || 
+                 userRoles.includes('ROLE_ADMIN')
+        
+        default:
+          return false
+      }
+    },
+    
+    // Benutzerrolle für Dashboard-Typ
+    dashboardType: (state) => {
+      if (!state.user || !state.user.roles) return 'customer'
+      
+      if (state.user.roles.includes('ROLE_ADMIN')) return 'admin'
+      if (state.user.roles.includes('ROLE_EMPLOYEE')) return 'employee'
+      return 'customer'
+    }
+  },
+  
   actions: {
     async login({ username, password, remember = false }) {
       this.loading = true

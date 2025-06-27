@@ -9,6 +9,14 @@ const logout = () => {
   auth.logout()
   router.push('/login')
 }
+
+const goToProfile = () => {
+  router.push('/profile')
+}
+
+const goToSettings = () => {
+  router.push('/settings')
+}
 </script>
 
 <template>
@@ -20,15 +28,15 @@ const logout = () => {
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
       <CDropdownHeader tag="h6" class="bg-light fw-semibold py-2">
-        Account
+        {{ auth.user?.fullName || auth.user?.email || 'Account' }}
       </CDropdownHeader>
-      <CDropdownItem>
+      <CDropdownItem @click="goToProfile">
         <CIcon icon="cil-user" class="me-2" />
-        Profile
+        Profil
       </CDropdownItem>
-      <CDropdownItem>
+      <CDropdownItem @click="goToSettings">
         <CIcon icon="cil-settings" class="me-2" />
-        Settings
+        Einstellungen
       </CDropdownItem>
       <CDropdownDivider />
       <CDropdownItem @click="logout">

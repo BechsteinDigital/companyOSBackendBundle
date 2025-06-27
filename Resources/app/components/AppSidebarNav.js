@@ -1,8 +1,9 @@
-import { defineComponent, h, onMounted, ref, resolveComponent } from 'vue'
+import { defineComponent, h, onMounted, ref, resolveComponent, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 import { CBadge, CSidebarNav, CNavItem, CNavGroup, CNavTitle } from '@coreui/vue'
-import nav from '../_nav.js'
+import { getNavigation } from '../_nav.js'
+import { useAuthStore } from '../stores/auth'
 
 import simplebar from 'simplebar-vue'
 import 'simplebar-vue/dist/simplebar.min.css'
@@ -48,10 +49,16 @@ const AppSidebarNav = defineComponent({
   },
   setup() {
     const route = useRoute()
+    const auth = useAuthStore()
     const firstRender = ref(true)
 
     onMounted(() => {
       firstRender.value = false
+    })
+
+    // Rollenbasierte Navigation berechnen
+    const navigation = computed(() => {
+      return getNavigation()
     })
 
     const renderItem = (item) => {
@@ -173,7 +180,7 @@ const AppSidebarNav = defineComponent({
           as: simplebar,
         },
         {
-          default: () => nav.map((item) => renderItem(item)),
+          default: () => navigation.value.map((item) => renderItem(item)),
         },
       )
   },

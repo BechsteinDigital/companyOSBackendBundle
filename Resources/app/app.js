@@ -85,52 +85,58 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('./views/Profile.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/users',
     name: 'Users',
     component: () => import('./views/Users.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/roles',
     name: 'Roles',
     component: () => import('./views/Roles.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/permissions',
     name: 'Permissions',
     component: () => import('./views/Permissions.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/plugins',
     name: 'Plugins',
     component: () => import('./views/Plugins.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/settings',
     name: 'Settings',
     component: () => import('./views/Settings.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/webhooks',
     name: 'Webhooks',
     component: () => import('./views/Webhooks.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/api-docs',
     name: 'ApiDocs',
     component: () => import('./views/ApiDocs.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   },
   {
     path: '/system-status',
     name: 'SystemStatus',
     component: () => import('./views/SystemStatus.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   }
 ]
 
@@ -143,19 +149,69 @@ const router = createRouter({
 const app = createApp(App)
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
-app.use(router)
+
 app.use(pinia)
+app.use(router)
+
+// CoreUI Icons
+app.component('CIcon', CIcon)
+
+// CoreUI Components
+app.component('CContainer', CContainer)
+app.component('CSidebar', CSidebar)
+app.component('CSidebarHeader', CSidebarHeader)
+app.component('CSidebarBrand', CSidebarBrand)
+app.component('CSidebarNav', CSidebarNav)
+app.component('CSidebarFooter', CSidebarFooter)
+app.component('CSidebarToggler', CSidebarToggler)
+app.component('CCloseButton', CCloseButton)
+app.component('CHeader', CHeader)
+app.component('CHeaderToggler', CHeaderToggler)
+app.component('CHeaderNav', CHeaderNav)
+app.component('CNavItem', CNavItem)
+app.component('CNavLink', CNavLink)
+app.component('CFooter', CFooter)
+app.component('CBreadcrumb', CBreadcrumb)
+app.component('CBreadcrumbItem', CBreadcrumbItem)
+app.component('CDropdown', CDropdown)
+app.component('CDropdownToggle', CDropdownToggle)
+app.component('CDropdownMenu', CDropdownMenu)
+app.component('CDropdownItem', CDropdownItem)
+app.component('CDropdownHeader', CDropdownHeader)
+app.component('CDropdownDivider', CDropdownDivider)
+app.component('CAvatar', CAvatar)
+app.component('CNavGroup', CNavGroup)
+app.component('CNavTitle', CNavTitle)
+app.component('CBadge', CBadge)
+app.component('CCard', CCard)
+app.component('CCardHeader', CCardHeader)
+app.component('CCardBody', CCardBody)
+app.component('CCardGroup', CCardGroup)
+app.component('CCol', CCol)
+app.component('CRow', CRow)
+app.component('CButton', CButton)
+app.component('CForm', CForm)
+app.component('CFormInput', CFormInput)
+app.component('CInputGroup', CInputGroup)
+app.component('CInputGroupText', CInputGroupText)
+app.component('CAlert', CAlert)
+app.component('CSpinner', CSpinner)
+app.component('CListGroup', CListGroup)
+app.component('CListGroupItem', CListGroupItem)
+app.component('CWidgetStatsF', CWidgetStatsF)
 
 // Auth-Store initialisieren
 const auth = useAuthStore()
 auth.loadTokens()
-setupAutoRefresh()
 
-// Router-Guard mit Store
+// Router-Guard mit Store und Rollenprüfung
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !auth.accessToken) {
     next('/login')
   } else if (to.path === '/login' && auth.accessToken) {
+    next('/dashboard')
+  } else if (to.meta.requiresRole && !auth.hasRole(to.meta.requiresRole)) {
+    // Benutzer hat nicht die erforderliche Rolle
     next('/dashboard')
   } else {
     next()
@@ -209,86 +265,8 @@ axios.interceptors.response.use(
   }
 )
 
-// Theme-Color-Mode Handling wie im CoreUIAdminTemplate (jetzt nach app.use(pinia))
-const { isColorModeSet, setColorMode } = useColorModes('companyos-admin-theme')
-const currentTheme = useThemeStore()
+// Auto-Refresh Setup
+setupAutoRefresh()
 
-app.mixin({
-  beforeMount() {
-    const urlParams = new URLSearchParams(window.location.href.split('?')[1])
-    let theme = urlParams.get('theme')
-    if (theme !== null && theme.match(/^[A-Za-z0-9\s]+/)) {
-      theme = theme.match(/^[A-Za-z0-9\s]+/)[0]
-    }
-    if (theme) {
-      setColorMode(theme)
-      return
-    }
-    if (isColorModeSet()) {
-      return
-    }
-    setColorMode(currentTheme.theme)
-  }
-})
-
-// CoreUI Icons global verfügbar machen
-app.component('CIcon', CIcon)
-app.provide('icons', iconsSet)
-
-// CoreUI Components global registrieren
-const coreuiComponents = {
-  CContainer,
-  CSidebar,
-  CSidebarHeader,
-  CSidebarBrand,
-  CSidebarNav,
-  CSidebarFooter,
-  CSidebarToggler,
-  CCloseButton,
-  CHeader,
-  CHeaderToggler,
-  CHeaderNav,
-  CNavItem,
-  CNavLink,
-  CFooter,
-  CBreadcrumb,
-  CBreadcrumbItem,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
-  CDropdownHeader,
-  CDropdownDivider,
-  CAvatar,
-  CNavGroup,
-  CNavTitle,
-  CBadge,
-  CCard,
-  CCardHeader,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CRow,
-  CButton,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CAlert,
-  CSpinner,
-  CListGroup,
-  CListGroupItem,
-  CWidgetStatsF
-}
-
-Object.entries(coreuiComponents).forEach(([name, component]) => {
-  app.component(name, component)
-})
-
-// Globale $api-Methoden
-app.config.globalProperties.$api = {
-  // API-Methoden werden hier hinzugefügt
-}
-
-// Mounten
+// App mounten
 app.mount('#app') 
