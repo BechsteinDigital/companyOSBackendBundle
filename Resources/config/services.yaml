@@ -5,10 +5,10 @@ services:
         public: false
 
     CompanyOS\Bundle\BackendBundle\:
-        resource: '%kernel.project_dir%/vendor/companyos/backend/src/'
+        resource: '../../src/'
         exclude:
-            - '%kernel.project_dir%/vendor/companyos/backend/src/DependencyInjection/'
-            - '%kernel.project_dir%/vendor/companyos/backend/src/Tests/'
+            - '../../src/DependencyInjection/'
+            - '../../src/Tests/'
 
     # Security Headers Listener
     CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener:

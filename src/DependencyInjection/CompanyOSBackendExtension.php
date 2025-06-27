@@ -16,6 +16,7 @@ class CompanyOSBackendExtension extends Extension
 
     public function load(array $configs, ContainerBuilder $container): void
     {
+        // Korrekter Pfad für Composer-Package
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
