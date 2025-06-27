@@ -29,5 +29,10 @@ class CompanyOSBackendExtension extends Extension
         $container->autowire('CompanyOS\Bundle\BackendBundle\Controller\BackendController')
             ->addTag('controller.service_arguments')
             ->addTag('container.service_subscriber');
+
+        // Twig Extension registrieren
+        $container->autowire('CompanyOS\Bundle\BackendBundle\Twig\EncoreExtension')
+            ->setArgument('$publicDir', '%kernel.project_dir%/public')
+            ->addTag('twig.extension');
     }
 } 
