@@ -19,13 +19,15 @@ export const useAuthStore = defineStore('auth', {
     remember: false,
   }),
   actions: {
-    async login({ username, password, remember = false }) {
+    async login({ username, password, remember = false, scope = '' }) {
       this.loading = true
       this.error = null
       this.remember = remember
       try {
-        const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${password}`
-        
+        let formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${password}`
+        if (scope && typeof scope === 'string') {
+          formData += `&scope=${encodeURIComponent(scope)}`
+        }
         // Debug-Logging
         console.log('Sending OAuth2 request:', {
           url: '/api/oauth2/token',
@@ -92,8 +94,9 @@ export const useAuthStore = defineStore('auth', {
     async refresh() {
       if (!this.refreshToken) return false
       try {
-        const formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
-        
+        let formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
+        // Falls du einen Scope beim Refresh brauchst, hier ergänzen
+        // formData += `&scope=${encodeURIComponent('user.read user.write ...')}`
         const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
