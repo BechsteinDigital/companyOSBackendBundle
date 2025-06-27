@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, inject } from 'vue'
 import { useColorModes } from '@coreui/vue'
 
 import AppBreadcrumb from './AppBreadcrumb.vue'
@@ -9,6 +9,7 @@ import { useSidebarStore } from '../stores/sidebar.js'
 const headerClassNames = ref('mb-4 p-0')
 const { colorMode, setColorMode } = useColorModes('companyos-admin-theme')
 const sidebar = useSidebarStore()
+const icons = inject('icons', {})
 
 onMounted(() => {
   document.addEventListener('scroll', () => {
@@ -25,7 +26,7 @@ onMounted(() => {
   <CHeader position="sticky" :class="headerClassNames">
     <CContainer class="border-bottom px-4" fluid>
       <CHeaderToggler @click="sidebar.toggleVisible()" style="margin-inline-start: -14px">
-        <CIcon icon="cil-menu" size="lg" />
+        <CIcon :content="icons.cilMenu" size="lg" />
       </CHeaderToggler>
       <CHeaderNav class="d-none d-md-flex">
         <CNavItem>
@@ -41,17 +42,17 @@ onMounted(() => {
       <CHeaderNav class="ms-auto">
         <CNavItem>
           <CNavLink href="#">
-            <CIcon icon="cil-bell" size="lg" />
+            <CIcon :content="icons.cilBell" size="lg" />
           </CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#">
-            <CIcon icon="cil-list" size="lg" />
+            <CIcon :content="icons.cilList" size="lg" />
           </CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#">
-            <CIcon icon="cil-envelope-open" size="lg" />
+            <CIcon :content="icons.cilEnvelopeOpen" size="lg" />
           </CNavLink>
         </CNavItem>
       </CHeaderNav>
@@ -61,9 +62,9 @@ onMounted(() => {
         </li>
         <CDropdown variant="nav-item" placement="bottom-end">
           <CDropdownToggle :caret="false">
-            <CIcon v-if="colorMode === 'dark'" icon="cil-moon" size="lg" />
-            <CIcon v-else-if="colorMode === 'light'" icon="cil-sun" size="lg" />
-            <CIcon v-else icon="cil-contrast" size="lg" />
+            <CIcon v-if="colorMode === 'dark'" :content="icons.cilMoon" size="lg" />
+            <CIcon v-else-if="colorMode === 'light'" :content="icons.cilSun" size="lg" />
+            <CIcon v-else :content="icons.cilContrast" size="lg" />
           </CDropdownToggle>
           <CDropdownMenu>
             <CDropdownItem
@@ -73,7 +74,7 @@ onMounted(() => {
               type="button"
               @click="setColorMode('light')"
             >
-              <CIcon class="me-2" icon="cil-sun" size="lg" /> Light
+              <CIcon class="me-2" :content="icons.cilSun" size="lg" /> Light
             </CDropdownItem>
             <CDropdownItem
               :active="colorMode === 'dark'"
@@ -82,7 +83,7 @@ onMounted(() => {
               type="button"
               @click="setColorMode('dark')"
             >
-              <CIcon class="me-2" icon="cil-moon" size="lg" /> Dark
+              <CIcon class="me-2" :content="icons.cilMoon" size="lg" /> Dark
             </CDropdownItem>
             <CDropdownItem
               :active="colorMode === 'auto'"
@@ -91,7 +92,7 @@ onMounted(() => {
               type="button"
               @click="setColorMode('auto')"
             >
-              <CIcon class="me-2" icon="cil-contrast" size="lg" /> Auto
+              <CIcon class="me-2" :content="icons.cilContrast" size="lg" /> Auto
             </CDropdownItem>
           </CDropdownMenu>
         </CDropdown>

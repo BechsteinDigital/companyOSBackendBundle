@@ -153,8 +153,9 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
 
-// CoreUI Icons
+// CoreUI Icons korrekt konfigurieren
 app.component('CIcon', CIcon)
+app.provide('icons', iconsSet)
 
 // CoreUI Components
 app.component('CContainer', CContainer)

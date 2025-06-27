@@ -1,9 +1,11 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { inject } from 'vue'
 
 const router = useRouter()
 const auth = useAuthStore()
+const icons = inject('icons', {})
 
 const logout = () => {
   auth.logout()
@@ -23,7 +25,7 @@ const goToSettings = () => {
   <CDropdown variant="nav-item">
     <CDropdownToggle placement="bottom-end" class="py-0 pe-0" :caret="false">
       <CAvatar size="md">
-        <CIcon icon="cil-user" />
+        <CIcon :content="icons.cilUser" />
       </CAvatar>
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
@@ -31,16 +33,16 @@ const goToSettings = () => {
         {{ auth.user?.fullName || auth.user?.email || 'Account' }}
       </CDropdownHeader>
       <CDropdownItem @click="goToProfile">
-        <CIcon icon="cil-user" class="me-2" />
+        <CIcon :content="icons.cilUser" class="me-2" />
         Profil
       </CDropdownItem>
       <CDropdownItem @click="goToSettings">
-        <CIcon icon="cil-settings" class="me-2" />
+        <CIcon :content="icons.cilSettings" class="me-2" />
         Einstellungen
       </CDropdownItem>
       <CDropdownDivider />
       <CDropdownItem @click="logout">
-        <CIcon icon="cil-account-logout" class="me-2" />
+        <CIcon :content="icons.cilAccountLogout" class="me-2" />
         Logout
       </CDropdownItem>
     </CDropdownMenu>
