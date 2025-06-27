@@ -6,7 +6,7 @@
     <title>CompanyOS Admin</title>
     
     {% block stylesheets %}
-        {% if function_exists('encore_entry_exists') and encore_entry_exists('app') %}
+        {% if encore_entry_exists is defined and encore_entry_exists('app') %}
             {{ encore_entry_link_tags('app') }}
         {% else %}
             <style>
@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="app">
-        {% if not function_exists('encore_entry_exists') or not encore_entry_exists('app') %}
+        {% if encore_entry_exists is not defined or not encore_entry_exists('app') %}
             <div class="loading">
                 <h2>CompanyOS Admin wird geladen...</h2>
                 <div class="spinner"></div>
@@ -41,7 +41,7 @@
     </div>
     
     {% block javascripts %}
-        {% if function_exists('encore_entry_exists') and encore_entry_exists('app') %}
+        {% if encore_entry_exists is defined and encore_entry_exists('app') %}
             {{ encore_entry_script_tags('app') }}
         {% endif %}
     {% endblock %}

@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.81-alpha] - 2025-06-27
+
+### Fixed
+- fix: Update condition for checking if encore_entry_exists is defined in backe...
+
+
 ## [0.1.80-alpha] - 2025-06-27
 
 ### Added
