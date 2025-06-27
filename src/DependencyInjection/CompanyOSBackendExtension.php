@@ -2,10 +2,8 @@
 
 namespace CompanyOS\Bundle\BackendBundle\DependencyInjection;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class CompanyOSBackendExtension extends Extension
 {
@@ -16,13 +14,13 @@ class CompanyOSBackendExtension extends Extension
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        // Korrekter Pfad für Composer-Package
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yaml');
-
-        // Security Headers Listener registrieren
+        // Services direkt registrieren anstatt YAML-Datei zu laden
         $container->autowire('CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener')
             ->setArgument('$environment', '%kernel.environment%')
             ->addTag('kernel.event_subscriber');
+
+        // Controller als Service registrieren
+        $container->autowire('CompanyOS\Bundle\BackendBundle\Controller\BackendController')
+            ->addTag('controller.service_arguments');
     }
 } 
