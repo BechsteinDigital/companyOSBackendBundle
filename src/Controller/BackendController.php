@@ -19,6 +19,7 @@ class BackendController extends AbstractController
     #[Route('/api/csrf-token', name: 'api_csrf_token', methods: ['GET'])]
     public function getCsrfToken(CsrfTokenManagerInterface $csrfTokenManager): JsonResponse
     {
+        // CSRF-Token für Authentifizierung generieren
         $token = $csrfTokenManager->getToken('authenticate')->getValue();
         
         return $this->json([

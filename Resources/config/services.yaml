@@ -2,9 +2,17 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        public: false
 
     CompanyOS\Bundle\BackendBundle\:
         resource: '%kernel.project_dir%/vendor/companyos/backend/src/'
         exclude:
             - '%kernel.project_dir%/vendor/companyos/backend/src/DependencyInjection/'
-            - '%kernel.project_dir%/vendor/companyos/backend/src/Resources/' 
+            - '%kernel.project_dir%/vendor/companyos/backend/src/Tests/'
+
+    # Security Headers Listener
+    CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener:
+        arguments:
+            $environment: '%kernel.environment%'
+        tags:
+            - { name: 'kernel.event_subscriber' } 
