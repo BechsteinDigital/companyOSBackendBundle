@@ -51,7 +51,7 @@ Das BackendBundle ist ein **reines Frontend-Bundle**:
 ### ⚠️ Nur für Entwickler und Tester
 
 ```bash
-composer require companyos/backend:^0.1.87-alpha
+composer require companyos/backend:^0.1.88-alpha
 ```
 
 ### Bundle registrieren
@@ -172,36 +172,64 @@ export default [
 
 ## Plugin-System
 
-Plugins können das BackendBundle erweitern durch:
+### Dynamische Plugin-Integration
 
-### Vue-Komponenten
+- Plugins werden als eigenständige Bundles entwickelt und gebaut
+- Nach dem Login werden alle aktiven Plugins über die API geladen
+- Die Sidebar und die Routen werden automatisch um die Navigation und Views der aktiven Plugins erweitert
+- Plugins registrieren ihre Navigation und Routen in ihrem eigenen Bundle (z.B. `window.plugin_MyPlugin`)
+- Keine statischen Entrypoints oder manuelle Navigationserweiterung nötig
 
-```vue
-<!-- Plugin-Komponente -->
-<template>
-  <div class="plugin-component">
-    <h3>Plugin-Komponente</h3>
-  </div>
-</template>
-```
-
-### Navigation-Erweiterungen
+### Beispiel für ein Plugin
 
 ```javascript
-// Plugin-Navigation
-export const pluginNav = [
-  {
-    component: 'CNavItem',
-    name: 'Plugin-Feature',
-    to: '/plugin-feature',
-    icon: 'cil-puzzle',
-  },
+// In custom/plugins/CompanyOSCRMPlugin/Resources/app/main.js
+import CustomerList from './components/CustomerList.vue'
+import ContractList from './components/ContractList.vue'
+
+export const components = {
+    'CustomerList': CustomerList,
+    'ContractList': ContractList
+}
+
+export const routes = [
+    {
+        path: '/plugin/crm/customers',
+        name: 'crm-customers',
+        component: CustomerList,
+        meta: { title: 'Kunden', permission: 'crm.customers' }
+    },
+    {
+        path: '/plugin/crm/contracts',
+        name: 'crm-contracts',
+        component: ContractList,
+        meta: { title: 'Verträge', permission: 'crm.contracts' }
+    }
 ]
+
+export const navigation = [
+    { component: 'CNavTitle', name: 'CRM', permission: 'crm' },
+    { component: 'CNavItem', name: 'Kunden', to: '/plugin/crm/customers', icon: 'cil-people', permission: 'crm.customers' },
+    { component: 'CNavItem', name: 'Verträge', to: '/plugin/crm/contracts', icon: 'cil-file', permission: 'crm.contracts' }
+]
+
+window.plugin_CompanyOSCRMPlugin = {
+    components,
+    routes,
+    navigation,
+    name: 'CompanyOSCRMPlugin'
+}
 ```
 
-### Asset-Überschreibungen
+### Berechtigungen
 
-Plugins können CoreUI-Komponenten überschreiben und eigene Assets hinzufügen.
+- Die Sidebar und die Routen werden automatisch nach den Berechtigungen des eingeloggten Users gefiltert
+- Jede Navigation und Route kann ein `permission`-Attribut haben
+- Nur User mit entsprechender Berechtigung sehen und nutzen die Plugin-Funktionen
+
+---
+
+**Das Plugin-System ist jetzt vollständig dynamisch und benötigt keine statischen Entrypoints oder Navigationserweiterungen mehr!**
 
 ## API-Integration
 

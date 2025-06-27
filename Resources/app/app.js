@@ -131,12 +131,6 @@ const routes = [
     name: 'ApiDocs',
     component: () => import('./views/ApiDocs.vue'),
     meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
-  },
-  {
-    path: '/system-status',
-    name: 'SystemStatus',
-    component: () => import('./views/SystemStatus.vue'),
-    meta: { requiresAuth: true, requiresRole: 'ROLE_ADMIN' }
   }
 ]
 
@@ -150,8 +144,126 @@ const app = createApp(App)
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-app.use(pinia)
-app.use(router)
+// Core-Komponenten importieren
+import * as coreComponents from './components'
+
+// Core-Komponenten global registrieren
+Object.entries(coreComponents).forEach(([name, component]) => {
+    app.component(name, component)
+})
+
+// Plugin-Status über API laden
+async function loadActivePlugins() {
+    try {
+        const response = await fetch('/api/plugins')
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
+        
+        const plugins = await response.json()
+        const activePlugins = plugins.filter(plugin => plugin.active)
+        
+        console.log('Aktive Plugins gefunden:', activePlugins.map(p => p.name))
+        return activePlugins
+    } catch (error) {
+        console.error('Fehler beim Laden der aktiven Plugins:', error)
+        return []
+    }
+}
+
+// Plugin-Entrypoints dynamisch laden
+async function loadPluginEntrypoints(activePlugins) {
+    console.log('Lade Plugin-Entrypoints für:', activePlugins.map(p => p.name))
+    
+    for (const plugin of activePlugins) {
+        const entrypointPath = `/bundles/${plugin.name.toLowerCase()}/dist/plugin.js`
+        
+        try {
+            // Plugin-Script dynamisch laden
+            await loadScript(entrypointPath)
+            console.log(`✅ Plugin geladen: ${plugin.name}`)
+        } catch (error) {
+            console.error(`❌ Plugin-Fehler: ${plugin.name}`, error)
+        }
+    }
+}
+
+// Script dynamisch laden
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = src
+        script.onload = resolve
+        script.onerror = reject
+        document.head.appendChild(script)
+    })
+}
+
+// Plugin-Komponenten registrieren (nach dem Laden der Scripts)
+function registerPluginComponents() {
+    Object.keys(window).forEach(key => {
+        if (key.startsWith('plugin_') && typeof window[key] === 'object') {
+            const pluginName = key.replace('plugin_', '')
+            console.log(`Plugin-Komponenten registrieren: ${pluginName}`)
+            
+            // Plugin-Komponenten registrieren
+            if (window[key].components) {
+                Object.entries(window[key].components).forEach(([componentName, component]) => {
+                    app.component(componentName, component)
+                })
+            }
+            
+            // Plugin-Routen hinzufügen
+            if (window[key].routes) {
+                window[key].routes.forEach(route => {
+                    router.addRoute(route)
+                })
+            }
+        }
+    })
+}
+
+// Auto-Refresh Setup
+function setupAutoRefresh() {
+    if (process.env.NODE_ENV === 'development') {
+        // WebSocket-Verbindung für Auto-Refresh
+        const ws = new WebSocket('ws://localhost:8080')
+        
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data)
+            if (data.type === 'reload') {
+                window.location.reload()
+            }
+        }
+        
+        ws.onerror = () => {
+            console.log('WebSocket nicht verfügbar - Auto-Refresh deaktiviert')
+        }
+    }
+}
+
+// App initialisieren
+async function initializeApp() {
+    // Plugin-Status über API laden
+    const activePlugins = await loadActivePlugins()
+    
+    // Plugin-Entrypoints laden
+    await loadPluginEntrypoints(activePlugins)
+    
+    // Plugin-Komponenten registrieren
+    registerPluginComponents()
+    
+    // Auto-Refresh Setup
+    setupAutoRefresh()
+    
+    // App mounten
+    app.use(pinia)
+    app.use(router)
+    app.mount('#app')
+}
+
+// App starten
+initializeApp()
 
 // CoreUI Icons korrekt konfigurieren
 app.component('CIcon', CIcon)
@@ -254,10 +366,4 @@ axios.interceptors.response.use(
     
     return Promise.reject(err)
   }
-)
-
-// Auto-Refresh Setup
-setupAutoRefresh()
-
-// App mounten
-app.mount('#app') 
+) 

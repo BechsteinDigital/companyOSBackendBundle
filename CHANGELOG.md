@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.88-alpha] - 2025-06-28
+
+### Added
+- feat: Dynamische Plugin-Integration, vollständig dynamisches Plugin-System o...
+
+
 ## [0.1.87-alpha] - 2025-06-27
 
 ### Added

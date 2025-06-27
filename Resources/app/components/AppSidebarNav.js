@@ -52,12 +52,26 @@ const AppSidebarNav = defineComponent({
     const auth = useAuthStore()
     const firstRender = ref(true)
     const icons = inject('icons', {})
+    const pluginNavigation = ref([])
 
     onMounted(() => {
       firstRender.value = false
+      loadPluginNavigation()
     })
 
-    // Rollenbasierte Navigation berechnen
+    // Plugin-Navigation laden
+    const loadPluginNavigation = () => {
+        // Plugin-Navigation zurücksetzen
+        pluginNavigation.value = []
+        // Plugin-Navigation aus globalen Plugin-Objekten sammeln
+        Object.keys(window).forEach(key => {
+            if (key.startsWith('plugin_') && typeof window[key] === 'object' && window[key].navigation) {
+                pluginNavigation.value = [...pluginNavigation.value, ...window[key].navigation]
+            }
+        })
+    }
+
+    // Rollenbasierte Navigation berechnen (Core + Plugins)
     const navigation = computed(() => {
       console.log('Navigation berechnen - User:', auth.user)
       console.log('Navigation berechnen - User-Rollen:', auth.user?.roles)
@@ -68,16 +82,27 @@ const AppSidebarNav = defineComponent({
         return allNavigationItems.filter(item => item.permission === 'dashboard')
       }
       
-      // Navigation basierend auf Berechtigungen filtern
-      const filteredNav = allNavigationItems.filter(item => {
+      // Core-Navigation basierend auf Berechtigungen filtern
+      const filteredCoreNav = allNavigationItems.filter(item => {
         if (!item.permission) return true
         const canAccess = auth.canAccess(item.permission)
-        console.log(`Item ${item.name} (${item.permission}): ${canAccess}`)
+        console.log(`Core Item ${item.name} (${item.permission}): ${canAccess}`)
         return canAccess
       })
       
-      console.log('Gefilterte Navigation:', filteredNav)
-      return filteredNav
+      // Plugin-Navigation basierend auf Berechtigungen filtern
+      const filteredPluginNav = pluginNavigation.value.filter(item => {
+        if (!item.permission) return true
+        const canAccess = auth.canAccess(item.permission)
+        console.log(`Plugin Item ${item.name} (${item.permission}): ${canAccess}`)
+        return canAccess
+      })
+      
+      // Core- und Plugin-Navigation kombinieren
+      const combinedNav = [...filteredCoreNav, ...filteredPluginNav]
+      
+      console.log('Gefilterte Navigation:', combinedNav)
+      return combinedNav
     })
 
     const renderItem = (item) => {

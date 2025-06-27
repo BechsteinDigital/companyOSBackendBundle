@@ -4,11 +4,18 @@ namespace CompanyOS\Bundle\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/admin")
+ */
 class BackendController extends AbstractController
 {
-    public function index(string $route = ''): Response
+    /**
+     * @Route("/index", name="admin_index")
+     */
+    public function index(): Response
     {
-        return $this->render('@CompanyOSBackend/backend.html.twig');
+        return $this->render('@CompanyOSBackend/backend/index.html.twig');
     }
 } 
