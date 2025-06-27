@@ -19,38 +19,20 @@ export const useAuthStore = defineStore('auth', {
     remember: false,
   }),
   actions: {
-    async login({ username, password, remember = false, scope = '' }) {
+    async login({ username, password, remember = false }) {
       this.loading = true
       this.error = null
       this.remember = remember
       try {
-        let formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${password}`
-        if (scope && typeof scope === 'string') {
-          formData += `&scope=${encodeURIComponent(scope)}`
-        }
-        // Debug-Logging
-        console.log('Sending OAuth2 request:', {
-          url: '/api/oauth2/token',
-          formData: formData,
+        const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${password}`
+        const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
-
-        const { data } = await axios.post('/api/oauth2/token', formData, {
-          headers: { 
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-        
-        console.log('OAuth2 response:', data)
         this.setTokens(data, remember)
         this.loading = false
-        
-        // Profile nach dem Token-Setup abrufen
         await this.fetchProfile()
-        
         return true
       } catch (e) {
-        console.error('OAuth2 error:', e.response?.data || e.message)
         this.error = e.response?.data?.message || 'Login fehlgeschlagen'
         this.loading = false
         return false
@@ -94,13 +76,9 @@ export const useAuthStore = defineStore('auth', {
     async refresh() {
       if (!this.refreshToken) return false
       try {
-        let formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
-        // Falls du einen Scope beim Refresh brauchst, hier ergänzen
-        // formData += `&scope=${encodeURIComponent('user.read user.write ...')}`
+        const formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
         const { data } = await axios.post('/api/oauth2/token', formData, {
-          headers: { 
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
         this.setTokens(data, this.remember)
         return true
