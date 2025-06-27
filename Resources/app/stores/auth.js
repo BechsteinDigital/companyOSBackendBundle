@@ -31,7 +31,6 @@ export const useAuthStore = defineStore('auth', {
     loading: false,
     error: null,
     remember: false,
-    csrfToken: null,
   }),
   
   getters: {
@@ -103,16 +102,10 @@ export const useAuthStore = defineStore('auth', {
           throw new Error('Passwort muss mindestens 8 Zeichen lang sein')
         }
         
-        // CSRF-Token abrufen falls nicht vorhanden
-        if (!this.csrfToken) {
-          await this.fetchCsrfToken()
-        }
-        
         const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(sanitizedEmail)}&password=${encodeURIComponent(password)}`
         const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': this.csrfToken
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
         
@@ -124,17 +117,6 @@ export const useAuthStore = defineStore('auth', {
         this.error = e.response?.data?.message || e.message || 'Login fehlgeschlagen'
         this.loading = false
         return false
-      }
-    },
-    
-    async fetchCsrfToken() {
-      try {
-        const response = await axios.get('/api/csrf-token', {
-          withCredentials: true
-        })
-        this.csrfToken = response.data.token
-      } catch (error) {
-        console.warn('CSRF-Token konnte nicht abgerufen werden:', error)
       }
     },
     
@@ -172,7 +154,6 @@ export const useAuthStore = defineStore('auth', {
       this.expiresAt = null
       this.scopes = []
       this.user = null
-      this.csrfToken = null
       localStorage.removeItem(STORAGE_KEY)
       sessionStorage.removeItem(STORAGE_KEY)
     },
@@ -180,14 +161,10 @@ export const useAuthStore = defineStore('auth', {
     async refresh() {
       if (!this.refreshToken) return false
       try {
-        // CSRF-Token erneuern
-        await this.fetchCsrfToken()
-        
         const formData = `grant_type=refresh_token&client_id=backend&refresh_token=${encodeURIComponent(this.refreshToken)}`
         const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': this.csrfToken
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
         this.setTokens(data, this.remember)
@@ -199,11 +176,14 @@ export const useAuthStore = defineStore('auth', {
     },
     
     async fetchProfile() {
+      if (!this.accessToken) return
       try {
-        const { data } = await axios.get('/api/users/profile')
-        this.user = data.data
-      } catch {
-        this.user = null
+        const { data } = await axios.get('/api/user/profile', {
+          headers: { Authorization: `Bearer ${this.accessToken}` }
+        })
+        this.user = data
+      } catch (error) {
+        console.error('Profil konnte nicht abgerufen werden:', error)
       }
     },
     
@@ -213,15 +193,12 @@ export const useAuthStore = defineStore('auth', {
   }
 })
 
-// Auto-Refresh Setup (kann in main.js importiert werden)
 export function setupAutoRefresh() {
   const auth = useAuthStore()
-  setInterval(async () => {
-    if (auth.accessToken && auth.expiresAt) {
-      const timeLeft = auth.expiresAt - Date.now()
-      if (timeLeft < 60 * 1000 && auth.refreshToken) {
-        await auth.refresh()
-      }
+  
+  setInterval(() => {
+    if (auth.expiresAt && Date.now() > auth.expiresAt - 60000) {
+      auth.refresh()
     }
-  }, 30 * 1000)
+  }, 30000)
 } 

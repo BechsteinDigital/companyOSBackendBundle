@@ -1,12 +1,6 @@
 # CompanyOS Backend Bundle Routes
 
-# API-Routen (müssen vor der Catch-All-Route stehen)
-api_csrf_token:
-    path: /api/csrf-token
-    controller: CompanyOS\Bundle\BackendBundle\Controller\BackendController::getCsrfToken
-    methods: [GET]
-
-# Catch All für Vue.js SPA (muss als letztes stehen)
+# Catch All für Vue.js SPA
 company_os_backend:
     path: /{route}
     controller: CompanyOS\Bundle\BackendBundle\Controller\BackendController::index

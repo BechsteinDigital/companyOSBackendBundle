@@ -225,11 +225,6 @@ axios.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${auth.accessToken}`
   }
   
-  // CSRF-Token für alle POST/PUT/DELETE Requests hinzufügen
-  if (['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase()) && auth.csrfToken) {
-    config.headers['X-CSRF-TOKEN'] = auth.csrfToken
-  }
-  
   // Security Headers
   config.headers['X-Requested-With'] = 'XMLHttpRequest'
   
@@ -249,16 +244,6 @@ axios.interceptors.response.use(
       } else {
         auth.logout()
         router.push('/login')
-      }
-    }
-    
-    // CSRF-Token Fehler behandeln
-    if (err.response?.status === 419) {
-      // CSRF-Token erneuern und Request wiederholen
-      await auth.fetchCsrfToken()
-      if (auth.csrfToken) {
-        err.config.headers['X-CSRF-TOKEN'] = auth.csrfToken
-        return axios(err.config)
       }
     }
     

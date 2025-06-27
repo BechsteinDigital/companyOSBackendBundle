@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- CSRF-Token Meta-Tag für zusätzliche Sicherheit -->
-    <meta name="csrf-token" :content="csrfToken" />
-    
     <AppSidebar v-if="showLayout" />
     <div class="wrapper d-flex flex-column min-vh-100">
       <AppHeader v-if="showLayout" />
@@ -28,13 +25,10 @@ const route = useRoute()
 const auth = useAuthStore()
 const showLayout = computed(() => route.path !== '/login')
 
-const csrfToken = computed(() => auth.csrfToken || '')
-
-// CSRF-Token beim App-Start abrufen
+// Auth-Store beim App-Start initialisieren
 onMounted(async () => {
-  if (!auth.csrfToken) {
-    await auth.fetchCsrfToken()
-  }
+  // Stelle sicher, dass der Auth-Store geladen ist
+  auth.loadTokens()
 })
 </script>
 
