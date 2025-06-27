@@ -41,8 +41,11 @@ export const useAuthStore = defineStore('auth', {
         
         console.log('OAuth2 response:', data)
         this.setTokens(data, remember)
-        await this.fetchProfile()
         this.loading = false
+        
+        // Profile nach dem Token-Setup abrufen
+        await this.fetchProfile()
+        
         return true
       } catch (e) {
         console.error('OAuth2 error:', e.response?.data || e.message)
