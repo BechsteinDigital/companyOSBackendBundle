@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.76-alpha] - 2025-06-27
+
+### Maintenance
+- chore: Update Packagist links in README.md to reflect bundle name change.
+
+
 ## [0.1.75-alpha] - 2025-06-27
 
 ### Added

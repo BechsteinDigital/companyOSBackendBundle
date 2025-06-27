@@ -2,9 +2,9 @@
 
 Ein vollständiges Symfony-Bundle für das CompanyOS Backend-Frontend mit VueJS, CoreUI und modularem Admin-Interface.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/companyos/backend-bundle.svg)](https://packagist.org/packages/companyos/backend-bundle)
-[![Total Downloads](https://img.shields.io/packagist/dt/companyos/backend-bundle.svg)](https://packagist.org/packages/companyos/backend-bundle)
-[![License](https://img.shields.io/packagist/l/companyos/backend-bundle.svg)](https://packagist.org/packages/companyos/backend-bundle)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/companyos/backend.svg)](https://packagist.org/packages/companyos/backend)
+[![Total Downloads](https://img.shields.io/packagist/dt/companyos/backend.svg)](https://packagist.org/packages/companyos/backend)
+[![License](https://img.shields.io/packagist/l/companyos/backend.svg)](https://packagist.org/packages/companyos/backend)
 
 ## ⚠️ Alpha Version
 
@@ -51,7 +51,7 @@ Das BackendBundle ist ein **reines Frontend-Bundle**:
 ### ⚠️ Nur für Entwickler und Tester
 
 ```bash
-composer require companyos/backend:^0.1.75-alpha
+composer require companyos/backend:^0.1.76-alpha
 ```
 
 ### Bundle registrieren
