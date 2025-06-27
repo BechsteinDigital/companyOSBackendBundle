@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.64-alpha] - 2025-06-27
+
+### Added
+- feat: Implement use of auth store for logout in AppHeaderDropdownAccnt.vue
+
+
 ## [0.1.63-alpha] - 2025-06-27
 
 ### Added
