@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       this.remember = remember
       try {
-        const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${password}`
         
         // Debug-Logging
         console.log('Sending OAuth2 request:', {

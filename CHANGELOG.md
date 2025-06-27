@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.63-alpha] - 2025-06-27
+
+### Added
+- fix(auth): Fix encoding issue in password field in OAuth2 request
+
+
 ## [0.1.62-alpha] - 2025-06-27
 
 ### Added
