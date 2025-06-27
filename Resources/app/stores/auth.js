@@ -25,17 +25,27 @@ export const useAuthStore = defineStore('auth', {
       this.remember = remember
       try {
         const formData = `grant_type=password&client_id=backend&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        
+        // Debug-Logging
+        console.log('Sending OAuth2 request:', {
+          url: '/api/oauth2/token',
+          formData: formData,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
 
         const { data } = await axios.post('/api/oauth2/token', formData, {
           headers: { 
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
+        
+        console.log('OAuth2 response:', data)
         this.setTokens(data, remember)
         await this.fetchProfile()
         this.loading = false
         return true
       } catch (e) {
+        console.error('OAuth2 error:', e.response?.data || e.message)
         this.error = e.response?.data?.message || 'Login fehlgeschlagen'
         this.loading = false
         return false
