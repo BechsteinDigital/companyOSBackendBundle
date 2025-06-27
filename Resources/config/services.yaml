@@ -15,4 +15,9 @@ services:
         arguments:
             $environment: '%kernel.environment%'
         tags:
-            - { name: 'kernel.event_subscriber' } 
+            - { name: 'kernel.event_subscriber' }
+
+    # CSRF Token Manager
+    CompanyOS\Bundle\BackendBundle\Controller\BackendController:
+        tags:
+            - { name: 'controller.service_arguments' } 
