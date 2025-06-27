@@ -59,16 +59,25 @@ const AppSidebarNav = defineComponent({
 
     // Rollenbasierte Navigation berechnen
     const navigation = computed(() => {
+      console.log('Navigation berechnen - User:', auth.user)
+      console.log('Navigation berechnen - User-Rollen:', auth.user?.roles)
+      
       if (!auth.user) {
+        console.log('Kein User - zeige nur Dashboard')
         // Fallback: Nur Dashboard anzeigen
         return allNavigationItems.filter(item => item.permission === 'dashboard')
       }
       
       // Navigation basierend auf Berechtigungen filtern
-      return allNavigationItems.filter(item => {
+      const filteredNav = allNavigationItems.filter(item => {
         if (!item.permission) return true
-        return auth.canAccess(item.permission)
+        const canAccess = auth.canAccess(item.permission)
+        console.log(`Item ${item.name} (${item.permission}): ${canAccess}`)
+        return canAccess
       })
+      
+      console.log('Gefilterte Navigation:', filteredNav)
+      return filteredNav
     })
 
     const renderItem = (item) => {

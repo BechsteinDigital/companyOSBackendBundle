@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.84-alpha] - 2025-06-27
+
+### Added
+- feat: Laden des User-Profils und der Rollen bei vorhandenem Token
+
+
 ## [0.1.83-alpha] - 2025-06-27
 
 ### Added

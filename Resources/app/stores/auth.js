@@ -181,7 +181,9 @@ export const useAuthStore = defineStore('auth', {
         const { data } = await axios.get('/api/user/profile', {
           headers: { Authorization: `Bearer ${this.accessToken}` }
         })
+        console.log('User-Profil geladen:', data)
         this.user = data
+        console.log('User-Rollen:', this.user?.roles)
       } catch (error) {
         console.error('Profil konnte nicht abgerufen werden:', error)
       }

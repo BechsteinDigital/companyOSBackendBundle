@@ -205,6 +205,11 @@ app.component('CWidgetStatsF', CWidgetStatsF)
 const auth = useAuthStore()
 auth.loadTokens()
 
+// User-Profil laden falls Token vorhanden
+if (auth.accessToken) {
+  auth.fetchProfile()
+}
+
 // Router-Guard mit Store und Rollenprüfung
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !auth.accessToken) {
