@@ -30,7 +30,9 @@ export const useAuthStore = defineStore('auth', {
         params.append('username', username)
         params.append('password', password)
 
-        const { data } = await axios.post('/api/oauth2/token', params)
+        const { data } = await axios.post('/api/oauth2/token', params, {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
         this.setTokens(data, remember)
         await this.fetchProfile()
         this.loading = false
@@ -83,7 +85,9 @@ export const useAuthStore = defineStore('auth', {
         params.append('grant_type', 'refresh_token')
         params.append('client_id', 'backend')
         params.append('refresh_token', this.refreshToken)
-        const { data } = await axios.post('/api/oauth2/token', params)
+        const { data } = await axios.post('/api/oauth2/token', params, {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
         this.setTokens(data, this.remember)
         return true
       } catch {
