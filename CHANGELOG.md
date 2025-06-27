@@ -7,6 +7,33 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.68-alpha] - 2025-06-27
+
+### Security
+- **BREAKING**: Implementiere umfassende Sicherheitsverbesserungen
+- **feat(security)**: CSRF-Schutz für alle Formulare hinzugefügt
+- **feat(security)**: Security Headers mit Umgebungsunterscheidung implementiert
+- **feat(security)**: Verbesserte Session-Sicherheit mit HttpOnly und SameSite-Cookies
+- **feat(security)**: Input-Validierung und Sanitization für Login-Daten
+- **feat(security)**: Content Security Policy (CSP) für XSS-Schutz
+- **feat(security)**: Automatische CSRF-Token-Erneuerung bei Ablauf
+- **feat(security)**: E-Mail-Format-Validierung im Frontend und Backend
+- **feat(security)**: Passwort-Mindestlänge von 8 Zeichen
+- **feat(security)**: Umgebungsunterscheidung für Development/Production/Test
+- **feat(security)**: Verbesserte Axios-Interceptors mit CSRF-Schutz
+- **feat(security)**: Security-Dokumentation aktualisiert
+
+### Changed
+- **refactor(auth)**: Auth-Store um CSRF-Token-Management erweitert
+- **refactor(login)**: Login-Formular mit Client-seitiger Validierung
+- **refactor(backend)**: BackendController um CSRF-Token-Endpunkt erweitert
+- **refactor(user)**: UserRepository mit Input-Sanitization verbessert
+
+### Technical
+- **config(security)**: Security-Konfiguration mit Umgebungsunterscheidung
+- **config(framework)**: Session-Sicherheit und CSRF-Schutz konfiguriert
+- **config(headers)**: Security Headers für verschiedene Umgebungen
+
 ## [0.1.67-alpha] - 2025-06-27
 
 ### Added

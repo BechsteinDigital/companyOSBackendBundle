@@ -38,6 +38,52 @@ Wir nehmen die Sicherheit von CompanyOS Backend Bundle sehr ernst. Wenn Sie eine
 - **PGP-Key**: [PGP-Key hier einfügen]
 - **Response Time**: 24 Stunden
 
+### Implementierte Sicherheitsmaßnahmen:
+
+#### ✅ OAuth2-Authentifizierung
+- Sichere Token-basierte Authentifizierung
+- Access- und Refresh-Token mit konfigurierbaren TTLs
+- Stateless API-Design für bessere Skalierbarkeit
+
+#### ✅ Passwort-Sicherheit
+- Symfony Password Hasher mit automatischer Algorithmus-Auswahl
+- Sichere Passwort-Hashing-Verfahren (Argon2i/bcrypt)
+- Mindestlänge von 8 Zeichen für Passwörter
+
+#### ✅ CSRF-Schutz
+- CSRF-Token für alle Formulare
+- Automatische Token-Validierung
+- Token-Erneuerung bei Ablauf
+
+#### ✅ Input-Validierung & Sanitization
+- E-Mail-Format-Validierung
+- Input-Sanitization für alle Benutzereingaben
+- XSS-Schutz durch Content Security Policy
+
+#### ✅ Rate Limiting & Brute Force Protection
+- IP-basierte Sperrung nach 5 fehlgeschlagenen Login-Versuchen
+- 15-minütige Sperrzeit für blockierte IPs
+- Umfassendes Audit-Logging
+
+#### ✅ Security Headers
+- Content Security Policy (CSP)
+- X-Frame-Options: DENY
+- X-Content-Type-Options: nosniff
+- X-XSS-Protection: 1; mode=block
+- Referrer-Policy: strict-origin-when-cross-origin
+- Permissions-Policy für Browser-Features
+
+#### ✅ Session-Sicherheit
+- HttpOnly-Cookies
+- SameSite-Cookie-Attribute
+- Session-Fixation-Schutz
+- Automatische Session-Bereinigung
+
+#### ✅ Umgebungsunterscheidung
+- **Development**: Weniger strenge Security Headers für bessere Entwicklererfahrung
+- **Production**: Strenge Security Headers für maximale Sicherheit
+- **Test**: Deaktivierte CSRF-Schutz für automatisierte Tests
+
 ### Bekannte Sicherheitslücken:
 
 Derzeit sind keine bekannten Sicherheitslücken bekannt.
@@ -45,6 +91,27 @@ Derzeit sind keine bekannten Sicherheitslücken bekannt.
 ### Sicherheits-Updates:
 
 Alle Sicherheits-Updates werden in der [CHANGELOG.md](CHANGELOG.md) dokumentiert.
+
+### Empfohlene Produktionskonfiguration:
+
+```yaml
+# .env.local für Production
+APP_ENV=prod
+APP_SECRET=your-very-long-random-secret-key
+OAUTH2_ENCRYPTION_KEY=your-oauth2-encryption-key
+DATABASE_URL="mysql://user:password@host:port/database?charset=utf8mb4"
+```
+
+### Sicherheitscheckliste für Production:
+
+- [ ] HTTPS/SSL konfiguriert
+- [ ] Sichere APP_SECRET gesetzt
+- [ ] OAuth2-Schlüssel generiert
+- [ ] Datenbank-Backup konfiguriert
+- [ ] Logging für Security-Events aktiviert
+- [ ] Rate Limiting aktiviert
+- [ ] Security Headers konfiguriert
+- [ ] Session-Sicherheit aktiviert
 
 ---
 

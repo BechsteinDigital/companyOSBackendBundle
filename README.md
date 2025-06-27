@@ -51,7 +51,7 @@ Das BackendBundle ist ein **reines Frontend-Bundle**:
 ### ⚠️ Nur für Entwickler und Tester
 
 ```bash
-composer require companyos/backend:^0.1.67-alpha
+composer require companyos/backend:^0.1.68-alpha
 ```
 
 ### Bundle registrieren
