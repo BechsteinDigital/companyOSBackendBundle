@@ -31,7 +31,10 @@ export const useAuthStore = defineStore('auth', {
         params.append('password', password)
 
         const { data } = await axios.post('/api/oauth2/token', params, {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          transformRequest: [(data) => data] // Verhindert Axios-Transformation
         })
         this.setTokens(data, remember)
         await this.fetchProfile()
@@ -86,7 +89,10 @@ export const useAuthStore = defineStore('auth', {
         params.append('client_id', 'backend')
         params.append('refresh_token', this.refreshToken)
         const { data } = await axios.post('/api/oauth2/token', params, {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          transformRequest: [(data) => data] // Verhindert Axios-Transformation
         })
         this.setTokens(data, this.remember)
         return true
