@@ -1,5 +1,7 @@
 const Encore = require('@symfony/webpack-encore');
 const { VueLoaderPlugin } = require('vue-loader');
+const fs = require('fs');
+const path = require('path');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -18,6 +20,26 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 | webpack config *before* calling Encore.
 |
 */
+
+// Backup-Funktion für alte Assets
+function backupOldAssets() {
+    const buildPath = 'Resources/public/build';
+    const backupPath = 'Resources/public/build.backup';
+    
+    if (fs.existsSync(buildPath)) {
+        // Altes Backup entfernen falls vorhanden
+        if (fs.existsSync(backupPath)) {
+            fs.rmSync(backupPath, { recursive: true, force: true });
+        }
+        
+        // Aktuelles Build als Backup kopieren
+        fs.cpSync(buildPath, backupPath, { recursive: true });
+        console.log('✅ Alte Assets gesichert');
+    }
+}
+
+// Backup erstellen vor dem Build
+backupOldAssets();
 
 Encore
     // directory where compiled assets will be stored
@@ -52,8 +74,8 @@ Encore
      */
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+    // enables hashed filenames (e.g. app.abc123.css) - IMMER aktiviert für Versioning
+    .enableVersioning(true)
 
     // enables and configure @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
@@ -69,4 +91,19 @@ Encore
     })
     .enableSassLoader();
 
-module.exports = Encore.getWebpackConfig(); 
+const config = Encore.getWebpackConfig();
+
+// Post-Build Hook für Cleanup
+config.plugins.push({
+    apply: (compiler) => {
+        compiler.hooks.afterEmit.tap('CleanupBackup', () => {
+            const backupPath = 'Resources/public/build.backup';
+            if (fs.existsSync(backupPath)) {
+                fs.rmSync(backupPath, { recursive: true, force: true });
+                console.log('✅ Backup entfernt (Build erfolgreich)');
+            }
+        });
+    }
+});
+
+module.exports = config; 
