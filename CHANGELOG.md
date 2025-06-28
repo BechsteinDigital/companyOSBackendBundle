@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.119-alpha] - 2025-06-28
+
+### Added
+- feat(routes): Update routes for CompanyOS Backend Bundle to use /admin route ...
+
+
 ## [0.1.118-alpha] - 2025-06-28
 
 ### Fixed
