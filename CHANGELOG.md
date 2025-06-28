@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.118-alpha] - 2025-06-28
+
+### Fixed
+- fix: Removed package-lock.json file for 'CompanyOS Backend Bundle' to avoid c...
+
+
 ## [0.1.117-alpha] - 2025-06-28
 
 ### Added
