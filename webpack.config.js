@@ -9,9 +9,9 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
     // directory where compiled assets will be stored
-    .setOutputPath('/var/www/html/public/bundles/companyosbackend/build/')
+    .setOutputPath('public/build/')
     // public path used by the web server to access the output path
-    .setPublicPath('/bundles/companyosbackend/build')
+    .setPublicPath('/build')
 
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
