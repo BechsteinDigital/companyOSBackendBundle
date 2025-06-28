@@ -250,3 +250,9 @@ main "$@"
 - Commit: Fix: Änderung des API-Endpunkts für Benutzerprofil abgerufen....
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.128-alpha] - 2025-06-28
+
+- Commit: "Entferne überflüssige Begrüßung im Backend-Template"...
+- [M] Resources/views/backend/base.html.twig
+- [M] composer.json
