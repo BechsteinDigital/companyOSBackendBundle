@@ -1,19 +1,21 @@
 <template>
   <div>
-    <CCard class="mb-4">
-      <CCardHeader>
-        <strong>Benutzer-Verwaltung</strong>
-      </CCardHeader>
-      <CCardBody>
-        <p>Benutzer-Verwaltung wird hier implementiert.</p>
-        <CButton color="primary">
-          Neuen Benutzer erstellen
-        </CButton>
-      </CCardBody>
-    </CCard>
+    <CRow>
+      <CCol xs="12">
+        <CCard class="mb-4">
+          <CCardHeader>
+            <strong>Benutzer-Verwaltung</strong>
+          </CCardHeader>
+          <CCardBody>
+            <p>Hier werden alle Benutzer verwaltet.</p>
+            <p>Diese Seite ist noch in Entwicklung.</p>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
   </div>
 </template>
 
 <script setup>
-// Benutzer-Verwaltung Logik hier
+// Placeholder für Users-Komponente
 </script> 

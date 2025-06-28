@@ -71,30 +71,54 @@ const AppSidebarNav = defineComponent({
         })
     }
 
-    // Rollenbasierte Navigation berechnen (Core + Plugins)
+    // Permission-basierte Navigation berechnen (Core + Plugins)
     const navigation = computed(() => {
       console.log('Navigation berechnen - User:', auth.user)
-      console.log('Navigation berechnen - User-Rollen:', auth.user?.roles)
+      console.log('Navigation berechnen - User-Permissions:', auth.user?.permissions)
+      console.log('Navigation berechnen - User-Rollen (Fallback):', auth.user?.roles)
       
       if (!auth.user) {
         console.log('Kein User - zeige nur Dashboard')
         // Fallback: Nur Dashboard anzeigen
-        return allNavigationItems.filter(item => item.permission === 'dashboard')
+        return allNavigationItems.filter(item => 
+          item.permission === 'dashboard.view' || item.permission === 'dashboard'
+        )
+      }
+      
+      // Helper-Funktion für Permission-Checks
+      const checkItemPermission = (item) => {
+        if (!item.permission) return true
+        
+        let hasPermission = false
+        
+        // Permission kann Array oder String sein
+        if (Array.isArray(item.permission)) {
+          // Mindestens eine Permission muss vorhanden sein
+          hasPermission = auth.hasAnyPermission(item.permission)
+        } else {
+          // Einzelne Permission prüfen
+          hasPermission = auth.hasPermission(item.permission)
+        }
+        
+        // Fallback auf Legacy-Permission und canAccess
+        if (!hasPermission && item.fallbackPermission) {
+          hasPermission = auth.canAccess(item.fallbackPermission)
+        }
+        
+        return hasPermission
       }
       
       // Core-Navigation basierend auf Berechtigungen filtern
       const filteredCoreNav = allNavigationItems.filter(item => {
-        if (!item.permission) return true
-        const canAccess = auth.canAccess(item.permission)
-        console.log(`Core Item ${item.name} (${item.permission}): ${canAccess}`)
+        const canAccess = checkItemPermission(item)
+        console.log(`Core Item ${item.name} (${JSON.stringify(item.permission)}): ${canAccess}`)
         return canAccess
       })
       
       // Plugin-Navigation basierend auf Berechtigungen filtern
       const filteredPluginNav = pluginNavigation.value.filter(item => {
-        if (!item.permission) return true
-        const canAccess = auth.canAccess(item.permission)
-        console.log(`Plugin Item ${item.name} (${item.permission}): ${canAccess}`)
+        const canAccess = checkItemPermission(item)
+        console.log(`Plugin Item ${item.name} (${JSON.stringify(item.permission)}): ${canAccess}`)
         return canAccess
       })
       

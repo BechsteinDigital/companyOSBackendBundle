@@ -270,3 +270,19 @@ main "$@"
 - [M] Resources/app/layout/App.vue
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.131-alpha] - 2025-06-28
+
+- Commit: "Update: Permission-Prüfung für Navigation, Rollen durch Permissions ersetzt"...
+- [M] Resources/app/_nav.js
+- [M] Resources/app/app.js
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] Resources/app/stores/auth.js
+- [M] Resources/app/views/ApiDocs.vue
+- [M] Resources/app/views/Permissions.vue
+- [M] Resources/app/views/Plugins.vue
+- [M] Resources/app/views/Roles.vue
+- [M] Resources/app/views/Settings.vue
+- [M] Resources/app/views/Users.vue
+- [M] Resources/app/views/Webhooks.vue
+- [M] composer.json

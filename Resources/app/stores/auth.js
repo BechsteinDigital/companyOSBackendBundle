@@ -34,25 +34,83 @@ export const useAuthStore = defineStore('auth', {
   }),
   
   getters: {
-    // Rollenprüfung
+    // Rollenprüfung (Legacy - wird durch Permissions ersetzt)
     hasRole: (state) => (role) => {
       if (!state.user || !state.user.roles) return false
       return state.user.roles.includes(role)
     },
     
-    // Berechtigungsprüfung für Navigation
+    // Permission-Prüfung (Empfohlen)
+    hasPermission: (state) => (permission) => {
+      if (!state.user || !state.user.permissions) return false
+      return state.user.permissions.includes(permission)
+    },
+    
+    // Hybrid Permission Check (RBAC + ABAC)
+    hasHybridPermission: (state) => (permission, context = {}) => {
+      // Basis RBAC-Check
+      if (!state.user || !state.user.permissions) return false
+      if (!state.user.permissions.includes(permission)) return false
+      
+      // Admin-Überschreibung
+      if (state.user.roles?.includes('ROLE_ADMIN')) return true
+      
+      // ABAC-Regeln prüfen (vereinfacht für Frontend)
+      return state.checkAbacRules(permission, context)
+    },
+    
+    // Mehrere Permissions prüfen (mindestens eine muss vorhanden sein)
+    hasAnyPermission: (state) => (permissions) => {
+      if (!state.user || !state.user.permissions) return false
+      return permissions.some(permission => state.user.permissions.includes(permission))
+    },
+    
+    // Alle Permissions prüfen (alle müssen vorhanden sein)
+    hasAllPermissions: (state) => (permissions) => {
+      if (!state.user || !state.user.permissions) return false
+      return permissions.every(permission => state.user.permissions.includes(permission))
+    },
+    
+    // Berechtigungsprüfung für Navigation (Permission-basiert)
     canAccess: (state) => (permission) => {
-      if (!state.user || !state.user.roles) return false
+      if (!state.user) return false
       
-      const userRoles = state.user.roles
+      // Admin-Rolle hat alle Berechtigungen (Fallback)
+      if (state.user.roles?.includes('ROLE_ADMIN')) return true
       
-      // Admin hat alle Berechtigungen
-      if (userRoles.includes('ROLE_ADMIN')) return true
+      // Permission-basierte Prüfung
+      if (state.user.permissions) {
+        // Direkte Permission-Prüfung
+        if (state.user.permissions.includes(permission)) return true
+        
+        // Mapping von Legacy-Permissions zu spezifischen Permissions
+        switch (permission) {
+          case 'dashboard':
+            return state.user.permissions.includes('dashboard.view')
+          
+          case 'administration':
+            return state.user.permissions.some(p => p.startsWith('user.') || p.startsWith('role.'))
+          
+          case 'system':
+            return state.user.permissions.some(p => p.startsWith('plugin.') || p.startsWith('settings.'))
+          
+          case 'development':
+            return state.user.permissions.some(p => p.startsWith('api.') || p.startsWith('system.'))
+          
+          case 'profile':
+            return state.user.permissions.includes('profile.view')
+          
+          default:
+            return false
+        }
+      }
       
-      // Spezifische Berechtigungen
+      // Fallback auf Rollen-basierte Prüfung (Legacy)
+      const userRoles = state.user.roles || []
+      
       switch (permission) {
         case 'dashboard':
-          return userRoles.includes('ROLE_CUSTOMER') || 
+          return userRoles.includes('ROLE_USER') || 
                  userRoles.includes('ROLE_EMPLOYEE') || 
                  userRoles.includes('ROLE_ADMIN')
         
@@ -66,7 +124,7 @@ export const useAuthStore = defineStore('auth', {
           return userRoles.includes('ROLE_ADMIN')
         
         case 'profile':
-          return userRoles.includes('ROLE_CUSTOMER') || 
+          return userRoles.includes('ROLE_USER') || 
                  userRoles.includes('ROLE_EMPLOYEE') || 
                  userRoles.includes('ROLE_ADMIN')
         
@@ -77,15 +135,64 @@ export const useAuthStore = defineStore('auth', {
     
     // Benutzerrolle für Dashboard-Typ
     dashboardType: (state) => {
-      if (!state.user || !state.user.roles) return 'customer'
+      if (!state.user || !state.user.roles) return 'user'
       
       if (state.user.roles.includes('ROLE_ADMIN')) return 'admin'
       if (state.user.roles.includes('ROLE_EMPLOYEE')) return 'employee'
-      return 'customer'
+      return 'user'
     }
-  },
-  
+    },
+
   actions: {
+    // ABAC-Regeln prüfen (Frontend-seitig)
+    checkAbacRules(permission, context) {
+      // Vereinfachte ABAC-Regeln für Frontend
+      const rules = {
+        'user.update': (ctx) => {
+          // Nur eigene Profile bearbeiten
+          return ctx.resource?.owner_id === this.user?.id
+        },
+        'user.delete': (ctx) => {
+          // Nur während Arbeitszeit (9-17 Uhr)
+          const hour = new Date().getHours()
+          return hour >= 9 && hour <= 17
+        },
+        'plugin.install': (ctx) => {
+          // Nur gleiche Abteilung
+          return ctx.resource?.department === this.user?.department
+        }
+      }
+      
+      const rule = rules[permission]
+      return rule ? rule(context) : true
+    },
+
+    // Batch-Permission Check vom Backend
+    async checkBatchPermissions(permissions, context = {}) {
+      if (!this.user?.id) return {}
+      
+      try {
+        const response = await fetch(`/api/users/batch-permissions/${this.user.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+          },
+          body: JSON.stringify({
+            permissions,
+            context
+          })
+        })
+        
+        if (!response.ok) throw new Error('Permission check failed')
+        
+        const data = await response.json()
+        return data.permissions || {}
+      } catch (error) {
+        console.error('Batch permission check failed:', error)
+        return {}
+      }
+    },
     async login({ username, password, remember = false }) {
       this.loading = true
       this.error = null

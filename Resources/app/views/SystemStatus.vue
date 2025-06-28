@@ -4,10 +4,10 @@
       <CCol xs="12">
         <CCard class="mb-4">
           <CCardHeader>
-            <strong>API-Dokumentation</strong>
+            <strong>System-Status</strong>
           </CCardHeader>
           <CCardBody>
-            <p>Hier finden Sie die API-Dokumentation.</p>
+            <p>Hier sehen Sie den aktuellen System-Status.</p>
             <p>Diese Seite ist noch in Entwicklung.</p>
           </CCardBody>
         </CCard>
@@ -17,5 +17,5 @@
 </template>
 
 <script setup>
-// Placeholder für ApiDocs-Komponente
+// Placeholder für SystemStatus-Komponente
 </script> 

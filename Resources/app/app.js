@@ -31,6 +31,14 @@ import App from './layout/App.vue'
 // Vue components
 import Login from './views/Login.vue'
 import Dashboard from './views/Dashboard.vue'
+import Users from './views/Users.vue'
+import Roles from './views/Roles.vue'
+import Permissions from './views/Permissions.vue'
+import Plugins from './views/Plugins.vue'
+import Settings from './views/Settings.vue'
+import Webhooks from './views/Webhooks.vue'
+import ApiDocs from './views/ApiDocs.vue'
+import SystemStatus from './views/SystemStatus.vue'
 
 // Vue-Router setup
 const routes = [
@@ -46,6 +54,58 @@ const routes = [
     component: Dashboard,
     meta: { requiresAuth: true }
   },
+  // Administration Routes
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users,
+    meta: { requiresAuth: true, permission: 'administration' }
+  },
+  {
+    path: '/roles',
+    name: 'Roles',
+    component: Roles,
+    meta: { requiresAuth: true, permission: 'administration' }
+  },
+  {
+    path: '/permissions',
+    name: 'Permissions',
+    component: Permissions,
+    meta: { requiresAuth: true, permission: 'administration' }
+  },
+  // System Routes
+  {
+    path: '/plugins',
+    name: 'Plugins',
+    component: Plugins,
+    meta: { requiresAuth: true, permission: 'system' }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: { requiresAuth: true, permission: 'system' }
+  },
+  {
+    path: '/webhooks',
+    name: 'Webhooks',
+    component: Webhooks,
+    meta: { requiresAuth: true, permission: 'system' }
+  },
+  // Development Routes
+  {
+    path: '/api-docs',
+    name: 'ApiDocs',
+    component: ApiDocs,
+    meta: { requiresAuth: true, permission: 'development' }
+  },
+  {
+    path: '/system-status',
+    name: 'SystemStatus',
+    component: SystemStatus,
+    meta: { requiresAuth: true, permission: 'development' }
+  },
+  // Redirects
   {
     path: '/',
     redirect: '/dashboard'
@@ -204,6 +264,11 @@ async function initializeApp() {
     
     // Rollenprüfung
     if (to.meta.requiresRole && !auth.hasRole(to.meta.requiresRole)) {
+      return next('/dashboard')
+    }
+    
+    // Permission-Prüfung
+    if (to.meta.permission && !auth.canAccess(to.meta.permission)) {
       return next('/dashboard')
     }
     
