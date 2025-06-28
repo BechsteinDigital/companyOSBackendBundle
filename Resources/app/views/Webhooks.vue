@@ -706,7 +706,7 @@ const formatDate = (dateString) => {
 onMounted(() => {
   loadWebhooks()
 })
-</script>
+</script> 
 
 <style scoped>
 .table-responsive {

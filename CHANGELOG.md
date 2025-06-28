@@ -311,3 +311,9 @@ main "$@"
 - Commit: Fix export statement in AppSidebarNav component....
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.135-alpha] - 2025-06-29
+
+- Commit: "Fix: Fehler behoben in Webhooks.vue Datei"...
+- [M] Resources/app/views/Webhooks.vue
+- [M] composer.json
