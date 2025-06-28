@@ -179,8 +179,8 @@ async function initializeApp() {
   // Initialisierung der Authentifizierung
   if (auth.accessToken) {
     try {
-      await auth.fetchProfile()
-      setupAutoRefresh(auth)
+    await auth.fetchProfile()
+    setupAutoRefresh(auth)
     } catch (error) {
       console.log('Profile loading failed, user will be redirected to login')
       // Don't logout here, let the router guard handle it
@@ -209,7 +209,7 @@ async function initializeApp() {
       // Nur logout wenn es nicht der Profile-Endpoint ist
       // (Profile-Endpoint handled logout selbst)
       if (err.response?.status === 401 && !err.config?.url?.includes('/profile')) {
-        auth.logout()
+      auth.logout()
       }
       
       return Promise.reject(err)
@@ -278,9 +278,9 @@ async function initializeApp() {
 
   // 6) Dynamic plugin loading (only if authenticated)
   if (auth.accessToken) {
-    const activePlugins = await loadActivePlugins()
-    await loadPluginEntrypoints(activePlugins)
-    registerPluginComponents(app, router)
+  const activePlugins = await loadActivePlugins()
+  await loadPluginEntrypoints(activePlugins)
+  registerPluginComponents(app, router)
   }
 
   // 7) Mount

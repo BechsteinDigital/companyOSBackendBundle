@@ -286,3 +286,9 @@ main "$@"
 - [M] Resources/app/views/Users.vue
 - [M] Resources/app/views/Webhooks.vue
 - [M] composer.json
+
+## [0.1.132-alpha] - 2025-06-29
+
+- Commit: Fix: Einrückung und Formatierung verbessert....
+- [M] Resources/app/app.js
+- [M] composer.json
