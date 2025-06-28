@@ -61,6 +61,9 @@ Encore
         config.corejs = '3.23';
     })
 
+    // enables Sass/SCSS support
+    .enableSassLoader()
+
     // Vue.js support
     .enableVueLoader(() => {}, {
         version: 3,
@@ -69,7 +72,5 @@ Encore
     })
 
     .enableSourceMaps(true)
-
-    .enableSassLoader()
 
 module.exports = Encore.getWebpackConfig(); 

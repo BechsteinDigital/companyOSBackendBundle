@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.117-alpha] - 2025-06-28
+
+### Added
+- feat: Aktiviere Sass/SCSS-Unterstützung im 'CompanyOS Backend Bundle' Symfon...
+
+
 ## [0.1.116-alpha] - 2025-06-28
 
 ### Added
