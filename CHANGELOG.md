@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.95-alpha] - 2025-06-28
+
+### Added
+- feat: Plugin-Navigation hinzufügen und Backend-Template aktualisieren
+
+
 ## [0.1.94-alpha] - 2025-06-28
 
 ### Added

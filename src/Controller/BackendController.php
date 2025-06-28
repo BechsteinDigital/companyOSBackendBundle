@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class BackendController extends AbstractController
 {
     /**
-     * @Route("/index", name="admin_index")
+     * @Route("/", name="admin_index")
      */
     public function index(): Response
     {
-        return $this->render('@CompanyOSBackend/backend/index.html.twig');
+        return $this->render('@CompanyOSBackend/backend/base.html.twig');
     }
 } 

@@ -80,6 +80,12 @@ export const allNavigationItems = [
   }
 ]
 
+// Plugin-Navigation aktualisieren
+export function updatePluginNavigation(pluginNavigationItems = []) {
+  // Hier können Plugin-spezifische Navigation-Items hinzugefügt werden
+  return [...allNavigationItems, ...pluginNavigationItems]
+}
+
 // Standard-Export - nur Dashboard für Kompatibilität
 export default [
   {
