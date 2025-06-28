@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.111-alpha] - 2025-06-28
+
+### Added
+- feat: Update webpack configuration for 'CompanyOS Backend Bundle'
+
+
 ## [0.1.110-alpha] - 2025-06-28
 
 ### Added
