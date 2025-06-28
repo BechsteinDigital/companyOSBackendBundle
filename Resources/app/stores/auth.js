@@ -191,7 +191,7 @@ export const useAuthStore = defineStore('auth', {
     async fetchProfile() {
       if (!this.accessToken) return
       try {
-        const { data } = await axios.get('/api/user/profile', {
+        const { data } = await axios.get('/api/users/profile', {
           headers: { Authorization: `Bearer ${this.accessToken}` }
         })
         console.log('User-Profil geladen:', data)

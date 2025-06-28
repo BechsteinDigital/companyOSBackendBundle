@@ -244,3 +244,9 @@ main "$@"
 - Commit: Hinzufügen von Login- und Dashboard-Komponenten, dynamisches Plugin-Laden nur...
 - [M] Resources/app/app.js
 - [M] composer.json
+
+## [0.1.127-alpha] - 2025-06-28
+
+- Commit: Fix: Änderung des API-Endpunkts für Benutzerprofil abgerufen....
+- [M] Resources/app/stores/auth.js
+- [M] composer.json
