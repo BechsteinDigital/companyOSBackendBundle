@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.100-alpha] - 2025-06-28
+
+### Changed
+- refactor: Update Asset-Konfiguration für Webpack Encore und Pfade für Compa...
+
+
 ## [0.1.99-alpha] - 2025-06-28
 
 ### Fixed

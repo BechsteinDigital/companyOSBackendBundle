@@ -34,5 +34,8 @@ class CompanyOSBackendExtension extends Extension
                 ->addTag('controller.service_arguments')
                 ->addTag('container.service_subscriber');
         }
+
+        // Asset-Konfiguration für Webpack Encore
+        $container->setParameter('company_os_backend.assets_path', 'bundles/companyosbackend');
     }
 } 
