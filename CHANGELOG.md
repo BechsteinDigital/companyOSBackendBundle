@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.120-alpha] - 2025-06-28
+
+### Fixed
+- fix: Update controller name in routes.yaml to match new naming convention.
+
+
 ## [0.1.119-alpha] - 2025-06-28
 
 ### Added
