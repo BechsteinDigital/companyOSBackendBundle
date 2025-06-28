@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.97-alpha] - 2025-06-28
+
+### Fixed
+- fix: Füge fehlende Zeilenumbruch am Ende der base.html.twig-Datei hinzu
+
+
 ## [0.1.96-alpha] - 2025-06-28
 
 ### Added
