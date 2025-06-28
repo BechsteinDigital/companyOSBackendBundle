@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.93-alpha] - 2025-06-28
+
+### Fixed
+- fix: Nur existierende Services registrieren und SecurityHeadersListener und B...
+
+
 ## [0.1.92-alpha] - 2025-06-28
 
 ### Changed

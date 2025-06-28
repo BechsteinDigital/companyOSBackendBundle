@@ -20,19 +20,19 @@ class CompanyOSBackendExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
         $loader->load('services.yaml');
 
-        // Services direkt registrieren anstatt YAML-Datei zu laden
-        $container->autowire('CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener')
-            ->setArgument('$environment', '%kernel.environment%')
-            ->addTag('kernel.event_subscriber');
+        // Nur Services registrieren, die tatsächlich existieren
+        // SecurityHeadersListener registrieren (falls vorhanden)
+        if (class_exists('CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener')) {
+            $container->autowire('CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener')
+                ->setArgument('$environment', '%kernel.environment%')
+                ->addTag('kernel.event_subscriber');
+        }
 
-        // Controller als Service registrieren
-        $container->autowire('CompanyOS\Bundle\BackendBundle\Controller\BackendController')
-            ->addTag('controller.service_arguments')
-            ->addTag('container.service_subscriber');
-
-        // Twig Extension registrieren
-        $container->autowire('CompanyOS\Bundle\BackendBundle\Twig\EncoreExtension')
-            ->setArgument('$publicDir', '%kernel.project_dir%/public')
-            ->addTag('twig.extension');
+        // BackendController registrieren (falls vorhanden)
+        if (class_exists('CompanyOS\Bundle\BackendBundle\Controller\BackendController')) {
+            $container->autowire('CompanyOS\Bundle\BackendBundle\Controller\BackendController')
+                ->addTag('controller.service_arguments')
+                ->addTag('container.service_subscriber');
+        }
     }
 } 
