@@ -99,15 +99,33 @@ export default {
     const loadDashboardData = async () => {
       loading.value = true
       try {
-        // Load dashboard statistics
-        const statsResponse = await axios.get('/api/dashboard/stats')
-        stats.value = statsResponse.data
+        // Load dashboard statistics from existing API endpoints
+        const [usersResponse, pluginsResponse, rolesResponse] = await Promise.all([
+          axios.get('/api/users/'),
+          axios.get('/api/plugins/'),
+          axios.get('/api/roles/')
+        ])
 
-        // Load recent activity
-        const activityResponse = await axios.get('/api/dashboard/activity')
-        recentActivity.value = activityResponse.data
+        stats.value = {
+          users: usersResponse.data?.data?.length || 0,
+          plugins: pluginsResponse.data?.data?.length || 0,
+          roles: rolesResponse.data?.data?.length || 0
+        }
+
+        // Mock recent activity data (replace with real activity endpoint when available)
+        recentActivity.value = [
+          {
+            id: 1,
+            title: 'System initialisiert',
+            icon: 'fas fa-check-circle',
+            timestamp: new Date().toISOString()
+          }
+        ]
       } catch (error) {
         console.error('Fehler beim Laden der Dashboard-Daten:', error)
+        // Set fallback values on error
+        stats.value = { users: 0, plugins: 0, roles: 0 }
+        recentActivity.value = []
       } finally {
         loading.value = false
       }

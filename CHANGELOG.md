@@ -256,3 +256,9 @@ main "$@"
 - Commit: "Entferne überflüssige Begrüßung im Backend-Template"...
 - [M] Resources/views/backend/base.html.twig
 - [M] composer.json
+
+## [0.1.129-alpha] - 2025-06-28
+
+- Commit: "Verbessere Dashboard-Statistiken und füge Mock-Aktivitätsdaten hinzu"...
+- [M] Resources/app/views/Dashboard.vue
+- [M] composer.json
