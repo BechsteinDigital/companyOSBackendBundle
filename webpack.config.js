@@ -11,7 +11,7 @@ Encore
   .setPublicPath('/build')
 
   // your main app entry
-  .addEntry('app', path.resolve(__dirname, 'vendor/companyos/backend/Resources/app/app.js'))
+  .addEntry('app', path.resolve(__dirname, 'Resources/app/app.js'))
   
   // let us import bundle sources directly
   .addAliases({
