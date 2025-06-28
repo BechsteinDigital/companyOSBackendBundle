@@ -9,11 +9,11 @@ import { useColorModes } from '@coreui/vue'
 import { useThemeStore } from './stores/theme.js'
 import { useAuthStore, setupAutoRefresh } from './stores/auth.js'
 
-// CoreUI Icons
+// CoreUI Icons - nur die benötigten Icons importieren
 import { iconsSet } from './icons'
 import CIcon from '@coreui/icons-vue'
 
-// CoreUI Components
+// CoreUI Components - nur die tatsächlich verwendeten Komponenten
 import {
   CContainer,
   CSidebar,

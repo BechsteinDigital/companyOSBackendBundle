@@ -1,0 +1,15 @@
+
+.api-docs-page[data-v-3592aa67] {
+  padding: 20px;
+}
+.list-group-item[data-v-3592aa67] {
+  border-left: none;
+  border-right: none;
+}
+.list-group-item[data-v-3592aa67]:first-child {
+  border-top: none;
+}
+.list-group-item[data-v-3592aa67]:last-child {
+  border-bottom: none;
+}
+
