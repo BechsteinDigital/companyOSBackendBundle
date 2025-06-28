@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.112-alpha] - 2025-06-28
+
+### Added
+- feat: Ändere den Eintragspfad für die Haupt-App in webpack.config.js
+
+
 ## [0.1.111-alpha] - 2025-06-28
 
 ### Added
