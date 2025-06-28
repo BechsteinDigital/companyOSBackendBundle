@@ -305,3 +305,9 @@ main "$@"
 - [M] Resources/app/views/Users.vue
 - [M] Resources/app/views/Webhooks.vue
 - [M] composer.json
+
+## [0.1.134-alpha] - 2025-06-29
+
+- Commit: Fix export statement in AppSidebarNav component....
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json

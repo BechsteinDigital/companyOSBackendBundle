@@ -447,4 +447,4 @@ const AppSidebarNav = defineComponent({
   }
 })
 
-export default AppSidebarNav 
+export { AppSidebarNav } 
