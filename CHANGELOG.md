@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.105-alpha] - 2025-06-28
+
+### Added
+- feat: Neue Funktion hinzugefügt, um Benutzerprofile zu verwalten.
+
+
 ## [0.1.104-alpha] - 2025-06-28
 
 ### Added
