@@ -226,3 +226,9 @@ main "$@"
 - Commit: fix: Aktualisiere Routenpfad in routes.yaml, um das '/admin'-Präfix zu entfer...
 - [M] CHANGELOG.md
 - [M] composer.json
+
+## [0.1.124-alpha] - 2025-06-28
+
+- Commit: "Plugin-Komponenten dynamisch registrieren und laden"...
+- [M] Resources/app/app.js
+- [M] composer.json
