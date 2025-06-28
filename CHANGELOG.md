@@ -317,3 +317,10 @@ main "$@"
 - Commit: "Fix: Fehler behoben in Webhooks.vue Datei"...
 - [M] Resources/app/views/Webhooks.vue
 - [M] composer.json
+
+## [0.1.136-alpha] - 2025-06-29
+
+- Commit: 🔒 Verbesserte Backend-Permission-Prüfung hinzugefügt...
+- [M] Resources/app/app.js
+- [M] Resources/app/stores/auth.js
+- [M] composer.json

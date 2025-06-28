@@ -280,16 +280,30 @@ function registerPluginComponents(app, router, navigationStore) {
 async function checkAdvancedPermissions(to, auth, navigationStore) {
   if (!to.meta.permission) return true
   
-  // Basis RBAC-Check
-  const hasBasicPermission = Array.isArray(to.meta.permission)
-    ? auth.hasAnyPermission(to.meta.permission)
-    : auth.hasPermission(to.meta.permission)
+  console.log(`🔍 Checking advanced permissions for route: ${to.name}`)
+  
+  // Backend-basierte Permission-Prüfung (RBAC + ABAC + ACL)
+  let hasBasicPermission = false
+  
+  if (Array.isArray(to.meta.permission)) {
+    // Mehrere Permissions - eine muss erfüllt sein
+    for (const permission of to.meta.permission) {
+      if (await auth.hasPermission(permission)) {
+        hasBasicPermission = true
+        break
+      }
+    }
+  } else {
+    // Einzelne Permission
+    hasBasicPermission = await auth.hasPermission(to.meta.permission)
+  }
   
   if (!hasBasicPermission && to.meta.fallbackPermission) {
-    if (!auth.canAccess(to.meta.fallbackPermission)) {
-      return false
-    }
-  } else if (!hasBasicPermission) {
+    hasBasicPermission = await auth.hasPermission(to.meta.fallbackPermission)
+  }
+  
+  if (!hasBasicPermission) {
+    console.warn(`❌ Backend permission check failed for route: ${to.name}`)
     return false
   }
   

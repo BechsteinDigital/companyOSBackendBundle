@@ -167,16 +167,43 @@ export const useAuthStore = defineStore('auth', {
       return rule ? rule(context) : true
     },
 
-    // Batch-Permission Check vom Backend
+    // Einzelne Permission über Backend-API prüfen (mit RBAC + ABAC + ACL)
+    async hasPermission(permission, context = {}) {
+      if (!this.user?.id) return false
+      
+      try {
+        const response = await fetch(`/api/users/user-permissions/check/${this.user.id}/${permission}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        
+        if (!response.ok) {
+          console.warn(`Permission check failed for ${permission}:`, response.status)
+          return false
+        }
+        
+        const data = await response.json()
+        console.log(`✅ Permission check result for ${permission}:`, data.allowed)
+        return data.allowed || false
+      } catch (error) {
+        console.error(`Permission check error for ${permission}:`, error)
+        return false
+      }
+    },
+
+    // Batch-Permission Check vom Backend (mit RBAC + ABAC + ACL)
     async checkBatchPermissions(permissions, context = {}) {
       if (!this.user?.id) return {}
       
       try {
-        const response = await fetch(`/api/users/batch-permissions/${this.user.id}`, {
+        const response = await fetch(`/api/users/api/users-hybrid/batch-permissions/${this.user.id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.token}`
+            'Authorization': `Bearer ${this.accessToken}`
           },
           body: JSON.stringify({
             permissions,
@@ -184,7 +211,7 @@ export const useAuthStore = defineStore('auth', {
           })
         })
         
-        if (!response.ok) throw new Error('Permission check failed')
+        if (!response.ok) throw new Error('Batch permission check failed')
         
         const data = await response.json()
         return data.permissions || {}
@@ -192,6 +219,35 @@ export const useAuthStore = defineStore('auth', {
         console.error('Batch permission check failed:', error)
         return {}
       }
+    },
+
+    // Vereinfachte lokale Permission-Checks für Fallback
+    hasRole(role) {
+      return this.user?.roles?.includes(role) || false
+    },
+
+    hasAnyPermission(permissions) {
+      // Für schnelle lokale Checks - nur RBAC
+      if (!this.user?.roles) return false
+      
+      // Admin hat alle Permissions
+      if (this.user.roles.includes('ROLE_ADMIN')) return true
+      
+      // TODO: Implementiere lokale Permission-Mappings für Performance
+      // Für jetzt: Optimistische Annahme für bessere UX
+      return true
+    },
+
+    // Legacy canAccess Methode für Kompatibilität
+    canAccess(permission) {
+      // Lokaler schneller Check für bessere UX
+      if (!this.user?.roles) return false
+      
+      // Admin hat alle Permissions
+      if (this.user.roles.includes('ROLE_ADMIN')) return true
+      
+      // TODO: Implementiere lokale Permission-Mappings
+      return true
     },
     async login({ username, password, remember = false }) {
       this.loading = true
