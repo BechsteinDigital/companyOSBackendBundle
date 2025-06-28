@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.121-alpha] - 2025-06-28
+
+### Fixed
+- fix: Updated route path in routes.yaml to remove '/admin' prefix.
+
+
 ## [0.1.120-alpha] - 2025-06-28
 
 ### Fixed
