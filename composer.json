@@ -1,7 +1,7 @@
 {
   "name": "companyos/backend",
   "description": "CompanyOS Backend Bundle - VueJS Frontend for Admin Interface",
-  "version": "0.1.90-alpha",
+  "version": "0.1.91-alpha",
   "type": "symfony-bundle",
   "license": "MIT",
   "keywords": [
@@ -28,9 +28,7 @@
     "symfony/framework-bundle": "^7.3",
     "symfony/twig-bundle": "^7.3",
     "symfony/asset": "^7.3",
-    "symfony/webpack-encore-bundle": "^2.2",
-    "ratchet/pawl": "^0.4.1",
-    "cboden/ratchet": "^0.4.4"
+    "symfony/webpack-encore-bundle": "^2.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.0",

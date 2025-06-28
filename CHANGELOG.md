@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.91-alpha] - 2025-06-28
+
+### Maintenance
+- chore: Entferne veraltete Abhängigkeiten aus composer.json
+
+
 ## [0.1.90-alpha] - 2025-06-28
 
 ### Added
