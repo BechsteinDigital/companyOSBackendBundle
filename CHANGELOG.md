@@ -771,3 +771,9 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Modulare Komponenten-Struktur
 - Plugin-System vorbereitet
 - Responsive Design
+
+## [0.1.122-alpha] - 2025-06-28
+
+- Commit: "Controller-Pfad aktualisiert für CompanyOS Backend Bundle"...
+- [M] Resources/config/routes.yaml
+- [M] composer.json

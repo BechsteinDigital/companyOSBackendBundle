@@ -1,6 +1,6 @@
 company_os_backend:
     path: /{route}
-    controller: CompanyOSBackend\Controller\BackendController::index
+    controller: CompanyOS\Bundle\BackendBundle\Controller\BackendController::index
     methods: [GET]
     # allow `route` to match literally anything (including slashes)
     requirements:
