@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.108-alpha] - 2025-06-28
+
+### Added
+- feat: Update webpack configuration and base.html.twig for 'CompanyOS Backend ...
+
+
 ## [0.1.107-alpha] - 2025-06-28
 
 ### Added
