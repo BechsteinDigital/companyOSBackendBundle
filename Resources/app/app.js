@@ -223,25 +223,6 @@ function registerPluginComponents() {
     })
 }
 
-// Auto-Refresh Setup
-function setupAutoRefresh() {
-    if (process.env.NODE_ENV === 'development') {
-        // WebSocket-Verbindung für Auto-Refresh
-        const ws = new WebSocket('ws://localhost:8080')
-        
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data)
-            if (data.type === 'reload') {
-                window.location.reload()
-            }
-        }
-        
-        ws.onerror = () => {
-            console.log('WebSocket nicht verfügbar - Auto-Refresh deaktiviert')
-        }
-    }
-}
-
 // App initialisieren
 async function initializeApp() {
     // Plugin-Status über API laden
@@ -252,9 +233,6 @@ async function initializeApp() {
     
     // Plugin-Komponenten registrieren
     registerPluginComponents()
-    
-    // Auto-Refresh Setup
-    setupAutoRefresh()
     
     // App mounten
     app.use(pinia)

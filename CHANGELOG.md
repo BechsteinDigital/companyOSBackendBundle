@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.94-alpha] - 2025-06-28
+
+### Added
+- feat(CompanyOS Backend Bundle): Entferne Auto-Refresh und backend.html.twig D...
+
+
 ## [0.1.93-alpha] - 2025-06-28
 
 ### Fixed
