@@ -238,3 +238,9 @@ main "$@"
 - Commit: Hinzufügen von "Hallo" in base.html.twig-Datei....
 - [M] Resources/views/backend/base.html.twig
 - [M] composer.json
+
+## [0.1.126-alpha] - 2025-06-28
+
+- Commit: Hinzufügen von Login- und Dashboard-Komponenten, dynamisches Plugin-Laden nur...
+- [M] Resources/app/app.js
+- [M] composer.json

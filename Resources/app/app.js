@@ -28,14 +28,39 @@ import {
 // Your root component
 import App from './layout/App.vue'
 
+// Vue components
+import Login from './views/Login.vue'
+import Dashboard from './views/Dashboard.vue'
+
 // Vue-Router setup
-const routes = [ /* … your route definitions … */ ]
+const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard', 
+    component: Dashboard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/',
+    redirect: '/dashboard'
+  },
+  {
+    path: '/admin',
+    redirect: '/dashboard'
+  }
+]
 
 // Plugin loader helpers
 async function loadActivePlugins() {
   try {
-    const res = await fetch('/api/plugins')
-    const plugins = await res.json()
+    const res = await axios.get('/api/plugins')
+    const plugins = res.data
     return plugins.filter(p => p.active)
   } catch (e) {
     console.error('Failed to load plugins', e)
@@ -147,10 +172,12 @@ async function initializeApp() {
   })
   app.use(router)
 
-  // 6) Dynamic plugin loading
-  const activePlugins = await loadActivePlugins()
-  await loadPluginEntrypoints(activePlugins)
-  registerPluginComponents(app, router)
+  // 6) Dynamic plugin loading (only if authenticated)
+  if (auth.accessToken) {
+    const activePlugins = await loadActivePlugins()
+    await loadPluginEntrypoints(activePlugins)
+    registerPluginComponents(app, router)
+  }
 
   // 7) Mount
   app.mount('#app')
