@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.99-alpha] - 2025-06-28
+
+### Fixed
+- fix: Update webpack config to use path module instead of vue-loader
+
+
 ## [0.1.98-alpha] - 2025-06-28
 
 ### Changed
