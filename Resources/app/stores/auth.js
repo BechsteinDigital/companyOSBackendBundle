@@ -101,16 +101,13 @@ export const useAuthStore = defineStore('auth', {
         if (!validatePassword(password)) {
           throw new Error('Passwort muss mindestens 8 Zeichen lang sein')
         }
-        
-        // Passwort dekodieren falls es bereits URL-encodiert ist
-        const decodedPassword = decodeURIComponent(password)
-        
+                
         // URLSearchParams für korrektes Encoding verwenden
         const formData = new URLSearchParams({
           grant_type: 'password',
           client_id: 'backend',
           username: sanitizedEmail,
-          password: decodedPassword
+          password: password
         })
         
         const { data } = await axios.post('/api/oauth2/token', formData, {

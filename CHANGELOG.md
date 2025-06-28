@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.90-alpha] - 2025-06-28
+
+### Added
+- refactor(auth): Entfernen der Dekodierung des Passworts und Verwendung von UR...
+
+
 ## [0.1.89-alpha] - 2025-06-28
 
 ### Changed
