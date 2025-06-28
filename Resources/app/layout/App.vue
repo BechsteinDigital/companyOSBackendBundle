@@ -49,82 +49,104 @@ onMounted(async () => {
 // Plugin-Komponenten laden
 const loadPluginComponents = async () => {
   try {
-    const response = await fetch('/admin/plugin-components')
+    // Nur eingeloggte Benutzer können Plugins laden
+    if (!auth.accessToken) {
+      return
+    }
+    
+    const response = await fetch('/api/plugins', {
+      headers: {
+        'Authorization': `Bearer ${auth.accessToken}`,
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    
     if (response.ok) {
-      const plugins = await response.json()
+      const result = await response.json()
+      const plugins = result.data || result
       
-      // Plugin-Komponenten laden
-      for (const plugin of plugins) {
-        if (plugin.css) {
-          await loadCSS(plugin.css)
-        }
-        if (plugin.js) {
-          await loadJS(plugin.js)
+      // Nur aktive Plugins verarbeiten
+      const activePlugins = plugins.filter(plugin => plugin.active)
+      
+      console.log('Aktive Plugins geladen:', activePlugins)
+      
+      // Plugin-Assets laden (falls vorhanden)
+      for (const plugin of activePlugins) {
+        if (plugin.assets) {
+          if (plugin.assets.css) {
+            await loadCSS(plugin.assets.css)
+          }
+          if (plugin.assets.js) {
+            await loadJS(plugin.assets.js)
+          }
         }
       }
-      
-      // Plugin-Navigation laden
-      await loadPluginNavigation()
-      
-      console.log('Plugin-Komponenten geladen:', plugins)
     }
   } catch (error) {
     console.error('Fehler beim Laden der Plugin-Komponenten:', error)
   }
 }
 
-// Plugin-Navigation laden
+// Plugin-Navigation laden (wird jetzt über /api/plugins abgedeckt)
 const loadPluginNavigation = async () => {
-  try {
-    const response = await fetch('/admin/plugin-navigation')
-    if (response.ok) {
-      const pluginNav = await response.json()
-      updatePluginNavigation(pluginNav)
-      console.log('Plugin-Navigation geladen:', pluginNav)
-    }
-  } catch (error) {
-    console.error('Fehler beim Laden der Plugin-Navigation:', error)
-  }
+  // Navigation wird jetzt über den Plugin-Endpoint geladen
+  console.log('Plugin-Navigation wird über /api/plugins geladen')
 }
 
 // Aktive Plugin-Komponenten laden
 async function loadActivePluginComponents() {
   try {
-    const response = await fetch('/admin/plugin-assets')
-    const assets = await response.json()
-    
-    // Nur Komponenten von installierten UND aktivierten Plugins laden
-    const components = []
-    for (const [componentName, componentConfig] of Object.entries(assets.frontendComponents)) {
-      // Prüfen ob Plugin installiert UND aktiviert ist UND als Overlay angezeigt werden soll
-      if (componentConfig.plugin && 
-          await isPluginActive(componentConfig.plugin) && 
-          componentConfig.overlay) {
-        components.push({
-          name: componentName,
-          props: componentConfig.props || {},
-          plugin: componentConfig.plugin
-        })
-      }
+    if (!auth.accessToken) {
+      return
     }
     
-    activePluginComponents.value = components
-    console.log('✅ Aktive Plugin-Overlay-Komponenten geladen:', components.length)
+    const response = await fetch('/api/plugins', {
+      headers: {
+        'Authorization': `Bearer ${auth.accessToken}`,
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    
+    if (response.ok) {
+      const result = await response.json()
+      const plugins = result.data || result
+      
+      // Nur aktive Plugins mit Frontend-Komponenten
+      const components = []
+      for (const plugin of plugins) {
+        if (plugin.active && plugin.frontendComponents) {
+          for (const [componentName, componentConfig] of Object.entries(plugin.frontendComponents)) {
+            if (componentConfig.overlay) {
+              components.push({
+                name: componentName,
+                props: componentConfig.props || {},
+                plugin: plugin.name
+              })
+            }
+          }
+        }
+      }
+      
+      activePluginComponents.value = components
+      console.log('✅ Aktive Plugin-Overlay-Komponenten geladen:', components.length)
+    }
   } catch (error) {
     console.error('❌ Fehler beim Laden der Plugin-Komponenten:', error)
   }
 }
 
-// Prüfen ob Plugin installiert UND aktiviert ist
-async function isPluginActive(pluginName) {
-  try {
-    const response = await fetch(`/admin/plugin-status/${pluginName}`)
-    const status = await response.json()
-    return status.installed && status.active
-  } catch (error) {
-    console.error(`❌ Fehler beim Prüfen des Plugin-Status für ${pluginName}:`, error)
-    return false
-  }
+// Helper-Funktionen für CSS und JS-Loading
+async function loadCSS(cssPath) {
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = cssPath
+  document.head.appendChild(link)
+}
+
+async function loadJS(jsPath) {
+  const script = document.createElement('script')
+  script.src = jsPath
+  document.head.appendChild(script)
 }
 </script>
 

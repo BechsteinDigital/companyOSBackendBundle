@@ -190,6 +190,8 @@ export const useAuthStore = defineStore('auth', {
     
     async fetchProfile() {
       if (!this.accessToken) return
+      
+      this.loading = true
       try {
         const { data } = await axios.get('/api/users/profile', {
           headers: { Authorization: `Bearer ${this.accessToken}` }
@@ -199,6 +201,11 @@ export const useAuthStore = defineStore('auth', {
         console.log('User-Rollen:', this.user?.roles)
       } catch (error) {
         console.error('Profil konnte nicht abgerufen werden:', error)
+        // Bei Fehler logout durchführen
+        this.logout()
+        throw error
+      } finally {
+        this.loading = false
       }
     },
     

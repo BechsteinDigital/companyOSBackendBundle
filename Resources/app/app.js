@@ -115,9 +115,16 @@ async function initializeApp() {
   // 2) Set up Auth store + auto-refresh
   const auth = useAuthStore()
   auth.loadTokens()
+  
+  // Initialisierung der Authentifizierung
   if (auth.accessToken) {
-    await auth.fetchProfile()
-    setupAutoRefresh(auth)
+    try {
+      await auth.fetchProfile()
+      setupAutoRefresh(auth)
+    } catch (error) {
+      console.log('Profile loading failed, user will be redirected to login')
+      // Don't logout here, let the router guard handle it
+    }
   }
 
   // 3) Axios interceptors
@@ -138,7 +145,13 @@ async function initializeApp() {
           return axios(err.config)
         }
       }
-      auth.logout()
+      
+      // Nur logout wenn es nicht der Profile-Endpoint ist
+      // (Profile-Endpoint handled logout selbst)
+      if (err.response?.status === 401 && !err.config?.url?.includes('/profile')) {
+        auth.logout()
+      }
+      
       return Promise.reject(err)
     }
   )
@@ -162,12 +175,38 @@ async function initializeApp() {
     history: createWebHistory('/admin'),
     routes
   })
-  router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !auth.accessToken) return next('/login')
-    if (to.path === '/login' && auth.accessToken)    return next('/dashboard')
+  router.beforeEach(async (to, from, next) => {
+    // Wenn Login-Seite aufgerufen wird und Token vorhanden ist
+    if (to.path === '/login' && auth.accessToken) {
+      return next('/dashboard')
+    }
+    
+    // Wenn Route keine Authentifizierung erfordert
+    if (!to.meta.requiresAuth) {
+      return next()
+    }
+    
+    // Wenn kein Access Token vorhanden ist
+    if (!auth.accessToken) {
+      return next('/login')
+    }
+    
+    // Wenn Access Token vorhanden ist, aber User-Profil noch nicht geladen
+    if (auth.accessToken && !auth.user && !auth.loading) {
+      try {
+        await auth.fetchProfile()
+      } catch (error) {
+        console.error('Failed to load user profile:', error)
+        auth.logout()
+        return next('/login')
+      }
+    }
+    
+    // Rollenprüfung
     if (to.meta.requiresRole && !auth.hasRole(to.meta.requiresRole)) {
       return next('/dashboard')
     }
+    
     next()
   })
   app.use(router)

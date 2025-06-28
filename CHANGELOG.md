@@ -262,3 +262,11 @@ main "$@"
 - Commit: "Verbessere Dashboard-Statistiken und füge Mock-Aktivitätsdaten hinzu"...
 - [M] Resources/app/views/Dashboard.vue
 - [M] composer.json
+
+## [0.1.130-alpha] - 2025-06-28
+
+- Commit: "Verbesserte Authentifizierung und Fehlerbehandlung hinzugefügt"...
+- [M] Resources/app/app.js
+- [M] Resources/app/layout/App.vue
+- [M] Resources/app/stores/auth.js
+- [M] composer.json
