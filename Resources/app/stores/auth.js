@@ -169,7 +169,10 @@ export const useAuthStore = defineStore('auth', {
 
     // Einzelne Permission über Backend-API prüfen (mit RBAC + ABAC + ACL)
     async hasPermission(permission, context = {}) {
-      if (!this.user?.id) return false
+      if (!this.user?.id || !this.accessToken) {
+        console.warn(`❌ Cannot check permission ${permission}: User not authenticated`)
+        return false
+      }
       
       try {
         const response = await fetch(`/api/users/user-permissions/check/${this.user.id}/${permission}`, {
@@ -181,16 +184,23 @@ export const useAuthStore = defineStore('auth', {
         })
         
         if (!response.ok) {
-          console.warn(`Permission check failed for ${permission}:`, response.status)
+          if (response.status === 401 || response.status === 403) {
+            console.warn(`❌ Permission check denied for ${permission}: Status ${response.status}`)
+            // Bei 401/403 nicht als Fehler behandeln, sondern Permission verweigern
+            return false
+          }
+          console.warn(`⚠️ Permission check failed for ${permission}: Status ${response.status}`)
           return false
         }
         
         const data = await response.json()
-        console.log(`✅ Permission check result for ${permission}:`, data.allowed)
-        return data.allowed || false
+        const allowed = data.hasPermission || data.allowed || false
+        console.log(`✅ Permission check result for ${permission}:`, allowed)
+        return allowed
       } catch (error) {
-        console.error(`Permission check error for ${permission}:`, error)
-        return false
+        console.error(`❌ Permission check network error for ${permission}:`, error)
+        // Bei Netzwerkfehlern auf lokale Permission-Checks zurückfallen
+        return this.canAccess(permission)
       }
     },
 

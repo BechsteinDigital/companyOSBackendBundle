@@ -324,3 +324,10 @@ main "$@"
 - [M] Resources/app/app.js
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.137-alpha] - 2025-06-29
+
+- Commit: "Verbesserte Permission-Prüfung mit vollständiger Authentifizierung"...
+- [M] Resources/app/app.js
+- [M] Resources/app/stores/auth.js
+- [M] composer.json

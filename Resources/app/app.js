@@ -527,8 +527,8 @@ async function initializeApp() {
       return next('/dashboard')
     }
     
-    // Erweiterte Permission-Prüfung (RBAC + ABAC + ACL)
-    if (to.meta.permission) {
+    // Erweiterte Permission-Prüfung (RBAC + ABAC + ACL) - nur wenn User vollständig geladen
+    if (to.meta.permission && auth.user && auth.accessToken) {
       const hasPermission = await checkAdvancedPermissions(to, auth, navigationStore)
       if (!hasPermission) {
         console.warn(`❌ Advanced permission check failed for route: ${to.name}`)
