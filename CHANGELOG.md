@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.115-alpha] - 2025-06-28
+
+### Added
+- feat: Neue Funktion zur Verwaltung von Benutzerrollen hinzugefügt.
+
+
 ## [0.1.114-alpha] - 2025-06-28
 
 ### Added
