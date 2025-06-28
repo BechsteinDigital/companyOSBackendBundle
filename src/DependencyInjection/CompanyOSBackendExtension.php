@@ -6,7 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Configuration;
 
 class CompanyOSBackendExtension extends Extension
 {
@@ -35,13 +34,5 @@ class CompanyOSBackendExtension extends Extension
         $container->autowire('CompanyOS\Bundle\BackendBundle\Twig\EncoreExtension')
             ->setArgument('$publicDir', '%kernel.project_dir%/public')
             ->addTag('twig.extension');
-
-        $configuration = $this->getConfiguration($configs, $container);
-        $config = $this->processConfiguration($configuration, $configs);
-    }
-
-    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
-    {
-        return new Configuration();
     }
 } 
