@@ -232,3 +232,9 @@ main "$@"
 - Commit: "Plugin-Komponenten dynamisch registrieren und laden"...
 - [M] Resources/app/app.js
 - [M] composer.json
+
+## [0.1.125-alpha] - 2025-06-28
+
+- Commit: Hinzufügen von "Hallo" in base.html.twig-Datei....
+- [M] Resources/views/backend/base.html.twig
+- [M] composer.json
