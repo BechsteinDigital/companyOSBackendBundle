@@ -1,779 +1,228 @@
-# Changelog
-
-Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
-
-Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
-und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-## [0.1.121-alpha] - 2025-06-28
-
-### Fixed
-- fix: Updated route path in routes.yaml to remove '/admin' prefix.
-
-
-## [0.1.120-alpha] - 2025-06-28
-
-### Fixed
-- fix: Update controller name in routes.yaml to match new naming convention.
-
-
-## [0.1.119-alpha] - 2025-06-28
-
-### Added
-- feat(routes): Update routes for CompanyOS Backend Bundle to use /admin route ...
-
-
-## [0.1.118-alpha] - 2025-06-28
-
-### Fixed
-- fix: Removed package-lock.json file for 'CompanyOS Backend Bundle' to avoid c...
-
-
-## [0.1.117-alpha] - 2025-06-28
-
-### Added
-- feat: Aktiviere Sass/SCSS-Unterstützung im 'CompanyOS Backend Bundle' Symfon...
-
-
-## [0.1.116-alpha] - 2025-06-28
-
-### Added
-- feat: Hinzufügen von Sass-Loader in webpack.config.js für CompanyOS Backend...
-
-
-## [0.1.115-alpha] - 2025-06-28
-
-### Added
-- feat: Neue Funktion zur Verwaltung von Benutzerrollen hinzugefügt.
-
-
-## [0.1.114-alpha] - 2025-06-28
-
-### Added
-- feat(CompanyOS Backend Bundle): Aktualisiere Basis-Layout und Routenkonfigura...
-
-
-## [0.1.113-alpha] - 2025-06-28
-
-### Fixed
-- fix: Update webpack config to correctly point to bundle resources
-
-
-## [0.1.112-alpha] - 2025-06-28
-
-### Added
-- feat: Ändere den Eintragspfad für die Haupt-App in webpack.config.js
-
-
-## [0.1.111-alpha] - 2025-06-28
-
-### Added
-- feat: Update webpack configuration for 'CompanyOS Backend Bundle'
-
-
-## [0.1.110-alpha] - 2025-06-28
-
-### Added
-- feat(CompanyOS Backend Bundle): Optimiere Webpack-Konfiguration für bessere ...
-
-
-## [0.1.109-alpha] - 2025-06-28
-
-### Fixed
-- fix: Korrigiere Tippfehler in base.html.twig-Datei
-
-
-## [0.1.108-alpha] - 2025-06-28
-
-### Added
-- feat: Update webpack configuration and base.html.twig for 'CompanyOS Backend ...
-
-
-## [0.1.107-alpha] - 2025-06-28
-
-### Added
-- feat: Hinzufügen von base.html.twig für CompanyOS Admin Backend-Ansicht
-
-
-## [0.1.106-alpha] - 2025-06-28
-
-### Added
-- feat: Update base.html.twig for CompanyOS Backend Bundle with new asset links.
-
-
-## [0.1.105-alpha] - 2025-06-28
-
-### Added
-- feat: Neue Funktion hinzugefügt, um Benutzerprofile zu verwalten.
-
-
-## [0.1.104-alpha] - 2025-06-28
-
-### Added
-- feat: Hinzufügen von base.html.twig für CompanyOS Admin-Ansicht
-
-
-## [0.1.103-alpha] - 2025-06-28
-
-### Added
-- feat(webpack): Hinzufügen von Manifest-Key-Präfix für 'CompanyOS Backend Bundle'
-
-
-## [0.1.102-alpha] - 2025-06-28
-
-### Fixed
-- fix: Ändere den Ausgabe- und öffentlichen Pfad für Assets in Symfony-Bundl...
-
-
-## [0.1.101-alpha] - 2025-06-28
-
-### Added
-- feat: Hinzufügen von Webpack Encore-Konfiguration für das Bundle und Aktual...
-
-
-## [0.1.100-alpha] - 2025-06-28
-
-### Changed
-- refactor: Update Asset-Konfiguration für Webpack Encore und Pfade für Compa...
-
-
-## [0.1.99-alpha] - 2025-06-28
-
-### Fixed
-- fix: Update webpack config to use path module instead of vue-loader
-
-
-## [0.1.98-alpha] - 2025-06-28
-
-### Changed
-- refactor: Entferne base.html.twig und aktualisiere Symfony-Bundle.
-
-
-## [0.1.97-alpha] - 2025-06-28
-
-### Fixed
-- fix: Füge fehlende Zeilenumbruch am Ende der base.html.twig-Datei hinzu
-
-
-## [0.1.96-alpha] - 2025-06-28
-
-### Added
-- feat: Optimize CoreUI Icons and Components imports in app.js and index.js, up...
-
-
-## [0.1.95-alpha] - 2025-06-28
-
-### Added
-- feat: Plugin-Navigation hinzufügen und Backend-Template aktualisieren
-
-
-## [0.1.94-alpha] - 2025-06-28
-
-### Added
-- feat(CompanyOS Backend Bundle): Entferne Auto-Refresh und backend.html.twig D...
-
-
-## [0.1.93-alpha] - 2025-06-28
-
-### Fixed
-- fix: Nur existierende Services registrieren und SecurityHeadersListener und B...
-
-
-## [0.1.92-alpha] - 2025-06-28
-
-### Changed
-- refactor: Entfernen nicht verwendeter Code in CompanyOSBackendExtension
-
-
-## [0.1.91-alpha] - 2025-06-28
-
-### Maintenance
-- chore: Entferne veraltete Abhängigkeiten aus composer.json
-
-
-## [0.1.90-alpha] - 2025-06-28
-
-### Added
-- refactor(auth): Entfernen der Dekodierung des Passworts und Verwendung von UR...
-
-
-## [0.1.89-alpha] - 2025-06-28
-
-### Changed
-- refactor: Remove unused Twig extension for Encore integration
-
-
-## [0.1.88-alpha] - 2025-06-28
-
-### Added
-- feat: Dynamische Plugin-Integration, vollständig dynamisches Plugin-System o...
-
-
-## [0.1.87-alpha] - 2025-06-27
-
-### Added
-- fix(auth): decode password if URL-encoded before sending to backend API
-
-
-## [0.1.86-alpha] - 2025-06-27
-
-### Changed
-- refactor: Aktiviere immer das Hashing von Dateinamen für das Versioning im S...
-
-
-## [0.1.85-alpha] - 2025-06-27
-
-### Added
-- refactor(auth): Verwendung von URLSearchParams für korrektes Encoding in Aut...
-
-
-## [0.1.84-alpha] - 2025-06-27
-
-### Added
-- feat: Laden des User-Profils und der Rollen bei vorhandenem Token
-
-
-## [0.1.83-alpha] - 2025-06-27
-
-### Added
-- feat: Implement CSRF-Token Handling und Auth-Store Initialisierung in Company...
-
-
-## [0.1.82-alpha] - 2025-06-27
-
-### Changed
-- refactor: Optimiere die Asset-Einbindung in backend.html.twig
-
-
-## [0.1.81-alpha] - 2025-06-27
-
-### Fixed
-- fix: Update condition for checking if encore_entry_exists is defined in backe...
-
-
-## [0.1.80-alpha] - 2025-06-27
-
-### Added
-- feat: Hinzufügen von Twig Extension für Encore und Fallback-Styles bei fehl...
-
-
-## [0.1.79-alpha] - 2025-06-27
-
-### Added
-- feat: Hinzufügen von API-Routen und CSRF-Token-Manager für CompanyOS Backen...
-
-
-## [0.1.78-alpha] - 2025-06-27
-
-### Added
-- feat: CoreUI Icons korrekt konfigurieren und in Komponenten verwenden
-
-
-## [0.1.77-alpha] - 2025-06-27
-
-### Changed
-- refactor: Aktualisiere die Navigation auf rollenbasierte Berechtigungen
-
-
-## [0.1.76-alpha] - 2025-06-27
-
-### Maintenance
-- chore: Update Packagist links in README.md to reflect bundle name change.
-
-
-## [0.1.75-alpha] - 2025-06-27
-
-### Added
-- feat: Rollenbasierte Navigation hinzugefügt und Router-Guard mit Rollenprüf...
-
-
-## [0.1.74-alpha] - 2025-06-27
-
-### Added
-- feat: Registriere BackendController als Service im CompanyOS Backend Bundle
-
-
-## [0.1.73-alpha] - 2025-06-27
-
-### Changed
-- refactor: Remove redundant controller registration in CompanyOSBackendExtension
-
-
-## [0.1.72-alpha] - 2025-06-27
-
-### Changed
-- refactor: Services direkt registrieren und Controller als Service hinzufügen
-
-
-## [0.1.71-alpha] - 2025-06-27
-
-### Fixed
-- fix: Update resource paths in services.yaml for correct Composer package path
-
-
-## [0.1.70-alpha] - 2025-06-27
-
-### Added
-- feat: Update CompanyOSBackendExtension to extend Symfony\Component\Dependency...
-
-
-## [0.1.69-alpha] - 2025-06-27
-
-### Added
-- feat: Hinzufügen von Security Headers Listener und CSRF-Token Generierung in...
-
-
-## [0.1.68-alpha] - 2025-06-27
-
-### Security
-- **BREAKING**: Implementiere umfassende Sicherheitsverbesserungen
-- **feat(security)**: CSRF-Schutz für alle Formulare hinzugefügt
-- **feat(security)**: Security Headers mit Umgebungsunterscheidung implementiert
-- **feat(security)**: Verbesserte Session-Sicherheit mit HttpOnly und SameSite-Cookies
-- **feat(security)**: Input-Validierung und Sanitization für Login-Daten
-- **feat(security)**: Content Security Policy (CSP) für XSS-Schutz
-- **feat(security)**: Automatische CSRF-Token-Erneuerung bei Ablauf
-- **feat(security)**: E-Mail-Format-Validierung im Frontend und Backend
-- **feat(security)**: Passwort-Mindestlänge von 8 Zeichen
-- **feat(security)**: Umgebungsunterscheidung für Development/Production/Test
-- **feat(security)**: Verbesserte Axios-Interceptors mit CSRF-Schutz
-- **feat(security)**: Security-Dokumentation aktualisiert
-
-### Changed
-- **refactor(auth)**: Auth-Store um CSRF-Token-Management erweitert
-- **refactor(login)**: Login-Formular mit Client-seitiger Validierung
-- **refactor(backend)**: BackendController um CSRF-Token-Endpunkt erweitert
-- **refactor(user)**: UserRepository mit Input-Sanitization verbessert
-
-### Technical
-- **config(security)**: Security-Konfiguration mit Umgebungsunterscheidung
-- **config(framework)**: Session-Sicherheit und CSRF-Schutz konfiguriert
-- **config(headers)**: Security Headers für verschiedene Umgebungen
-
-## [0.1.67-alpha] - 2025-06-27
-
-### Added
-- feat(auth): Aktualisiere Login- und Refresh-Methoden, entferne Debug-Logging
-
-
-## [0.1.66-alpha] - 2025-06-27
-
-### Added
-- feat(auth): Hinzufügen von Scope-Unterstützung für Login und Refresh-Token
-
-
-## [0.1.65-alpha] - 2025-06-27
-
-### Added
-- feat(auth): Profile nach Token-Setup abrufen
-
-
-## [0.1.64-alpha] - 2025-06-27
-
-### Added
-- feat: Implement use of auth store for logout in AppHeaderDropdownAccnt.vue
-
-
-## [0.1.63-alpha] - 2025-06-27
-
-### Added
-- fix(auth): Fix encoding issue in password field in OAuth2 request
-
-
-## [0.1.62-alpha] - 2025-06-27
-
-### Added
-- feat(auth): Hinzufügen von Debug-Logging für OAuth2-Anforderungen und -Antworten
-
-
-## [0.1.61-alpha] - 2025-06-27
-
-### Added
-- feat(auth): Verwende FormData für OAuth2 Token-Anforderungen
-
-
-## [0.1.60-alpha] - 2025-06-27
-
-### Fixed
-- fix: Verhindere Axios-Transformation bei Authentifizierungsanfragen
-
-
-## [0.1.59-alpha] - 2025-06-27
-
-### Fixed
-- fix: Set correct Content-Type header for OAuth token requests
-
-
-## [0.1.58-alpha] - 2025-06-27
-
-### Changed
-- refactor: Update API endpoint for fetching user profile in auth store
-
-
-## [0.1.57-alpha] - 2025-06-27
-
-### Fixed
-- fix: Behebe fehlenden Zeilenumbruch am Ende der Datei App.vue
-
-
-## [0.1.56-alpha] - 2025-06-27
-
-### Changed
-- refactor: Dynamische Anzeige von Layout-Komponenten basierend auf dem aktuell...
-
-
-## [0.1.55-alpha] - 2025-06-27
-
-### Fixed
-- fix: Update import path for useAuthStore in Login.vue to fix path issue.
-
-
-## [0.1.54-alpha] - 2025-06-27
-
-### Added
-- feat: Implementiere Authentifizierung mit Store und Axios-Interceptor
-
-
-## [0.1.53-alpha] - 2025-06-27
-
-### Maintenance
-- chore: Update composer require version to ^0.1.52-alpha in README.md
-
-
-## [0.1.52-alpha] - 2025-06-26
-
-### Added
-- feat(app): Theme-Color-Mode Handling wie im CoreUIAdminTemplate verbessert
-
-
-## [0.1.51-alpha] - 2025-06-26
-
-### Added
-- feat: Hinzufügen von @coreui/chartjs und @coreui/vue-chartjs dependencies
-
-
-## [0.1.50-alpha] - 2025-06-26
-
-### Changed
-- refactor: Verwendung von externen Styles in App.vue aktualisiert
-
-
-## [0.1.49-alpha] - 2025-06-26
-
-### Changed
-- refactor: Aktualisiere Styling in App.vue und entferne ungenutzte Imports
-
-
-## [0.1.48-alpha] - 2025-06-26
-
-### Added
-- feat: Enable Sass loader in webpack configuration
-
-
-## [0.1.47-alpha] - 2025-06-26
-
-### Fixed
-- fix: Behebe fehlenden Zeilenumbruch in app.js im CompanyOS Backend Bundle
-
-
-## [0.1.46-alpha] - 2025-06-26
-
-### Added
-- feat: Implement Theme-Color-Mode Handling and Sidebar Visibility Toggle in 'C...
-
-
-## [0.1.45-alpha] - 2025-06-26
-
-### Added
-- feat: Update layout in App.vue to improve user experience
-
-
-## [0.1.44-alpha] - 2025-06-26
-
-### Changed
-- refactor: Aktualisiere die Sidebar-Store-Implementierung mit Vue 3 Reactive-API
-
-
-## [0.1.43-alpha] - 2025-06-26
-
-### Added
-- feat: Add piniaPluginPersistedstate and simplebar-vue dependencies, update Ap...
-
-
-## [0.1.42-alpha] - 2025-06-26
-
-### Added
-- feat: Hinzufügen von CSidebarNav zu AppSidebarNav-Komponente
-
-
-## [0.1.41-alpha] - 2025-06-26
-
-### Added
-- feat: Swap AppHeader and AppSidebar components in App.vue layout for better u...
-
-
-## [0.1.40-alpha] - 2025-06-26
-
-### Maintenance
-- chore: Update devDependencies and dependencies versions in package.json
-
-
-## [0.1.39-alpha] - 2025-06-26
-
-### Fixed
-- fix: Update postcss-simple-vars and postcss-nested versions in package.json
-
-
-## [0.1.38-alpha] - 2025-06-26
-
-### Fixed
-- fix: Update popper.js to @popperjs/core in package.json
-
-
-## [0.1.37-alpha] - 2025-06-26
-
-### Changed
-- refactor: Ändere Namespace in CompanyOS\Bundle\BackendBundle\Controller.
-
-
-## [0.1.36-alpha] - 2025-06-26
-
-### Changed
-- refactor: Update namespace in services.yaml for consistency with bundle namin...
-
-
-## [0.1.35-alpha] - 2025-06-26
-
-### Changed
-- refactor: Ändere den Controller-Pfad in CompanyOS\BundleBackendBundle\Contro...
-
-
-## [0.1.34-alpha] - 2025-06-26
-
-### Added
-- feat: Neue Funktion hinzugefügt, um Benutzerprofile zu verwalten.
-
-
-## [0.1.33-alpha] - 2025-06-26
-
-### Added
-- feat: Hinzufügen von CompanyOSBackendExtension für die Erweiterung des Bundles
-
-
-## [0.1.32-alpha] - 2025-06-26
-
-### Added
-- feat: Neue Funktion hinzugefügt, um Benutzerprofile zu verwalten.
-
-
-## [0.1.31-alpha] - 2025-06-26
-
-### Maintenance
-- chore: erhöhe Version auf 0.1.30-alpha in composer.json
-
-
-## [0.1.29-alpha] - 2025-06-26
-
-### Fixed
-- fix: Update sass-loader version to 16.0.1 in package.json
-
-
-## [0.1.28-alpha] - 2025-06-26
-
-### Maintenance
-- chore: Update @symfony/webpack-encore to version 5.1.0 in package.json
-
-
-## [0.1.27-alpha] - 2025-06-26
-
-### Maintenance
-- chore: Update dependencies in CompanyOS Backend Bundle
-
-
-## [0.1.26-alpha] - 2025-06-26
-
-### Maintenance
-- chore: Update devDependencies in package.json for CompanyOS Backend Bundle
-
-
-## [0.1.25-alpha] - 2025-06-26
-
-### Maintenance
-- chore: Update dependencies in CompanyOS Backend Bundle
-
-
-## [0.1.24-alpha] - 2025-06-26
-
-### Added
-- feat: Update dependencies in package.json for CompanyOS Backend Bundle
-
-
-## [0.1.23-alpha] - 2025-06-26
-
-### Added
-- feat: Neue Funktion hinzugefügt, um Benutzerprofile zu bearbeiten.
-
-
-## [0.1.22-alpha] - 2025-06-26
-
-### Changed
-- refactor: Entferne nicht benötigte Kommentare und Leerzeilen in backend.html...
-
-
-## [0.1.21-alpha] - 2025-06-26
-
-### Added
-- feat(routes): Update CompanyOS Backend Bundle routes for Vue.js SPA.
-
-
-## [0.1.20-alpha] - 2025-06-26
-
-### Added
-- feat(BackendController): Aktualisiere Routenparameter für CompanyOS Backend ...
-
-
-## [0.1.19-alpha] - 2025-06-26
-
-### Added
-- feat: Ändere die Router-History auf '/admin' in app.js
-
-
-## [0.1.18-alpha] - 2025-06-26
-
-### Added
-- refactor(views): Update CSS and JS loading in backend.html.twig
-
-
-## [0.1.17-alpha] - 2025-06-26
-
-### Added
-- feat: Hinzufügen von symfony/asset als Abhängigkeit für das CompanyOS Back...
-
-
-## [0.1.16-alpha] - 2025-06-26
-
-### Added
-- feat: Add getPath method to retrieve bundle path in CompanyOS Backend Bundle
-
-
-## [0.1.15-alpha] - 2025-06-26
-
-### Changed
-- refactor: Entferne ungenutzte Dateien und Code für CompanyOS Backend Bundle.
-
-
-## [0.1.14-alpha] - 2025-06-26
-
-### Added
-- feat: Update icons and dependencies in CompanyOS Backend Bundle
-
-
-## [0.1.13-alpha] - 2025-06-26
-
-### Fixed
-- fix: Updated webpack entry path for better organization in 'CompanyOS Backend...
-
-
-## [0.1.12-alpha] - 2025-06-26
-
-### Changed
-- refactor: Entferne ungenutzte Dateien und nicht verwendeten Code in webpack.c...
-
-
-## [0.1.11-alpha] - 2025-06-26
-
-### Added
-- feat: Hinzufügen von file-loader zur Unterstützung des Datei-Handlings in S...
-
-
-## [0.1.10-alpha] - 2025-06-26
-
-### Added
-- feat: Set manifest key prefix in webpack config for CompanyOS Backend Bundle
-
-
-## [0.1.9-alpha] - 2025-06-26
-
-### Maintenance
-- chore: Update dependencies versions for vue, coreui, icons-vue, and vue in pa...
-
-
-## [0.1.8-alpha] - 2025-06-26
-
-### Fixed
-- fix: Update resource paths in services.yaml for better organization.
-
-
-## [0.1.7-alpha] - 2025-06-26
-
-### Changed
-- refactor: Update service configuration paths for better organization in servi...
-
-
-## [0.1.6-alpha] - 2025-06-26
-
-### Changed
-- refactor: Update service configuration paths for better organization in services.yaml
-
-
-## [0.1.5-alpha] - 2025-06-26
-
-### Changed
-- refactor: Update Pfad für Bundle-Ressourcen in services.yaml
-
-
-## [0.1.4-alpha] - 2025-06-26
-
-### Changed
-- refactor: Update service configuration paths for better organization.
-
-
-### Geplant
-- Vollständige CRUD-Implementierungen für alle Module
-- Plugin-System-Integration
-- Unit und Integration Tests
-- API-Integration mit CoreBundle
-- Erweiterte Dashboard-Widgets
-
-## [0.1.0-alpha] - 2024-01-15
-
-### Hinzugefügt
-- Initiale Alpha-Version des BackendBundles
-- Vollständige CoreUI-Admin-Template-Integration
-- VueJS 3 mit Composition API
-- Responsive Sidebar und Header
-- Theme-System (Dark/Light Mode)
-- Navigation mit Breadcrumbs
-- Login-System mit Authentication
-- Dashboard mit Widgets
-- Routing-System mit Auth-Guard
-- Pinia State Management
-- Webpack-Konfiguration für Asset-Building
-- Admin-Controller für `/admin`-Route
-- Twig-Template für VueJS-App
-- Grundlegende Views (Dashboard, Login, Users)
-- Plugin-System-Vorbereitung
-
-### Technische Details
-- Symfony 7.3 Kompatibilität
-- PHP 8.2+ Unterstützung
-- CoreUI 4.x Integration
-- Vue 3.x mit Composition API
-- Webpack Encore für Asset-Building
-- Pinia für State Management
-- Axios für API-Calls
-
-### Architektur
-- Reines Frontend-Bundle
-- API-First Design
-- Modulare Komponenten-Struktur
-- Plugin-System vorbereitet
-- Responsive Design
-
-## [0.1.122-alpha] - 2025-06-28
-
-- Commit: "Controller-Pfad aktualisiert für CompanyOS Backend Bundle"...
-- [M] Resources/config/routes.yaml
+#!/usr/bin/env bash
+#
+# CompanyOS Bundle Release Script
+# Automates version bumping, commits, tags, and full-file listing in CHANGELOG.md for both bundles.
+#
+# Usage: ./release.sh [--ci]
+#   --ci    non-interactive: auto-yes all prompts and disable colors.
+#
+set -euo pipefail
+
+# Default settings
+CI_MODE=false
+USE_COLORS=true
+
+# Detect flags
+for arg in "$@"; do
+  case "$arg" in
+    --ci) CI_MODE=true ;; 
+    *) ;;
+  esac
+done
+
+# Check for TERM support
+if [ "$CI_MODE" = false ] && [ -t 1 ] && command -v tput &>/dev/null; then
+  ncolors=$(tput colors)
+  if [ -z "$ncolors" ] || [ "$ncolors" -lt 8 ] || [ "${TERM:-}" = "dumb" ]; then
+    USE_COLORS=false
+  fi
+else
+  USE_COLORS=false
+fi
+
+# Color codes
+if [ "$USE_COLORS" = true ]; then
+  RED='\033[0;31m'
+  GREEN='\033[0;32m'
+  YELLOW='\033[1;33m'
+  BLUE='\033[0;34m'
+  CYAN='\033[0;36m'
+  NC='\033[0m'
+else
+  RED='' GREEN='' YELLOW='' BLUE='' CYAN='' NC=''
+fi
+
+log()    { printf "%b[INFO]%b %s\n" "$BLUE" "$NC" "$1" >&2; }
+success() { printf "%b[SUCCESS]%b %s\n" "$GREEN" "$NC" "$1" >&2; }
+warn()   { printf "%b[WARNING]%b %s\n" "$YELLOW" "$NC" "$1" >&2; }
+error()  { printf "%b[ERROR]%b %s\n" "$RED" "$NC" "$1" >&2; }
+prompt() { printf "%b[PROMPT]%b %s\n" "$CYAN" "$NC" "$1" >&2; }
+
+# Ask user to confirm; returns 0=yes, 1=no, 2=edit
+confirm() {
+  local msg="$1"
+  if [ "$CI_MODE" = true ]; then
+    return 0
+  fi
+  while true; do
+    prompt "$msg (y/n/e)"
+    read -r ans
+    case "$ans" in
+      [Yy]*) return 0 ;;  
+      [Ee]*) return 2 ;;  
+      [Nn]*) return 1 ;;  
+      *) warn "Bitte y (ja), n (nein) oder e (edit) eingeben." ;;  
+    esac
+  done
+}
+
+# Cleanup temporary files on exit
+cleanup_tmp() {
+  [[ -n "${TMPFILE:-}" ]] && rm -f "$TMPFILE"
+}
+trap cleanup_tmp EXIT
+
+# Bump patch version: x.y.z[-suffix] -> x.y.(z+1)[-suffix]
+increment_version() {
+  local v=$1
+  IFS='.-' read -r major minor patch suffix <<<"$v"
+  patch=$((patch + 1))
+  if [ -n "$suffix" ]; then
+    echo "${major}.${minor}.${patch}-${suffix}"
+  else
+    echo "${major}.${minor}.${patch}"
+  fi
+}
+
+# Generate commit message (OpenAI fallback)
+generate_commit_message() {
+  local bundle="$1"
+  if [ -n "${OPENAI_API_KEY:-}" ] && command -v curl &>/dev/null; then
+    log "Generating commit message via OpenAI..."
+    TMPFILE=$(mktemp)
+    local diffs
+    diffs=$(git diff --unified=0 HEAD | head -c 8000)
+    jq -n --arg m "gpt-3.5-turbo" \
+          --arg p "Erstelle eine prägnante Conventional-Commit Nachricht (Deutsch, max.80 Zeichen) für Symfony-Bundle '$bundle' basierend auf Änderungen: $diffs" \
+          '{model: $m, messages: [{role:"user",content:$p}], max_tokens:100, temperature:0.3}' \
+      > "$TMPFILE"
+    local resp
+    if resp=$(timeout 10 curl -sS -H "Authorization: Bearer $OPENAI_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d @"$TMPFILE" https://api.openai.com/v1/chat/completions) &&
+       echo "$resp" | jq -e '.choices[0].message.content' &>/dev/null; then
+      echo "$resp" | jq -r '.choices[0].message.content'
+      return
+    else
+      warn "OpenAI unavailable, falling back..."
+    fi
+  fi
+  # Fallback summary
+  log "Generating fallback commit message..."
+  local files
+  files=$(git diff --name-status HEAD)
+  if [ -z "$files" ]; then
+    echo "feat: Verschiedene Verbesserungen"
+  else
+    local msg="feat: Release – Änderungen: "
+    msg+=$(echo "$files" | awk '{printf "%s %s; ", $1, $2}')
+    echo "${msg:0:80}"
+  fi
+}
+
+process_bundle() {
+  local dir=$1 name="$2"
+  log "Processing $name..."
+  if ! [ -d "$dir" ]; then
+    warn "Directory '$dir' not found, skipping."
+    return
+  fi
+
+  pushd "$dir" >/dev/null
+
+  # ensure on main
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  if [ "$branch" != "main" ]; then
+    error "Branch is '$branch', expected 'main'. Aborting."
+    popd >/dev/null
+    exit 1
+  fi
+
+  if git diff-index --quiet HEAD --; then
+    warn "No changes in $name, skipping."
+    popd >/dev/null
+    return
+  fi
+
+  # Commit message
+  msg=$(generate_commit_message "$name")
+  msg=${msg//$'\n'/ }       # remove newlines
+  msg="${msg:0:77}..."
+  if confirm "Commit-Message für $name: '$msg'?"; then
+    :
+  elif [ $? -eq 2 ]; then
+    ${EDITOR:-nano} <(echo "$msg")
+    read -r msg
+  else
+    prompt "Neue Commit-Message eingeben:"
+    read -r msg
+  fi
+  msg=${msg//$'\n'/ }       # final cleanup
+  success "Using commit message: $msg"
+
+  # Version bump
+  current=$(jq -r '.version' composer.json)
+  next=$(increment_version "$current")
+  success "Bumping version: $current → $next"
+  jq ".version = \"$next\"" composer.json > composer.json.tmp && mv composer.json.tmp composer.json
+
+  # Changelog update with full file list at top
+  if confirm "CHANGELOG.md aktualisieren für $next?"; then
+    date=$(date +%Y-%m-%d)
+    files=$(git diff --name-status HEAD)
+    TMPCHANGELOG=$(mktemp)
+    {
+      echo
+      echo "## [$next] - $date"
+      echo
+      echo "- Commit: $msg"
+      while IFS= read -r line; do
+        status=$(echo "$line" | awk '{print $1}')
+        file=$(echo "$line" | awk '{print $2}')
+        echo "- [$status] $file"
+      done <<< "$files"
+      echo
+    } > "$TMPCHANGELOG"
+    sed -i.bak "/^## \[Unreleased\]/r $TMPCHANGELOG" CHANGELOG.md
+    rm "$TMPCHANGELOG"
+    success "CHANGELOG.md updated with full file list at top."
+  fi
+
+  # README update
+  if [ -f README.md ] && confirm "README.md Version updaten?"; then
+    sed -i.bak -E "s/[0-9]+\.[0-9]+\.[0-9]+(-[^\"]+)?/$next/g" README.md
+    success "README.md updated (backup at README.md.bak)."
+  fi
+
+  # Git operations
+  git add .
+  git commit -m "$msg"
+  git push origin main
+  git tag "v$next"
+  git push origin "v$next"
+  success "Released $name v$next"
+
+  popd >/dev/null
+}
+
+main() {
+  # pre-checks
+  for cmd in git jq; do
+    if ! command -v "$cmd" &>/dev/null; then
+      error "Required command '$cmd' not found."
+      exit 1
+    fi
+  done
+
+  process_bundle "CompanyOSCoreBundle"    "CompanyOS Core Bundle"
+  process_bundle "CompanyOSBackendBundle" "CompanyOS Backend Bundle"
+  success "All bundles processed."
+}
+
+main "$@"
+
+## [0.1.123-alpha] - 2025-06-28
+
+- Commit: fix: Aktualisiere Routenpfad in routes.yaml, um das '/admin'-Präfix zu entfer...
+- [M] CHANGELOG.md
 - [M] composer.json
