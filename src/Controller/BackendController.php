@@ -11,9 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BackendController extends AbstractController
 {
-    /**
-     * @Route("/", name="admin_index")
-     */
+
+    #[Route('/{route}', name: 'company_os_backend', requirements: ['route' => '.*'], defaults: ['route' => ''])]
     public function index(): Response
     {
         return $this->render('@CompanyOSBackend/backend/base.html.twig');
