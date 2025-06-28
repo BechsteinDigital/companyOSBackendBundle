@@ -70,4 +70,6 @@ Encore
 
     .enableSourceMaps(true)
 
+    .enableSassLoader()
+
 module.exports = Encore.getWebpackConfig(); 

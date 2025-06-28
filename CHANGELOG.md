@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.116-alpha] - 2025-06-28
+
+### Added
+- feat: Hinzufügen von Sass-Loader in webpack.config.js für CompanyOS Backend...
+
+
 ## [0.1.115-alpha] - 2025-06-28
 
 ### Added
