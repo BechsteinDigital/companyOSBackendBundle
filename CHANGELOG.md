@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.102-alpha] - 2025-06-28
+
+### Fixed
+- fix: Ändere den Ausgabe- und öffentlichen Pfad für Assets in Symfony-Bundl...
+
+
 ## [0.1.101-alpha] - 2025-06-28
 
 ### Added
