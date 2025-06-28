@@ -7,6 +7,12 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.98-alpha] - 2025-06-28
+
+### Changed
+- refactor: Entferne base.html.twig und aktualisiere Symfony-Bundle.
+
+
 ## [0.1.97-alpha] - 2025-06-28
 
 ### Fixed
