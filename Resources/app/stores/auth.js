@@ -155,7 +155,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         console.log(`🔍 Backend permission check for: ${permission}`)
         
-        const response = await axios.post('/api/user-permissions/check-permission', {
+        const response = await axios.post('/api/users/user-permissions/check-permission', {
           user_id: this.user.id,
           permission: permission,
           context: context
@@ -211,7 +211,7 @@ export const useAuthStore = defineStore('auth', {
       }
       
       try {
-        const response = await axios.post('/api/user-permissions/check-permissions-batch', {
+        const response = await axios.post('/api/users/user-permissions/check-permissions-batch', {
           user_id: this.user.id,
           permissions: permissions,
           context: context

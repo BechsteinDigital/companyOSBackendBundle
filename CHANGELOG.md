@@ -383,3 +383,9 @@ main "$@"
 - Commit: "Anpassungen für CoreBundle API-Endpunkte und verbesserte Fehlerbehandlung"...
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.146-alpha] - 2025-06-29
+
+- Commit: Fix API endpoint paths for user permissions....
+- [M] Resources/app/stores/auth.js
+- [M] composer.json
