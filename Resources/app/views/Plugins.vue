@@ -165,7 +165,6 @@
       v-model="showUploadModal" 
       title="Plugin hochladen"
       size="lg"
-      :backdrop="false"
     >
       <CModalBody>
         <!-- Upload Area -->
