@@ -389,3 +389,9 @@ main "$@"
 - Commit: Fix API endpoint paths for user permissions....
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.147-alpha] - 2025-06-29
+
+- Commit: Fix: Änderung des API-Endpunkts für Benutzerberechtigungen....
+- [M] Resources/app/stores/navigation.js
+- [M] composer.json

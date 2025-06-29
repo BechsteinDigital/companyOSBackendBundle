@@ -276,7 +276,7 @@ export const useNavigationStore = defineStore('navigation', {
       if (!auth.user?.id) return
       
       try {
-        const response = await fetch(`/api/user-permissions/navigation/${auth.user.id}`, {
+        const response = await fetch(`/api/users/user-permissions/navigation/${auth.user.id}`, {
           headers: {
             'Authorization': `Bearer ${auth.accessToken}`
           }
