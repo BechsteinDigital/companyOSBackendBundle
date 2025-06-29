@@ -155,7 +155,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         console.log(`🔍 Backend permission check for: ${permission}`)
         
-        const response = await axios.post('/api/users/check-permission', {
+        const response = await axios.post('/api/user-permissions/check-permission', {
           user_id: this.user.id,
           permission: permission,
           context: context
@@ -166,7 +166,14 @@ export const useAuthStore = defineStore('auth', {
           }
         })
         
-        const result = response.data.allowed || false
+        // Das CoreBundle API gibt Daten als { success: true, allowed: true } zurück
+        const apiResponse = response.data
+        if (!apiResponse.success) {
+          console.warn(`Backend permission check failed: ${apiResponse.message}`)
+          return false
+        }
+        
+        const result = apiResponse.allowed || false
         
         if (result) {
           console.log(`✅ Backend permission check: ${permission} GRANTED`)
@@ -204,7 +211,7 @@ export const useAuthStore = defineStore('auth', {
       }
       
       try {
-        const response = await axios.post('/api/users/check-permissions-batch', {
+        const response = await axios.post('/api/user-permissions/check-permissions-batch', {
           user_id: this.user.id,
           permissions: permissions,
           context: context
@@ -215,7 +222,14 @@ export const useAuthStore = defineStore('auth', {
           }
         })
         
-        return response.data.permissions || {}
+        // Das CoreBundle API gibt Daten als { success: true, permissions: {...} } zurück
+        const apiResponse = response.data
+        if (!apiResponse.success) {
+          console.warn(`Backend batch permission check failed: ${apiResponse.message}`)
+          return {}
+        }
+        
+        return apiResponse.permissions || {}
       } catch (error) {
         console.error('🚨 Batch permission check failed:', error)
         
@@ -369,16 +383,58 @@ export const useAuthStore = defineStore('auth', {
             Authorization: `Bearer ${this.accessToken}` 
           }
         })
-        this.user = response.data
+        
+        // Das CoreBundle API gibt Daten als { success: true, data: { ... } } zurück
+        const apiResponse = response.data
+        console.log('📥 Raw API Response:', apiResponse)
+        
+        if (!apiResponse.success) {
+          throw new Error(apiResponse.message || 'API returned unsuccessful response')
+        }
+        
+        const userData = apiResponse.data
+        
+        // Debug: Vollständige Response anzeigen
+        console.log('📥 User Profile Response:', userData)
+        
+        // Validierung der wichtigsten User-Eigenschaften
+        if (!userData || typeof userData !== 'object') {
+          throw new Error('Invalid user data received from backend')
+        }
+        
+        if (!userData.id) {
+          console.error('❌ User profile is missing ID field!', userData)
+          throw new Error('User profile is missing required ID field')
+        }
+        
+        if (!userData.permissions || !Array.isArray(userData.permissions)) {
+          console.warn('⚠️ User profile is missing or has invalid permissions', userData.permissions)
+          userData.permissions = []
+        }
+        
+        this.user = userData
         this.error = null
-        console.log('User-Profil geladen:', this.user)
-        console.log('User-Permissions:', this.user?.permissions)
+        
+        console.log('✅ User-Profil erfolgreich geladen:', {
+          id: this.user.id,
+          username: this.user.username || 'N/A',
+          email: this.user.email || 'N/A',
+          roles: this.user.roles || [],
+          permissions: this.user.permissions?.length || 0,
+          permissionsList: this.user.permissions
+        })
+        
         return this.user
       } catch (error) {
-        console.error('Failed to fetch profile:', error)
+        console.error('❌ Failed to fetch profile:', error)
+        
         if (error.response?.status === 401) {
+          console.log('🔒 Unauthorized - logging out')
           this.logout()
+        } else if (error.response?.status === 500) {
+          console.error('🚨 Backend error when fetching profile:', error.response?.data)
         }
+        
         throw error
       }
     }
