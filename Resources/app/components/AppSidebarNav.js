@@ -82,7 +82,7 @@ const AppSidebarNav = defineComponent({
     })
 
     /**
-     * Einfache Navigation-Item-Rendering
+     * Erweiterte Navigation-Item-Rendering mit hierarchischer Unterstützung
      */
     const renderItem = (item) => {
       // Permission-Check vor Rendering
@@ -91,7 +91,7 @@ const AppSidebarNav = defineComponent({
         return null
       }
 
-      console.log(`🎨 Rendering navigation item: ${item.name}, icon: ${item.icon}`)
+      console.log(`🎨 Rendering navigation item: ${item.name}, icon: ${item.icon}, has children: ${!!item.items}`)
 
       // Navigation-Title rendern
       if (item.component === 'CNavTitle') {
@@ -100,6 +100,51 @@ const AppSidebarNav = defineComponent({
           { key: item.name },
           {
             default: () => item.name
+          }
+        )
+      }
+
+      // Navigation-Group mit Kindern rendern
+      if (item.items && item.items.length > 0) {
+        console.log(`🗂️ Rendering navigation group: ${item.name} with ${item.items.length} children`)
+        
+        return h(
+          CNavGroup,
+          {
+            key: item.name,
+            toggler: item.name,
+            visible: isActiveItem(route, item)
+          },
+          {
+            togglerContent: () => [
+              // Icon für Gruppe
+              item.icon && icons[item.icon]
+                ? h(resolveComponent('CIcon'), {
+                    customClassName: 'nav-icon',
+                    content: icons[item.icon],
+                  })
+                : h('span', { class: 'nav-icon' }, [
+                    h('span', { class: 'nav-icon-bullet' })
+                  ]),
+              // Gruppename
+              item.name,
+              // Badge für Gruppe
+              item.badge && h(
+                CBadge,
+                {
+                  class: 'ms-auto',
+                  color: item.badge.color,
+                  size: 'sm',
+                },
+                { default: () => item.badge.text }
+              )
+            ],
+            default: () => {
+              // Kinder-Items rekursiv rendern
+              return item.items
+                .map((childItem) => renderItem(childItem))
+                .filter(Boolean)
+            }
           }
         )
       }
@@ -174,7 +219,8 @@ const AppSidebarNav = defineComponent({
       renderItem,
       auth,
       navigationStore,
-      icons
+      icons,
+      route
     }
   },
   
@@ -194,12 +240,12 @@ const AppSidebarNav = defineComponent({
             `Navigation: ${this.navigation.length} items`
           ]),
           
-          // Navigation-Items rendern
+          // Navigation-Items rekursiv rendern
           ...this.navigation.map((item) => this.renderItem(item)).filter(Boolean)
         ],
-      },
+      }
     )
-  }
+  },
 })
 
-export { AppSidebarNav } 
+export default AppSidebarNav 

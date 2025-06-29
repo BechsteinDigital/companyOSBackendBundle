@@ -234,3 +234,9 @@
 - Commit: "Behebung von Navigation Store Fehler"...
 - [M] Resources/app/stores/navigation.js
 - [M] composer.json
+
+## [0.1.158-alpha] - 2025-06-29
+
+- Commit: Erweiterte Navigation-Item-Rendering mit hierarchischer Unterstützung und Gru...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json

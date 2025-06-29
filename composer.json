@@ -1,7 +1,7 @@
 {
   "name": "companyos/backend",
   "description": "CompanyOS Backend Bundle - VueJS Frontend for Admin Interface",
-  "version": "0.1.157-alpha",
+  "version": "0.1.158-alpha",
   "type": "symfony-bundle",
   "license": "MIT",
   "keywords": [
