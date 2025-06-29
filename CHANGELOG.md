@@ -216,3 +216,9 @@
 - [M] Resources/app/app.js
 - [M] Resources/app/icons.js
 - [M] composer.json
+
+## [0.1.155-alpha] - 2025-06-29
+
+- Commit: Ändern Symbol für Datenbank zu Speicher und Globe zu GlobeAlt...
+- [M] Resources/app/icons.js
+- [M] composer.json
