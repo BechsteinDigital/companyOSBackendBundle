@@ -106,10 +106,18 @@ export const useAuthStore = defineStore('auth', {
       this.remember = remember
       
       try {
-        const response = await axios.post('/api/auth/login', {
+        // OAuth2 Password Grant - Form-encoded data
+        const formData = new URLSearchParams({
+          grant_type: 'password',
+          client_id: 'backend',
           username: username.trim().toLowerCase(),
-          password,
-          remember
+          password: password
+        })
+        
+        const response = await axios.post('/api/oauth2/token', formData, {
+          headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
         })
         
         this.setTokens(response.data, remember)
@@ -177,8 +185,17 @@ export const useAuthStore = defineStore('auth', {
       if (!this.refreshToken) return false
       
       try {
-        const response = await axios.post('/api/auth/refresh', {
+        // OAuth2 Refresh Grant - Form-encoded data
+        const formData = new URLSearchParams({
+          grant_type: 'refresh_token',
+          client_id: 'backend',
           refresh_token: this.refreshToken
+        })
+        
+        const response = await axios.post('/api/oauth2/token', formData, {
+          headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
         })
         
         this.setTokens(response.data, this.remember)
@@ -197,9 +214,15 @@ export const useAuthStore = defineStore('auth', {
       }
       
       try {
-        const response = await axios.get('/api/auth/profile')
+        const response = await axios.get('/api/users/profile', {
+          headers: { 
+            Authorization: `Bearer ${this.accessToken}` 
+          }
+        })
         this.user = response.data
         this.error = null
+        console.log('User-Profil geladen:', this.user)
+        console.log('User-Permissions:', this.user?.permissions)
         return this.user
       } catch (error) {
         console.error('Failed to fetch profile:', error)

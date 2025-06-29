@@ -351,3 +351,9 @@ main "$@"
 - Commit: "Optimierung der Berechtigungsprüfung für Navigation"...
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.141-alpha] - 2025-06-29
+
+- Commit: Refactor OAuth2-Authentifizierung und Profil-Endpunkte....
+- [M] Resources/app/stores/auth.js
+- [M] composer.json
