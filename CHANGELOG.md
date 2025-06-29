@@ -331,3 +331,10 @@ main "$@"
 - [M] Resources/app/app.js
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.138-alpha] - 2025-06-29
+
+- Commit: "🔧 Debug-Modus aktivieren, automatische Permission-Diagnose hinzugefügt"...
+- [M] Resources/app/app.js
+- [M] Resources/app/stores/auth.js
+- [M] composer.json

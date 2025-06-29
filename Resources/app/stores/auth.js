@@ -42,8 +42,32 @@ export const useAuthStore = defineStore('auth', {
     
     // Permission-Prüfung (Empfohlen)
     hasPermission: (state) => (permission) => {
-      if (!state.user || !state.user.permissions) return false
-      return state.user.permissions.includes(permission)
+      if (!state.user || !state.user.permissions) {
+        console.warn(`❌ Permission check failed: User not authenticated or no permissions loaded`)
+        return false
+      }
+      
+      // Super-Admin hat alle Rechte
+      if (state.user.permissions.includes('**')) {
+        console.log(`✅ Permission ${permission} granted: User has super-admin rights (**)`)
+        return true
+      }
+      
+      // Direkte Permission-Prüfung
+      if (state.user.permissions.includes(permission)) {
+        console.log(`✅ Permission ${permission} granted: Direct match`)
+        return true
+      }
+      
+      // Wildcard-Prüfung (z.B. user.* für user.read)
+      const permissionPrefix = permission.split('.')[0] + '.*'
+      if (state.user.permissions.includes(permissionPrefix)) {
+        console.log(`✅ Permission ${permission} granted: Wildcard match (${permissionPrefix})`)
+        return true
+      }
+      
+      console.warn(`❌ Permission ${permission} denied: Not found in user permissions`, state.user.permissions)
+      return false
     },
     
     // Hybrid Permission Check (RBAC + ABAC)
@@ -73,64 +97,45 @@ export const useAuthStore = defineStore('auth', {
     
     // Berechtigungsprüfung für Navigation (Permission-basiert)
     canAccess: (state) => (permission) => {
-      if (!state.user) return false
+      if (!state.user) {
+        console.warn(`❌ Navigation access denied: User not authenticated`)
+        return false
+      }
       
-      // Admin-Rolle hat alle Berechtigungen (Fallback)
-      if (state.user.roles?.includes('ROLE_ADMIN')) return true
+      // Super-Admin hat alle Berechtigungen
+      if (state.user.permissions?.includes('**')) {
+        console.log(`✅ Navigation access granted for ${permission}: Super-admin rights`)
+        return true
+      }
       
       // Permission-basierte Prüfung
       if (state.user.permissions) {
         // Direkte Permission-Prüfung
-        if (state.user.permissions.includes(permission)) return true
+        if (state.user.permissions.includes(permission)) {
+          console.log(`✅ Navigation access granted for ${permission}: Direct permission match`)
+          return true
+        }
         
-        // Mapping von Legacy-Permissions zu spezifischen Permissions
-        switch (permission) {
-          case 'dashboard':
-            return state.user.permissions.includes('dashboard.view')
-          
-          case 'administration':
-            return state.user.permissions.some(p => p.startsWith('user.') || p.startsWith('role.'))
-          
-          case 'system':
-            return state.user.permissions.some(p => p.startsWith('plugin.') || p.startsWith('settings.'))
-          
-          case 'development':
-            return state.user.permissions.some(p => p.startsWith('api.') || p.startsWith('system.'))
-          
-          case 'profile':
-            return state.user.permissions.includes('profile.view')
-          
-          default:
-            return false
+        // Wildcard-Prüfung
+        const permissionPrefix = permission.split('.')[0] + '.*'
+        if (state.user.permissions.includes(permissionPrefix)) {
+          console.log(`✅ Navigation access granted for ${permission}: Wildcard permission (${permissionPrefix})`)
+          return true
+        }
+        
+        // Erweiterte Permission-Mappings für Navigation
+        const hasNavigationPermission = state.checkNavigationPermission(permission)
+        if (hasNavigationPermission) {
+          console.log(`✅ Navigation access granted for ${permission}: Navigation mapping`)
+          return hasNavigationPermission
         }
       }
       
-      // Fallback auf Rollen-basierte Prüfung (Legacy)
-      const userRoles = state.user.roles || []
-      
-      switch (permission) {
-        case 'dashboard':
-          return userRoles.includes('ROLE_USER') || 
-                 userRoles.includes('ROLE_EMPLOYEE') || 
-                 userRoles.includes('ROLE_ADMIN')
-        
-        case 'administration':
-          return userRoles.includes('ROLE_ADMIN')
-        
-        case 'system':
-          return userRoles.includes('ROLE_ADMIN')
-        
-        case 'development':
-          return userRoles.includes('ROLE_ADMIN')
-        
-        case 'profile':
-          return userRoles.includes('ROLE_USER') || 
-                 userRoles.includes('ROLE_EMPLOYEE') || 
-                 userRoles.includes('ROLE_ADMIN')
-        
-        default:
-          return false
-      }
+      console.warn(`❌ Navigation access denied for ${permission}: No matching permissions found`, {
+        userPermissions: state.user.permissions,
+        userRoles: state.user.roles
+      })
+      return false
     },
     
     // Benutzerrolle für Dashboard-Typ
@@ -144,6 +149,94 @@ export const useAuthStore = defineStore('auth', {
     },
 
   actions: {
+    // Navigation-spezifische Permission-Prüfung
+    checkNavigationPermission(permission) {
+      if (!this.user || !this.user.permissions) return false
+      
+      const userPermissions = this.user.permissions
+      
+      // Mapping von Navigation-Permissions zu Datenbank-Permissions
+      switch (permission) {
+        case 'dashboard.view':
+        case 'dashboard':
+          // Dashboard sollte für jeden authentifizierten Benutzer zugänglich sein
+          return userPermissions.includes('profile.read') || 
+                 userPermissions.includes('dashboard.view') ||
+                 userPermissions.includes('dashboard.*') ||
+                 this.user.roles?.includes('ROLE_USER')
+        
+        case 'administration':
+          return userPermissions.some(p => 
+            p.startsWith('user.') || 
+            p.startsWith('role.') ||
+            p === 'administration.*'
+          )
+        
+        case 'user.read':
+        case 'user.create':
+        case 'user.update':
+        case 'user.delete':
+          return userPermissions.includes(permission) ||
+                 userPermissions.includes('user.*') ||
+                 userPermissions.includes('administration.*')
+        
+        case 'role.read':
+        case 'role.create':
+        case 'role.update':
+        case 'role.delete':
+          return userPermissions.includes(permission) ||
+                 userPermissions.includes('role.*') ||
+                 userPermissions.includes('administration.*')
+        
+        case 'system':
+          return userPermissions.some(p => 
+            p.startsWith('plugin.') || 
+            p.startsWith('settings.') ||
+            p.startsWith('webhook.') ||
+            p === 'system.*'
+          )
+        
+        case 'plugin.read':
+        case 'plugin.create':
+        case 'plugin.update':
+        case 'plugin.delete':
+          return userPermissions.includes(permission) ||
+                 userPermissions.includes('plugin.*') ||
+                 userPermissions.includes('system.*')
+        
+        case 'settings.read':
+        case 'settings.update':
+        case 'settings.system':
+          return userPermissions.includes(permission) ||
+                 userPermissions.includes('settings.*') ||
+                 userPermissions.includes('system.*')
+        
+        case 'webhook.read':
+        case 'webhook.create':
+        case 'webhook.update':
+        case 'webhook.delete':
+          return userPermissions.includes(permission) ||
+                 userPermissions.includes('webhook.*') ||
+                 userPermissions.includes('system.*')
+        
+        case 'development':
+          return userPermissions.some(p => 
+            p.startsWith('api.') || 
+            p.startsWith('system.logs') ||
+            p === 'development.*'
+          )
+        
+        case 'profile':
+        case 'profile.view':
+          return userPermissions.includes('profile.read') ||
+                 userPermissions.includes('profile.*') ||
+                 true // Profil sollte für jeden Benutzer zugänglich sein
+        
+        default:
+          return false
+      }
+    },
+
     // ABAC-Regeln prüfen (Frontend-seitig)
     checkAbacRules(permission, context) {
       // Vereinfachte ABAC-Regeln für Frontend

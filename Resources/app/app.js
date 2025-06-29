@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useThemeStore } from './stores/theme.js'
 import { useAuthStore, setupAutoRefresh } from './stores/auth.js'
 import { useNavigationStore, navigationHelper } from './stores/navigation.js'
+import { permissionsDebug } from './utils/permissions-debug.js'
 
 // CoreUI Icons & Components
 import { iconsSet } from './icons'
@@ -574,6 +575,22 @@ async function initializeApp() {
   app.mount('#app')
   
   console.log('🚀 CompanyOS Backend initialized with enhanced RBAC/ABAC/ACL security')
+  
+  // 8) Debug-Modus aktivieren (nur in Development)
+  if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+    console.log('🔧 Debug-Modus aktiviert')
+    console.log('💡 Verwenden Sie in der Browser-Konsole:')
+    console.log('   - diagnosePermissions() für Permission-Diagnose')
+    console.log('   - debugPermissions für erweiterte Debug-Funktionen')
+    
+    // Automatische Diagnose nach 2 Sekunden
+    setTimeout(() => {
+      if (auth.user) {
+        console.log('🔍 Automatische Permission-Diagnose gestartet...')
+        permissionsDebug.diagnoseProblems()
+      }
+    }, 2000)
+  }
 }
 
 initializeApp()
