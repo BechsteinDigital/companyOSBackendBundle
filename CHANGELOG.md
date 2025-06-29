@@ -289,3 +289,9 @@
 - Commit: feat: Release – Änderungen: M Resources/app/components/AppSidebarNav.js; ...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.167-alpha] - 2025-06-29
+
+- Commit: feat: Release – Änderungen: M Resources/app/views/Plugins.vue; ...
+- [M] Resources/app/views/Plugins.vue
+- [M] composer.json
