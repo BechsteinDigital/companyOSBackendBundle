@@ -204,8 +204,17 @@ const routes = [
 async function loadActivePlugins() {
   try {
     const res = await axios.get('/api/plugins')
-    const plugins = res.data
-    return plugins.filter(p => p.active)
+    
+    // Korrekte API-Response-Struktur verwenden: { success: true, data: [...] }
+    const plugins = res.data.data || res.data // Fallback für ältere API-Responses
+    
+    // Prüfen ob plugins ein Array ist
+    if (!Array.isArray(plugins)) {
+      console.warn('Plugin API returned non-array data:', plugins)
+      return []
+    }
+    
+    return plugins.filter(p => p.isActive || p.active) // isActive ist neuer, active ist legacy
   } catch (e) {
     console.error('Failed to load plugins', e)
     return []

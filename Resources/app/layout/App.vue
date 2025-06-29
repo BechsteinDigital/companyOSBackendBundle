@@ -63,10 +63,18 @@ const loadPluginComponents = async () => {
     
     if (response.ok) {
       const result = await response.json()
+      
+      // Korrekte API-Response-Struktur: { success: true, data: [...] }
       const plugins = result.data || result
       
+      // Prüfen ob plugins ein Array ist
+      if (!Array.isArray(plugins)) {
+        console.warn('Plugin API returned non-array data:', plugins)
+        return
+      }
+      
       // Nur aktive Plugins verarbeiten
-      const activePlugins = plugins.filter(plugin => plugin.active)
+      const activePlugins = plugins.filter(plugin => plugin.isActive || plugin.active)
       
       console.log('Aktive Plugins geladen:', activePlugins)
       
@@ -111,10 +119,16 @@ async function loadActivePluginComponents() {
       const result = await response.json()
       const plugins = result.data || result
       
+      // Prüfen ob plugins ein Array ist
+      if (!Array.isArray(plugins)) {
+        console.warn('Plugin API returned non-array data:', plugins)
+        return
+      }
+      
       // Nur aktive Plugins mit Frontend-Komponenten
       const components = []
       for (const plugin of plugins) {
-        if (plugin.active && plugin.frontendComponents) {
+        if ((plugin.isActive || plugin.active) && plugin.frontendComponents) {
           for (const [componentName, componentConfig] of Object.entries(plugin.frontendComponents)) {
             if (componentConfig.overlay) {
               components.push({

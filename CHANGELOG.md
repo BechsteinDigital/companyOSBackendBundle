@@ -184,3 +184,10 @@
 - Commit: Optimierung: Super-Admin-Überschreibung basierend auf Permission hinzugefügt....
 - [M] Resources/app/stores/navigation.js
 - [M] composer.json
+
+## [0.1.150-alpha] - 2025-06-29
+
+- Commit: "Korrekte API-Response-Struktur verwenden, Array-Validierung hinzufügen"...
+- [M] Resources/app/app.js
+- [M] Resources/app/layout/App.vue
+- [M] composer.json
