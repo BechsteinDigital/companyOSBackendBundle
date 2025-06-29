@@ -178,3 +178,9 @@
 - Commit: feat: Veröffentlicht CompanyOS Backend Bundle v1.0.0...
 - [M] CHANGELOG.md
 - [M] composer.json
+
+## [0.1.149-alpha] - 2025-06-29
+
+- Commit: Optimierung: Super-Admin-Überschreibung basierend auf Permission hinzugefügt....
+- [M] Resources/app/stores/navigation.js
+- [M] composer.json

@@ -69,8 +69,12 @@ export const useNavigationStore = defineStore('navigation', {
       // Öffentliche Items (ohne Permission) immer anzeigen
       if (!item.permission) return true
       
-      // Admin-Überschreibung (Super-User)
-      if (auth.user?.roles?.includes('ROLE_SUPER_ADMIN')) return true
+      // Super-Admin-Überschreibung (basierend auf Permission, nicht Rolle)
+      // Super-Admin mit "**" Permission umgeht ALLE Einschränkungen (RBAC, ABAC, ACL)
+      if (auth.user?.permissions?.includes('**')) {
+        console.log(`✅ Navigation Super-Admin override for: ${item.name}`)
+        return true
+      }
       
       // RBAC - Role-Based Access Control
       const rbacCheck = this.checkRBAC(item, auth)
