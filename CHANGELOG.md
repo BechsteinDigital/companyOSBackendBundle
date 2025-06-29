@@ -357,3 +357,9 @@ main "$@"
 - Commit: Refactor OAuth2-Authentifizierung und Profil-Endpunkte....
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.142-alpha] - 2025-06-29
+
+- Commit: "Optimistische Berechtigungen für bessere UX hinzugefügt"...
+- [M] Resources/app/app.js
+- [M] composer.json
