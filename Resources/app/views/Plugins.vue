@@ -173,7 +173,7 @@
           class="upload-area"
           :class="{ 
             'drag-over': isDragOver, 
-            'has-file': selectedFile',
+            'has-file': selectedFile,
             'uploading': uploadLoading 
           }"
           @drop="handleDrop"
