@@ -191,3 +191,9 @@
 - [M] Resources/app/app.js
 - [M] Resources/app/layout/App.vue
 - [M] composer.json
+
+## [0.1.151-alpha] - 2025-06-29
+
+- Commit: Hinzufügen von Navigation Store in Symfony Bundle....
+- [M] Resources/app/stores/navigation.js
+- [M] composer.json

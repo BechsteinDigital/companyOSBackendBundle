@@ -271,6 +271,7 @@ export const useNavigationStore = defineStore('navigation', {
       // await auditAPI.logNavigationAccess({ ... })
     },
     
+    
     /**
      * Navigation-Permissions vom Backend synchronisieren
      */
