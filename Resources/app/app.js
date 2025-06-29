@@ -11,7 +11,6 @@ import axios from 'axios'
 import { useThemeStore } from './stores/theme.js'
 import { useAuthStore, setupAutoRefresh } from './stores/auth.js'
 import { useNavigationStore, navigationHelper } from './stores/navigation.js'
-import { permissionsDebug } from './utils/permissions-debug.js'
 
 // CoreUI Icons & Components
 import { iconsSet } from './icons'
@@ -583,11 +582,16 @@ async function initializeApp() {
     console.log('   - diagnosePermissions() für Permission-Diagnose')
     console.log('   - debugPermissions für erweiterte Debug-Funktionen')
     
-    // Automatische Diagnose nach 2 Sekunden
-    setTimeout(() => {
+    // Debug-Tools lazy laden um Circular Dependencies zu vermeiden
+    setTimeout(async () => {
       if (auth.user) {
-        console.log('🔍 Automatische Permission-Diagnose gestartet...')
-        permissionsDebug.diagnoseProblems()
+        try {
+          const { permissionsDebug } = await import('./utils/permissions-debug.js')
+          console.log('🔍 Automatische Permission-Diagnose gestartet...')
+          permissionsDebug.diagnoseProblems()
+        } catch (error) {
+          console.warn('Debug-Tools konnten nicht geladen werden:', error)
+        }
       }
     }, 2000)
   }

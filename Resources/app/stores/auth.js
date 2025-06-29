@@ -98,13 +98,11 @@ export const useAuthStore = defineStore('auth', {
     // Berechtigungsprüfung für Navigation (Permission-basiert)
     canAccess: (state) => (permission) => {
       if (!state.user) {
-        console.warn(`❌ Navigation access denied: User not authenticated`)
         return false
       }
       
       // Super-Admin hat alle Berechtigungen
       if (state.user.permissions?.includes('**')) {
-        console.log(`✅ Navigation access granted for ${permission}: Super-admin rights`)
         return true
       }
       
@@ -112,29 +110,59 @@ export const useAuthStore = defineStore('auth', {
       if (state.user.permissions) {
         // Direkte Permission-Prüfung
         if (state.user.permissions.includes(permission)) {
-          console.log(`✅ Navigation access granted for ${permission}: Direct permission match`)
           return true
         }
         
         // Wildcard-Prüfung
         const permissionPrefix = permission.split('.')[0] + '.*'
         if (state.user.permissions.includes(permissionPrefix)) {
-          console.log(`✅ Navigation access granted for ${permission}: Wildcard permission (${permissionPrefix})`)
           return true
         }
         
-        // Erweiterte Permission-Mappings für Navigation
-        const hasNavigationPermission = state.checkNavigationPermission(permission)
-        if (hasNavigationPermission) {
-          console.log(`✅ Navigation access granted for ${permission}: Navigation mapping`)
-          return hasNavigationPermission
+        const userPermissions = state.user.permissions
+        
+        // Navigation-spezifische Permission-Mappings
+        switch (permission) {
+          case 'dashboard.view':
+          case 'dashboard':
+            return userPermissions.includes('profile.read') || 
+                   userPermissions.includes('dashboard.view') ||
+                   userPermissions.includes('dashboard.*') ||
+                   state.user.roles?.includes('ROLE_USER')
+          
+          case 'administration':
+            return userPermissions.some(p => 
+              p.startsWith('user.') || 
+              p.startsWith('role.') ||
+              p === 'administration.*'
+            )
+          
+          case 'system':
+            return userPermissions.some(p => 
+              p.startsWith('plugin.') || 
+              p.startsWith('settings.') ||
+              p.startsWith('webhook.') ||
+              p === 'system.*'
+            )
+          
+          case 'development':
+            return userPermissions.some(p => 
+              p.startsWith('api.') || 
+              p.startsWith('system.logs') ||
+              p === 'development.*'
+            )
+          
+          case 'profile':
+          case 'profile.view':
+            return userPermissions.includes('profile.read') ||
+                   userPermissions.includes('profile.*') ||
+                   true // Profil sollte für jeden Benutzer zugänglich sein
+          
+          default:
+            return false
         }
       }
       
-      console.warn(`❌ Navigation access denied for ${permission}: No matching permissions found`, {
-        userPermissions: state.user.permissions,
-        userRoles: state.user.roles
-      })
       return false
     },
     
@@ -327,30 +355,6 @@ export const useAuthStore = defineStore('auth', {
     // Vereinfachte lokale Permission-Checks für Fallback
     hasRole(role) {
       return this.user?.roles?.includes(role) || false
-    },
-
-    hasAnyPermission(permissions) {
-      // Für schnelle lokale Checks - nur RBAC
-      if (!this.user?.roles) return false
-      
-      // Admin hat alle Permissions
-      if (this.user.roles.includes('ROLE_ADMIN')) return true
-      
-      // TODO: Implementiere lokale Permission-Mappings für Performance
-      // Für jetzt: Optimistische Annahme für bessere UX
-      return true
-    },
-
-    // Legacy canAccess Methode für Kompatibilität
-    canAccess(permission) {
-      // Lokaler schneller Check für bessere UX
-      if (!this.user?.roles) return false
-      
-      // Admin hat alle Permissions
-      if (this.user.roles.includes('ROLE_ADMIN')) return true
-      
-      // TODO: Implementiere lokale Permission-Mappings
-      return true
     },
     async login({ username, password, remember = false }) {
       this.loading = true

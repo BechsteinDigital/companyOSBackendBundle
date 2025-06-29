@@ -338,3 +338,10 @@ main "$@"
 - [M] Resources/app/app.js
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.139-alpha] - 2025-06-29
+
+- Commit: Refactor: Lazy laden der Debug-Tools, Navigation-Spezifische Permission-Mappi...
+- [M] Resources/app/app.js
+- [M] Resources/app/stores/auth.js
+- [M] composer.json
