@@ -230,19 +230,53 @@ export const useNavigationStore = defineStore('navigation', {
      * Navigation hierarchisch strukturieren
      */
     structureNavigation(items) {
+      console.log('🏗️ structureNavigation: Start with', items.length, 'items')
+      console.log('🏗️ structureNavigation: Input items:', items.map(i => `${i.name} (${i.component})`))
+      
       const structured = []
       let currentGroup = null
       
-      items.forEach(item => {
+      items.forEach((item, index) => {
+        console.log(`🏗️ Processing item ${index + 1}: ${item.name} (${item.component})`)
+        
         if (item.component === 'CNavTitle') {
+          // Wenn es bereits eine Gruppe gibt, füge sie zur strukturierten Liste hinzu
+          if (currentGroup) {
+            console.log(`🏗️ Closing previous group: ${currentGroup.name} with ${currentGroup.items.length} children`)
+            structured.push(currentGroup)
+          }
+          
+          // Starte neue Gruppe
           currentGroup = { ...item, items: [] }
-          structured.push(currentGroup)
+          console.log(`🏗️ Starting new group: ${currentGroup.name}`)
         } else {
+          // Füge Item zur aktuellen Gruppe hinzu
           if (currentGroup) {
             currentGroup.items.push(item)
+            console.log(`🏗️ Added ${item.name} to group ${currentGroup.name} (now ${currentGroup.items.length} children)`)
           } else {
+            // Kein aktuelle Gruppe, füge direkt zur strukturierten Liste hinzu
             structured.push(item)
+            console.log(`🏗️ Added ${item.name} as standalone item`)
           }
+        }
+      })
+      
+      // Füge die letzte Gruppe hinzu, falls vorhanden
+      if (currentGroup) {
+        console.log(`🏗️ Closing final group: ${currentGroup.name} with ${currentGroup.items.length} children`)
+        structured.push(currentGroup)
+      }
+      
+      console.log('🏗️ structureNavigation: Final structure:')
+      structured.forEach((item, index) => {
+        if (item.items) {
+          console.log(`  ${index + 1}. ${item.name} (${item.component}) - ${item.items.length} children:`)
+          item.items.forEach((child, childIndex) => {
+            console.log(`     ${childIndex + 1}. ${child.name} (${child.component})`)
+          })
+        } else {
+          console.log(`  ${index + 1}. ${item.name} (${item.component}) - standalone`)
         }
       })
       

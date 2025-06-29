@@ -259,3 +259,9 @@
 - Commit: "Export AppSidebarNav als Modul für bessere Strukturierung"...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.162-alpha] - 2025-06-29
+
+- Commit: "🏗️ Strukturiere Navigation mit Debug-Logs"...
+- [M] Resources/app/stores/navigation.js
+- [M] composer.json
