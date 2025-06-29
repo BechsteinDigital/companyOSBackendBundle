@@ -265,3 +265,9 @@
 - Commit: "🏗️ Strukturiere Navigation mit Debug-Logs"...
 - [M] Resources/app/stores/navigation.js
 - [M] composer.json
+
+## [0.1.163-alpha] - 2025-06-29
+
+- Commit: Refaktorierung: Kinder-Items ohne zusätzliche Permission-Checks rendern 🔄...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json

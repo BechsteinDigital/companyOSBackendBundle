@@ -8,7 +8,7 @@ Ein vollständiges Symfony-Bundle für das CompanyOS Backend-Frontend mit VueJS,
 
 ## ⚠️ Alpha Version
 
-**Dies ist eine Alpha-Version (0.1.162-alpha
+**Dies ist eine Alpha-Version (0.1.163-alpha
 
 ### Was funktioniert:
 - ✅ Vollständiges CoreUI-Admin-Template
@@ -51,7 +51,7 @@ Das BackendBundle ist ein **reines Frontend-Bundle**:
 ### ⚠️ Nur für Entwickler und Tester
 
 ```bash
-composer require companyos/backend:^0.1.162-alpha
+composer require companyos/backend:^0.1.163-alpha
 ```
 
 ### Bundle registrieren

@@ -92,12 +92,6 @@ const AppSidebarNav = defineComponent({
      * Erweiterte Navigation-Item-Rendering mit hierarchischer Unterstützung
      */
     const renderItem = (item) => {
-      // Permission-Check vor Rendering
-      if (!navigationStore.checkNavigationPermission(item, auth)) {
-        console.log(`🚫 Skipping navigation item due to permissions: ${item.name}`)
-        return null
-      }
-
       console.log(`🎨 Rendering navigation item: ${item.name}, icon: ${item.icon}, has children: ${!!item.items}`)
 
       // Navigation-Title rendern
@@ -147,10 +141,66 @@ const AppSidebarNav = defineComponent({
               )
             ],
             default: () => {
-              // Kinder-Items rekursiv rendern
-              return item.items
-                .map((childItem) => renderItem(childItem))
-                .filter(Boolean)
+              console.log(`🔄 Rendering ${item.items.length} children for group: ${item.name}`)
+              console.log(`🔄 Children:`, item.items.map(c => c.name))
+              
+              // Kinder-Items rendern (OHNE zusätzliche Permission-Checks, da bereits gefiltert)
+              return item.items.map((childItem, index) => {
+                console.log(`  🎯 Rendering child ${index + 1}: ${childItem.name}`)
+                
+                // Direkt als CNavItem rendern (da bereits permission-gefiltert)
+                return h(
+                  RouterLink,
+                  {
+                    key: childItem.name,
+                    to: childItem.to,
+                    custom: true,
+                  },
+                  {
+                    default: (props) => {
+                      console.log(`🔗 Creating child RouterLink for ${childItem.name} to ${childItem.to}`)
+                      
+                      return h(
+                        CNavItem,
+                        {
+                          active: props.isActive,
+                          href: props.href,
+                          onClick: (event) => {
+                            console.log(`🖱️ Clicked child navigation item: ${childItem.name}`)
+                            event.preventDefault()
+                            props.navigate()
+                          }
+                        },
+                        {
+                          default: () => [
+                            // Icon für Kind
+                            childItem.icon && icons[childItem.icon]
+                              ? h(resolveComponent('CIcon'), {
+                                  customClassName: 'nav-icon',
+                                  content: icons[childItem.icon],
+                                })
+                              : h('span', { class: 'nav-icon' }, [
+                                  h('span', { class: 'nav-icon-bullet' })
+                                ]),
+                            // Name
+                            childItem.name,
+                            // Badge für Kind
+                            childItem.badge && h(
+                              CBadge,
+                              {
+                                class: 'ms-auto',
+                                color: childItem.badge.color,
+                                size: 'sm',
+                              },
+                              { default: () => childItem.badge.text }
+                            )
+                          ],
+                        }
+                      )
+                    }
+                  }
+                )
+              })
             }
           }
         )
