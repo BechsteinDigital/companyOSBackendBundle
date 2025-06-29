@@ -283,3 +283,9 @@
 - Commit: "Änderung: CNavGroup zu CNavTitle in AppSidebarNav.js"...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.166-alpha] - 2025-06-29
+
+- Commit: feat: Release – Änderungen: M Resources/app/components/AppSidebarNav.js; ...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json
