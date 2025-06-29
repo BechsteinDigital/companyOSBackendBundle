@@ -253,3 +253,9 @@
 - Commit: 🔍 Verbessere Navigation-Items Import und Debug-Filterung 🛠️...
 - [M] Resources/app/utils/permissions-debug.js
 - [M] composer.json
+
+## [0.1.161-alpha] - 2025-06-29
+
+- Commit: "Export AppSidebarNav als Modul für bessere Strukturierung"...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json
