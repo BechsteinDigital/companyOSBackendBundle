@@ -222,3 +222,9 @@
 - Commit: Ändern Symbol für Datenbank zu Speicher und Globe zu GlobeAlt...
 - [M] Resources/app/icons.js
 - [M] composer.json
+
+## [0.1.156-alpha] - 2025-06-29
+
+- Commit: "Vereinfachtes Rendering von Navigationselementen hinzugefügt 🎨"...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json
