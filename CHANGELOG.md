@@ -203,3 +203,9 @@
 - Commit: Refactor: Navigation-Permission-Logik verbessert 🚀...
 - [M] Resources/app/utils/permissions-debug.js
 - [M] composer.json
+
+## [0.1.153-alpha] - 2025-06-29
+
+- Commit: Refactor: ABAC-Einschränkungen verbessert für normale Benutzer 🛠️...
+- [M] Resources/app/app.js
+- [M] composer.json

@@ -292,6 +292,12 @@ async function checkAdvancedPermissions(to, auth, navigationStore) {
   
   console.log(`🔍 Checking secure permissions for route: ${to.name}`)
   
+  // SUPER-ADMIN OVERRIDE: Super-Admin umgeht ALLE Einschränkungen (RBAC, ABAC, ACL)
+  if (auth.user?.permissions?.includes('**')) {
+    console.log(`✅ Router Super-Admin override for: ${to.name} - bypassing all restrictions`)
+    return true
+  }
+  
   // Sichere Permission-Prüfung mit Backend-Validierung
   let hasPermission = false
   
@@ -330,7 +336,7 @@ async function checkAdvancedPermissions(to, auth, navigationStore) {
     return false
   }
   
-  // ABAC - Zeitbasierte Einschränkungen
+  // ABAC - Zeitbasierte Einschränkungen (nur für normale Benutzer)
   if (to.meta.timeRestrictions) {
     const now = new Date()
     const currentHour = now.getHours()
@@ -339,21 +345,21 @@ async function checkAdvancedPermissions(to, auth, navigationStore) {
     if (to.meta.timeRestrictions.hours) {
       const [startHour, endHour] = to.meta.timeRestrictions.hours
       if (currentHour < startHour || currentHour > endHour) {
-        console.warn(`Access denied: Route ${to.name} not accessible at ${currentHour}:00`)
+        console.warn(`❌ ABAC Time restriction: Route ${to.name} not accessible at ${currentHour}:00 (allowed: ${startHour}-${endHour})`)
         return false
       }
     }
     
     if (to.meta.timeRestrictions.weekdays && !to.meta.timeRestrictions.weekdays.includes(currentDay)) {
-      console.warn(`Access denied: Route ${to.name} not accessible on weekday ${currentDay}`)
+      console.warn(`❌ ABAC Time restriction: Route ${to.name} not accessible on weekday ${currentDay} (allowed: ${to.meta.timeRestrictions.weekdays})`)
       return false
     }
   }
   
-  // ABAC - Abteilungsbasierte Einschränkungen
+  // ABAC - Abteilungsbasierte Einschränkungen (nur für normale Benutzer)
   if (to.meta.departmentRestrictions && auth.user?.department) {
     if (!to.meta.departmentRestrictions.includes(auth.user.department)) {
-      console.warn(`Access denied: Route ${to.name} not accessible for department ${auth.user.department}`)
+      console.warn(`❌ ABAC Department restriction: Route ${to.name} not accessible for department ${auth.user.department} (allowed: ${to.meta.departmentRestrictions})`)
       return false
     }
   }
