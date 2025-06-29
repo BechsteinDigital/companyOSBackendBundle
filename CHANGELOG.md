@@ -247,3 +247,9 @@
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] Resources/app/stores/navigation.js
 - [M] composer.json
+
+## [0.1.160-alpha] - 2025-06-29
+
+- Commit: 🔍 Verbessere Navigation-Items Import und Debug-Filterung 🛠️...
+- [M] Resources/app/utils/permissions-debug.js
+- [M] composer.json

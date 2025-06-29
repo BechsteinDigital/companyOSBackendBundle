@@ -129,28 +129,64 @@ export class PermissionsDebug {
   testNavigationFiltering() {
     this.log('INFO', '🧭 Teste Navigation-Filterung...')
     
-    // Simuliere Navigation-Items
-    const navItems = [
-      { name: 'Dashboard', permission: 'dashboard.view' },
-      { name: 'Benutzer', permission: ['user.create', 'user.read', 'user.update', 'user.delete'] },
-      { name: 'Rollen', permission: ['role.create', 'role.read', 'role.update', 'role.delete'] },
-      { name: 'Plugins', permission: ['plugin.create', 'plugin.read', 'plugin.update', 'plugin.delete'] },
-      { name: 'Einstellungen', permission: ['settings.system', 'settings.read', 'settings.update'] },
-      { name: 'Webhooks', permission: ['webhook.create', 'webhook.read', 'webhook.update', 'webhook.delete'] }
-    ]
+    // ✅ KORRIGIERT - Verwende vollständige Navigation aus _nav.js
+    let navItems = []
+    try {
+      // Versuche die echte Navigation zu importieren
+      if (typeof window !== 'undefined' && window.allNavigationItems) {
+        navItems = window.allNavigationItems
+      } else {
+        // Fallback auf erweiterte Liste (statt nur 6 Items)
+        navItems = [
+          { name: 'Dashboard', permission: 'dashboard.view', component: 'CNavItem' },
+          { name: 'Verwaltung', permission: ['user.read', 'role.read'], component: 'CNavTitle' },
+          { name: 'Benutzer', permission: ['user.create', 'user.read', 'user.update', 'user.delete'], component: 'CNavItem' },
+          { name: 'Rollen', permission: ['role.create', 'role.read', 'role.update', 'role.delete'], component: 'CNavItem' },
+          { name: 'Berechtigungen', permission: ['permission.read', 'role.read'], component: 'CNavItem' },
+          { name: 'System', permission: ['plugin.read', 'settings.read'], component: 'CNavTitle' },
+          { name: 'Plugins', permission: ['plugin.create', 'plugin.read', 'plugin.update', 'plugin.delete'], component: 'CNavItem' },
+          { name: 'Einstellungen', permission: ['settings.system', 'settings.read', 'settings.update'], component: 'CNavItem' },
+          { name: 'Webhooks', permission: ['webhook.create', 'webhook.read', 'webhook.update', 'webhook.delete'], component: 'CNavItem' },
+          { name: 'Entwicklung', permission: ['api.read', 'system.logs'], component: 'CNavTitle' },
+          { name: 'API-Dokumentation', permission: ['api.read', 'api.documentation'], component: 'CNavItem' },
+          { name: 'System-Status', permission: ['system.monitoring', 'system.status'], component: 'CNavItem' },
+          { name: 'Compliance', permission: ['audit.read', 'compliance.read'], component: 'CNavTitle' },
+          { name: 'Audit-Log', permission: ['audit.read', 'audit.export'], component: 'CNavItem' },
+          { name: 'Datenschutz', permission: ['privacy.read', 'gdpr.access'], component: 'CNavItem' },
+          { name: 'Notfall', permission: ['emergency.access'], component: 'CNavTitle' },
+          { name: 'Notfall-Zugriff', permission: ['emergency.access', 'emergency.override'], component: 'CNavItem' }
+        ]
+      }
+    } catch (error) {
+      console.warn('Konnte vollständige Navigation nicht laden:', error)
+      // Fallback auf ursprüngliche 6 Items
+      navItems = [
+        { name: 'Dashboard', permission: 'dashboard.view', component: 'CNavItem' },
+        { name: 'Benutzer', permission: ['user.create', 'user.read', 'user.update', 'user.delete'], component: 'CNavItem' },
+        { name: 'Rollen', permission: ['role.create', 'role.read', 'role.update', 'role.delete'], component: 'CNavItem' },
+        { name: 'Plugins', permission: ['plugin.create', 'plugin.read', 'plugin.update', 'plugin.delete'], component: 'CNavItem' },
+        { name: 'Einstellungen', permission: ['settings.system', 'settings.read', 'settings.update'], component: 'CNavItem' },
+        { name: 'Webhooks', permission: ['webhook.create', 'webhook.read', 'webhook.update', 'webhook.delete'], component: 'CNavItem' }
+      ]
+    }
+
+    console.log('🔍 Debug: Verwende Navigation-Items:', navItems.length, 'Items')
+    console.log('🔍 Debug: Navigation-Items Details:', navItems.map(i => `${i.name} (${i.component})`))
 
     // ✅ KORREKT - Verwende die gleiche Navigation-Permission-Logik wie der Navigation Store
     const navigationStore = this.getNavigationStore()
     const filteredItems = navItems.filter(item => {
-      return navigationStore.checkNavigationPermission(item, this.authStore)
+      const hasPermission = navigationStore.checkNavigationPermission(item, this.authStore)
+      console.log(`🎯 Debug Filter: ${item.name} (${item.component}) -> ${hasPermission ? '✅ ALLOW' : '❌ DENY'}`)
+      return hasPermission
     })
 
     this.log('INFO', `📈 Navigation-Filter: ${filteredItems.length}/${navItems.length} Items sichtbar`)
     
     console.group('🧭 NAVIGATION FILTERING TEST')
-    console.log('Alle Items:', navItems.map(i => i.name))
-    console.log('Sichtbare Items:', filteredItems.map(i => i.name))
-    console.log('Versteckte Items:', navItems.filter(i => !filteredItems.includes(i)).map(i => i.name))
+    console.log('Alle Items:', navItems.map(i => `${i.name} (${i.component})`))
+    console.log('Sichtbare Items:', filteredItems.map(i => `${i.name} (${i.component})`))
+    console.log('Versteckte Items:', navItems.filter(i => !filteredItems.includes(i)).map(i => `${i.name} (${i.component})`))
     console.groupEnd()
 
     return {
