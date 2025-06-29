@@ -228,3 +228,9 @@
 - Commit: "Vereinfachtes Rendering von Navigationselementen hinzugefügt 🎨"...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.157-alpha] - 2025-06-29
+
+- Commit: "Behebung von Navigation Store Fehler"...
+- [M] Resources/app/stores/navigation.js
+- [M] composer.json
