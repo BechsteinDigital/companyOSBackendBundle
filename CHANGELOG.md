@@ -345,3 +345,9 @@ main "$@"
 - [M] Resources/app/app.js
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.140-alpha] - 2025-06-29
+
+- Commit: "Optimierung der Berechtigungsprüfung für Navigation"...
+- [M] Resources/app/stores/auth.js
+- [M] composer.json
