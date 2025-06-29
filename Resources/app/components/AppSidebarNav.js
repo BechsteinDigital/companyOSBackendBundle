@@ -94,18 +94,7 @@ const AppSidebarNav = defineComponent({
     const renderItem = (item) => {
       console.log(`🎨 Rendering navigation item: ${item.name}, icon: ${item.icon}, has children: ${!!item.items}`)
 
-      // Navigation-Title rendern
-      if (item.component === 'CNavTitle') {
-        return h(
-          CNavTitle,
-          { key: item.name },
-          {
-            default: () => item.name
-          }
-        )
-      }
-
-      // Navigation-Group mit Kindern rendern
+      // Navigation-Group mit Kindern rendern (ERSTE PRIORITÄT)
       if (item.items && item.items.length > 0) {
         console.log(`🗂️ Rendering navigation group: ${item.name} with ${item.items.length} children`)
         
@@ -202,6 +191,17 @@ const AppSidebarNav = defineComponent({
                 )
               })
             }
+          }
+        )
+      }
+
+      // Navigation-Title rendern (OHNE Kinder)
+      if (item.component === 'CNavTitle') {
+        return h(
+          CNavTitle,
+          { key: item.name },
+          {
+            default: () => item.name
           }
         )
       }

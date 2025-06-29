@@ -271,3 +271,9 @@
 - Commit: Refaktorierung: Kinder-Items ohne zusätzliche Permission-Checks rendern 🔄...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.164-alpha] - 2025-06-29
+
+- Commit: "Priorität für Navigation-Group mit Kindern erhöht, Navigation-Title ohne Kin...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json
