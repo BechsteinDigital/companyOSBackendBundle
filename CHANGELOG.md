@@ -363,3 +363,10 @@ main "$@"
 - Commit: "Optimistische Berechtigungen für bessere UX hinzugefügt"...
 - [M] Resources/app/app.js
 - [M] composer.json
+
+## [0.1.143-alpha] - 2025-06-29
+
+- Commit: 🔒 Sicherheitsüberprüfung verbessert & Fallbacks implementiert...
+- [M] Resources/app/app.js
+- [M] Resources/app/stores/auth.js
+- [M] composer.json

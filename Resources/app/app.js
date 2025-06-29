@@ -57,7 +57,7 @@ const routes = [
       requiresAuth: true,
       permission: 'dashboard.view',
       fallbackPermission: 'dashboard',
-      skipAdvancedChecks: true  // Dashboard sollte für alle zugänglich sein
+      securityLevel: 'low'  // Dashboard ist unkritisch - erlaubt Fallbacks
     }
   },
   // Administration Routes mit erweiterten Permissions
@@ -281,27 +281,44 @@ function registerPluginComponents(app, router, navigationStore) {
 async function checkAdvancedPermissions(to, auth, navigationStore) {
   if (!to.meta.permission) return true
   
-  console.log(`🔍 Checking permissions for route: ${to.name}`)
+  console.log(`🔍 Checking secure permissions for route: ${to.name}`)
   
-  // Lokale Permission-Prüfung (schnell und einfach)
-  let hasBasicPermission = false
+  // Sichere Permission-Prüfung mit Backend-Validierung
+  let hasPermission = false
   
   if (Array.isArray(to.meta.permission)) {
     // Mehrere Permissions - eine muss erfüllt sein
-    hasBasicPermission = auth.hasAnyPermission(to.meta.permission)
+    for (const permission of to.meta.permission) {
+      try {
+        if (await auth.checkPermissionSecure(permission)) {
+          hasPermission = true
+          break
+        }
+      } catch (error) {
+        console.error(`Permission check failed for ${permission}:`, error)
+      }
+    }
   } else {
     // Einzelne Permission
-    hasBasicPermission = auth.hasPermission(to.meta.permission)
+    try {
+      hasPermission = await auth.checkPermissionSecure(to.meta.permission)
+    } catch (error) {
+      console.error(`Permission check failed for ${to.meta.permission}:`, error)
+    }
   }
   
-  if (!hasBasicPermission && to.meta.fallbackPermission) {
-    hasBasicPermission = auth.canAccess(to.meta.fallbackPermission)
+  // Fallback Permission prüfen wenn Hauptpermission fehlschlägt
+  if (!hasPermission && to.meta.fallbackPermission) {
+    try {
+      hasPermission = await auth.checkPermissionSecure(to.meta.fallbackPermission)
+    } catch (error) {
+      console.error(`Fallback permission check failed for ${to.meta.fallbackPermission}:`, error)
+    }
   }
   
-  if (!hasBasicPermission) {
-    console.log(`✅ Permission granted for route: ${to.name} (local check)`)
-    // Für jetzt: Optimistische Berechtigung für bessere UX
-    hasBasicPermission = true
+  if (!hasPermission) {
+    console.error(`❌ SECURE permission check FAILED for route: ${to.name}`)
+    return false
   }
   
   // ABAC - Zeitbasierte Einschränkungen
@@ -489,29 +506,39 @@ async function initializeApp() {
       // Optimistische Berechtigung für bessere UX
     }
     
-    // Permission-Prüfung - vereinfacht für bessere UX
-    if (to.meta.permission && auth.user && auth.accessToken && !to.meta.skipAdvancedChecks) {
-      const hasPermission = await checkAdvancedPermissions(to, auth, navigationStore)
-      if (!hasPermission) {
-        console.warn(`❌ Permission check failed for route: ${to.name}`)
-        return next('/dashboard')
+    // Sichere Permission-Prüfung mit Backend-Validierung
+    if (to.meta.permission && auth.user && auth.accessToken) {
+      try {
+        const hasPermission = await checkAdvancedPermissions(to, auth, navigationStore)
+        if (!hasPermission) {
+          console.error(`❌ SECURE permission check FAILED for route: ${to.name}`)
+          
+          // Für unkritische Routen: Fallback auf Frontend-Check
+          if (to.meta.securityLevel === 'low') {
+            const frontendCheck = auth.canAccess(to.meta.permission || to.meta.fallbackPermission)
+            if (frontendCheck) {
+              console.warn(`⚠️ Using frontend fallback for route: ${to.name} (backend check failed)`)
+            } else {
+              console.error(`❌ Even frontend fallback failed for route: ${to.name}`)
+              return next('/dashboard')
+            }
+          } else {
+            // Für kritische Routen: Zugriff verweigern
+            console.error(`🚨 Critical route access DENIED: ${to.name}`)
+            return next('/dashboard')
+          }
+        }
+      } catch (error) {
+        console.error(`🚨 Permission check error for route ${to.name}:`, error)
+        
+        // Bei Fehlern: Nur unkritische Routen erlauben
+        if (to.meta.securityLevel !== 'low') {
+          return next('/dashboard')
+        }
       }
     }
     
-    // Einfache Permission-Prüfung für Routen mit skipAdvancedChecks
-    if (to.meta.permission && to.meta.skipAdvancedChecks) {
-      console.log(`✅ Skipping advanced checks for route: ${to.name}`)
-      // Dashboard und andere grundlegende Routen erhalten optimistische Berechtigung
-    }
-    
-    // Legacy Permission-Prüfung (optimistisch für bessere UX)
-    if (to.meta.permission && !to.meta.skipAdvancedChecks && !to.meta.timeRestrictions && !to.meta.departmentRestrictions) {
-      const canAccess = auth.canAccess(to.meta.permission)
-      if (!canAccess) {
-        console.log(`ℹ️ Legacy permission check: optimistic access for route: ${to.name}`)
-        // Optimistische Berechtigung für bessere UX
-      }
-    }
+    // Legacy Permission-Prüfung ist nicht mehr nötig - wird durch sichere Checks ersetzt
     
     console.log(`✅ Access granted to route: ${to.name}`)
     next()

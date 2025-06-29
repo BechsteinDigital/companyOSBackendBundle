@@ -20,67 +20,103 @@ export const useAuthStore = defineStore('auth', {
   }),
   
   getters: {
-    // Permission-Prüfung - einfach und sauber
+    // Permission-Prüfung - sicher und präzise
     hasPermission: (state) => (permission) => {
-      if (!state.user || !state.user.permissions) return false
+      if (!state.user || !state.user.permissions) {
+        console.warn(`❌ Permission check failed: No user or permissions loaded for ${permission}`)
+        return false
+      }
       
       // Super-Admin hat alle Rechte
-      if (state.user.permissions.includes('**')) return true
+      if (state.user.permissions.includes('**')) {
+        console.log(`✅ Permission ${permission}: Super-admin access`)
+        return true
+      }
       
       // Direkte Permission-Prüfung
-      if (state.user.permissions.includes(permission)) return true
+      if (state.user.permissions.includes(permission)) {
+        console.log(`✅ Permission ${permission}: Direct match`)
+        return true
+      }
       
       // Wildcard-Prüfung (z.B. user.* für user.read)
       const permissionPrefix = permission.split('.')[0] + '.*'
-      if (state.user.permissions.includes(permissionPrefix)) return true
+      if (state.user.permissions.includes(permissionPrefix)) {
+        console.log(`✅ Permission ${permission}: Wildcard match (${permissionPrefix})`)
+        return true
+      }
       
+      console.warn(`❌ Permission ${permission}: DENIED - not found in user permissions`, state.user.permissions)
       return false
     },
     
-    // Navigation-Access - simpel und effizient
+    // Navigation-Access - strenge Sicherheitsprüfung
     canAccess: (state) => (permission) => {
-      if (!state.user) return false
+      if (!state.user) {
+        console.warn(`❌ Navigation access denied: No user authenticated for ${permission}`)
+        return false
+      }
       
       // Super-Admin hat alle Berechtigungen
-      if (state.user.permissions?.includes('**')) return true
+      if (state.user.permissions?.includes('**')) {
+        console.log(`✅ Navigation access: Super-admin can access ${permission}`)
+        return true
+      }
       
       // Direkte Permission-Prüfung
-      if (state.user.permissions?.includes(permission)) return true
+      if (state.user.permissions?.includes(permission)) {
+        console.log(`✅ Navigation access: Direct permission match for ${permission}`)
+        return true
+      }
       
-      // Navigation-spezifische Mappings
+      // Navigation-spezifische Mappings (STRENG)
       const userPermissions = state.user.permissions || []
+      let hasAccess = false
       
       switch (permission) {
         case 'dashboard.view':
         case 'dashboard':
-          return userPermissions.includes('dashboard.view') || 
-                 userPermissions.includes('profile.read') ||
-                 userPermissions.includes('dashboard.*')
+          hasAccess = userPermissions.includes('dashboard.view') || 
+                     userPermissions.includes('dashboard.*')
+          break
         
         case 'administration':
-          return userPermissions.some(p => 
+          hasAccess = userPermissions.some(p => 
             p.startsWith('user.') || p.startsWith('role.') || p === 'administration.*'
           )
+          break
         
         case 'system':
-          return userPermissions.some(p => 
+          hasAccess = userPermissions.some(p => 
             p.startsWith('plugin.') || p.startsWith('settings.') || 
             p.startsWith('webhook.') || p === 'system.*'
           )
+          break
         
         case 'development':
-          return userPermissions.some(p => 
+          hasAccess = userPermissions.some(p => 
             p.startsWith('api.') || p.startsWith('system.logs') || p === 'development.*'
           )
+          break
         
         case 'profile':
         case 'profile.view':
-          return userPermissions.includes('profile.read') || 
-                 userPermissions.includes('profile.*') || true
+          // Profil-Zugriff: Nur mit expliziter Berechtigung
+          hasAccess = userPermissions.includes('profile.read') || 
+                     userPermissions.includes('profile.*')
+          break
         
         default:
-          return false
+          hasAccess = false
       }
+      
+      if (hasAccess) {
+        console.log(`✅ Navigation access: Permission granted for ${permission}`)
+      } else {
+        console.warn(`❌ Navigation access: Permission DENIED for ${permission}`, userPermissions)
+      }
+      
+      return hasAccess
     },
     
     // Mehrere Permissions prüfen
@@ -99,6 +135,103 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
+    // Backend Permission-Check (echte Sicherheit)
+    async checkPermissionSecure(permission, context = {}) {
+      if (!this.user?.id || !this.accessToken) {
+        console.error(`❌ Secure permission check failed: User not authenticated for ${permission}`)
+        return false
+      }
+      
+      // Erste Frontend-Validierung (schnell)
+      const frontendCheck = this.hasPermission(permission)
+      if (!frontendCheck) {
+        console.warn(`❌ Secure permission check: Frontend check failed for ${permission}`)
+        return false
+      }
+      
+      try {
+        console.log(`🔍 Backend permission check for: ${permission}`)
+        
+        const response = await axios.post('/api/users/check-permission', {
+          user_id: this.user.id,
+          permission: permission,
+          context: context
+        }, {
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        
+        const result = response.data.allowed || false
+        
+        if (result) {
+          console.log(`✅ Backend permission check: ${permission} GRANTED`)
+        } else {
+          console.warn(`❌ Backend permission check: ${permission} DENIED by backend`)
+        }
+        
+        return result
+      } catch (error) {
+        console.error(`🚨 Backend permission check failed for ${permission}:`, error)
+        
+        // Bei Backend-Fehlern: STRENGE Sicherheit - DENY by default
+        if (error.response?.status === 403 || error.response?.status === 401) {
+          console.warn(`❌ Backend permission check: ${permission} EXPLICITLY DENIED (403/401)`)
+          return false
+        }
+        
+        // Bei Netzwerkfehlern: Fallback auf Frontend-Check (aber nur für unkritische Permissions)
+        const uncriticalPermissions = ['dashboard.view', 'profile.read', 'profile.view']
+        if (uncriticalPermissions.includes(permission)) {
+          console.warn(`⚠️ Backend permission check: Using frontend fallback for ${permission} (network error)`)
+          return frontendCheck
+        }
+        
+        console.warn(`❌ Backend permission check: ${permission} DENIED (network error, critical permission)`)
+        return false
+      }
+    },
+
+    // Batch Permission Check für Performance
+    async checkPermissionsBatch(permissions, context = {}) {
+      if (!this.user?.id || !this.accessToken) {
+        console.error(`❌ Batch permission check failed: User not authenticated`)
+        return {}
+      }
+      
+      try {
+        const response = await axios.post('/api/users/check-permissions-batch', {
+          user_id: this.user.id,
+          permissions: permissions,
+          context: context
+        }, {
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        
+        return response.data.permissions || {}
+      } catch (error) {
+        console.error('🚨 Batch permission check failed:', error)
+        
+        // Fallback: Einzelne Frontend-Checks für unkritische Permissions
+        const result = {}
+        const uncriticalPermissions = ['dashboard.view', 'profile.read', 'profile.view']
+        
+        permissions.forEach(permission => {
+          if (uncriticalPermissions.includes(permission)) {
+            result[permission] = this.hasPermission(permission)
+          } else {
+            result[permission] = false // Kritische Permissions werden bei Backend-Fehlern verweigert
+          }
+        })
+        
+        return result
+      }
+    },
+
     // Login
     async login({ username, password, remember = false }) {
       this.loading = true
