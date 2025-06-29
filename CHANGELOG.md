@@ -209,3 +209,10 @@
 - Commit: Refactor: ABAC-Einschränkungen verbessert für normale Benutzer 🛠️...
 - [M] Resources/app/app.js
 - [M] composer.json
+
+## [0.1.154-alpha] - 2025-06-29
+
+- Commit: "🔄 Neue Icons hinzugefügt: Code, History, Cloud, Database, Report uvm."...
+- [M] Resources/app/app.js
+- [M] Resources/app/icons.js
+- [M] composer.json

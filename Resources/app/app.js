@@ -487,33 +487,37 @@ async function initializeApp() {
     routes
   })
   
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, from) => {
     console.log(`🔐 Router Guard: ${from.path} → ${to.path}`)
     
     // Wenn Login-Seite aufgerufen wird und Token vorhanden ist
     if (to.path === '/login' && auth.accessToken) {
-      return next('/dashboard')
+      console.log('✅ User already authenticated, redirecting to dashboard')
+      return '/dashboard'
     }
     
     // Wenn Route keine Authentifizierung erfordert
     if (!to.meta.requiresAuth) {
-      return next()
+      console.log('✅ Route does not require authentication')
+      return true
     }
     
     // Wenn kein Access Token vorhanden ist
     if (!auth.accessToken) {
       console.log('❌ No access token, redirecting to login')
-      return next('/login')
+      return '/login'
     }
     
     // Wenn Access Token vorhanden ist, aber User-Profil noch nicht geladen
     if (auth.accessToken && !auth.user && !auth.loading) {
       try {
+        console.log('🔄 Loading user profile...')
         await auth.fetchProfile()
+        console.log('✅ User profile loaded successfully')
       } catch (error) {
-        console.error('Failed to load user profile:', error)
+        console.error('❌ Failed to load user profile:', error)
         auth.logout()
-        return next('/login')
+        return '/login'
       }
     }
     
@@ -526,6 +530,7 @@ async function initializeApp() {
     // Sichere Permission-Prüfung mit Backend-Validierung
     if (to.meta.permission && auth.user && auth.accessToken) {
       try {
+        console.log(`🔍 Checking secure permissions for route: ${to.name}`)
         const hasPermission = await checkAdvancedPermissions(to, auth, navigationStore)
         if (!hasPermission) {
           console.error(`❌ SECURE permission check FAILED for route: ${to.name}`)
@@ -535,30 +540,33 @@ async function initializeApp() {
             const frontendCheck = auth.canAccess(to.meta.permission || to.meta.fallbackPermission)
             if (frontendCheck) {
               console.warn(`⚠️ Using frontend fallback for route: ${to.name} (backend check failed)`)
+              return true
             } else {
               console.error(`❌ Even frontend fallback failed for route: ${to.name}`)
-              return next('/dashboard')
+              return '/dashboard'
             }
           } else {
             // Für kritische Routen: Zugriff verweigern
             console.error(`🚨 Critical route access DENIED: ${to.name}`)
-            return next('/dashboard')
+            return '/dashboard'
           }
         }
+        console.log(`✅ Access granted to route: ${to.name}`)
       } catch (error) {
         console.error(`🚨 Permission check error for route ${to.name}:`, error)
         
         // Bei Fehlern: Nur unkritische Routen erlauben
         if (to.meta.securityLevel !== 'low') {
-          return next('/dashboard')
+          console.error(`🚨 Blocking access to critical route due to error: ${to.name}`)
+          return '/dashboard'
         }
+        console.warn(`⚠️ Allowing access to non-critical route despite error: ${to.name}`)
       }
+    } else {
+      console.log(`✅ No permission check required for route: ${to.name}`)
     }
     
-    // Legacy Permission-Prüfung ist nicht mehr nötig - wird durch sichere Checks ersetzt
-    
-    console.log(`✅ Access granted to route: ${to.name}`)
-    next()
+    return true
   })
   
   app.use(router)

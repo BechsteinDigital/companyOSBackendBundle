@@ -49,7 +49,23 @@ import {
   cilEnvelopeOpen,
   cilMoon,
   cilSun,
-  cilContrast
+  cilContrast,
+  cilCode,
+  cilHistory,
+  cilCloud,
+  cilDatabase,
+  cilReportSlash,
+  cilTask,
+  cilBan,
+  cilShield,
+  cilMagnifyingGlass,
+  cilIndustry,
+  cilLibrary,
+  cilEducation,
+  cilGlobe,
+  cilApplications,
+  cilBrush,
+  cilColorPalette
 } from '@coreui/icons'
 
 export const iconsSet = {
@@ -101,5 +117,21 @@ export const iconsSet = {
   cilEnvelopeOpen,
   cilMoon,
   cilSun,
-  cilContrast
+  cilContrast,
+  cilCode,
+  cilHistory,
+  cilCloud,
+  cilDatabase,
+  cilReportSlash,
+  cilTask,
+  cilBan,
+  cilShield,
+  cilMagnifyingGlass,
+  cilIndustry,
+  cilLibrary,
+  cilEducation,
+  cilGlobe,
+  cilApplications,
+  cilBrush,
+  cilColorPalette
 }
