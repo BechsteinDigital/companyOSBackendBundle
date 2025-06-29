@@ -99,7 +99,7 @@ const AppSidebarNav = defineComponent({
         console.log(`🗂️ Rendering navigation group: ${item.name} with ${item.items.length} children`)
         
         return h(
-          CNavGroup,
+          CNavTitle,
           {
             key: item.name,
             toggler: item.name,

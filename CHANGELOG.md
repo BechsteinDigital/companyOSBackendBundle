@@ -277,3 +277,9 @@
 - Commit: "Priorität für Navigation-Group mit Kindern erhöht, Navigation-Title ohne Kin...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.165-alpha] - 2025-06-29
+
+- Commit: "Änderung: CNavGroup zu CNavTitle in AppSidebarNav.js"...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] composer.json
