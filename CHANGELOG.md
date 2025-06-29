@@ -197,3 +197,9 @@
 - Commit: Hinzufügen von Navigation Store in Symfony Bundle....
 - [M] Resources/app/stores/navigation.js
 - [M] composer.json
+
+## [0.1.152-alpha] - 2025-06-29
+
+- Commit: Refactor: Navigation-Permission-Logik verbessert 🚀...
+- [M] Resources/app/utils/permissions-debug.js
+- [M] composer.json

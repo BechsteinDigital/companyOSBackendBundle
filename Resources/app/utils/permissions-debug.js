@@ -139,12 +139,10 @@ export class PermissionsDebug {
       { name: 'Webhooks', permission: ['webhook.create', 'webhook.read', 'webhook.update', 'webhook.delete'] }
     ]
 
+    // ✅ KORREKT - Verwende die gleiche Navigation-Permission-Logik wie der Navigation Store
+    const navigationStore = this.getNavigationStore()
     const filteredItems = navItems.filter(item => {
-      if (Array.isArray(item.permission)) {
-        return this.authStore.hasAnyPermission(item.permission)
-      } else {
-        return this.authStore.canAccess(item.permission)
-      }
+      return navigationStore.checkNavigationPermission(item, this.authStore)
     })
 
     this.log('INFO', `📈 Navigation-Filter: ${filteredItems.length}/${navItems.length} Items sichtbar`)
@@ -159,6 +157,39 @@ export class PermissionsDebug {
       allItems: navItems,
       visibleItems: filteredItems,
       hiddenItems: navItems.filter(i => !filteredItems.includes(i))
+    }
+  }
+
+  // Navigation Store helper
+  getNavigationStore() {
+    // Versuche den Navigation Store zu bekommen
+    if (window.$pinia) {
+      const stores = window.$pinia.state.value
+      for (const [key, store] of Object.entries(stores)) {
+        if (store.checkNavigationPermission && typeof store.checkNavigationPermission === 'function') {
+          return store
+        }
+      }
+    }
+    
+    // Fallback: Erstelle temporären Store mit der gleichen Logik
+    return {
+      checkNavigationPermission: (item, auth) => {
+        // Super-Admin-Überschreibung (gleiche Logik wie Navigation Store)
+        if (auth.user?.permissions?.includes('**')) {
+          console.log(`✅ Debug Super-Admin override for: ${item.name}`)
+          return true
+        }
+        
+        // Fallback auf normale Permission-Checks
+        if (!item.permission) return true
+        
+        if (Array.isArray(item.permission)) {
+          return auth.hasAnyPermission(item.permission)
+        } else {
+          return auth.canAccess(item.permission)
+        }
+      }
     }
   }
 
