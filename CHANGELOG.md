@@ -370,3 +370,10 @@ main "$@"
 - [M] Resources/app/app.js
 - [M] Resources/app/stores/auth.js
 - [M] composer.json
+
+## [0.1.144-alpha] - 2025-06-29
+
+- Commit: refactor: Verbessere Token-Handling und Fehlerbehandlung...
+- [M] Resources/app/app.js
+- [M] Resources/app/stores/auth.js
+- [M] composer.json

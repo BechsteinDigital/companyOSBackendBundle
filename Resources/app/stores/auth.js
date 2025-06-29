@@ -139,6 +139,9 @@ export const useAuthStore = defineStore('auth', {
     async checkPermissionSecure(permission, context = {}) {
       if (!this.user?.id || !this.accessToken) {
         console.error(`❌ Secure permission check failed: User not authenticated for ${permission}`)
+        console.error(`   - this.user: ${this.user ? 'exists' : 'null'}`)
+        console.error(`   - this.user.id: ${this.user?.id || 'undefined'}`)
+        console.error(`   - this.accessToken: ${this.accessToken ? 'exists' : 'null'}`)
         return false
       }
       
@@ -291,12 +294,26 @@ export const useAuthStore = defineStore('auth', {
       const data = sessionData || localData
       
       if (data) {
-        const parsed = JSON.parse(data)
-        this.accessToken = parsed.accessToken
-        this.refreshToken = parsed.refreshToken
-        this.expiresAt = parsed.expiresAt
-        this.scopes = parsed.scopes || []
-        this.remember = parsed.remember || false
+        try {
+          const parsed = JSON.parse(data)
+          this.accessToken = parsed.accessToken
+          this.refreshToken = parsed.refreshToken
+          this.expiresAt = parsed.expiresAt
+          this.scopes = parsed.scopes || []
+          this.remember = parsed.remember || false
+          
+          console.log('✅ Tokens loaded from storage', {
+            hasAccessToken: !!this.accessToken,
+            hasRefreshToken: !!this.refreshToken,
+            remember: this.remember,
+            expiresAt: this.expiresAt ? new Date(this.expiresAt).toLocaleString() : 'never'
+          })
+        } catch (error) {
+          console.error('❌ Failed to parse stored tokens:', error)
+          this.logout() // Ungültige Daten entfernen
+        }
+      } else {
+        console.log('ℹ️ No stored tokens found')
       }
     },
     

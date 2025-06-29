@@ -415,9 +415,11 @@ async function initializeApp() {
     try {
       await auth.fetchProfile()
       setupAutoRefresh(auth)
+      console.log('✅ User authenticated and profile loaded')
     } catch (error) {
-      console.log('Profile loading failed, user will be redirected to login')
-      // Don't logout here, let the router guard handle it
+      console.log('❌ Profile loading failed, clearing invalid token')
+      // Token ist ungültig oder abgelaufen - entfernen
+      auth.logout()
     }
   }
 
