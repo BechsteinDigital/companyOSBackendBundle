@@ -77,6 +77,13 @@ const AppSidebarNav = defineComponent({
       const availableNavigation = navigationStore.availableNavigation
       
       console.log('✅ Filtered navigation items:', availableNavigation)
+      console.log('✅ Navigation items structure:', availableNavigation.map(item => ({
+        name: item.name,
+        component: item.component,
+        hasChildren: !!item.items,
+        childrenCount: item.items?.length || 0,
+        children: item.items?.map(child => child.name) || []
+      })))
       
       return availableNavigation
     })

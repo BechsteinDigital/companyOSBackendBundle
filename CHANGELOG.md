@@ -240,3 +240,10 @@
 - Commit: Erweiterte Navigation-Item-Rendering mit hierarchischer Unterstützung und Gru...
 - [M] Resources/app/components/AppSidebarNav.js
 - [M] composer.json
+
+## [0.1.159-alpha] - 2025-06-29
+
+- Commit: Refactor: Verbesserte Navigation-Struktur-Logging 🚀...
+- [M] Resources/app/components/AppSidebarNav.js
+- [M] Resources/app/stores/navigation.js
+- [M] composer.json

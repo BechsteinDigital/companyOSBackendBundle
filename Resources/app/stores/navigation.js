@@ -25,10 +25,16 @@ export const useNavigationStore = defineStore('navigation', {
         return state.getPublicNavigation()
       }
       
+      console.log('🔍 Navigation: Alle verfügbaren Items:', allNavigationItems.map(i => `${i.name} (${i.component})`))
+      
       // Core-Navigation filtern
-      const filteredCoreNav = allNavigationItems.filter(item => 
-        state.checkNavigationPermission(item, auth)
-      )
+      const filteredCoreNav = allNavigationItems.filter(item => {
+        const hasPermission = state.checkNavigationPermission(item, auth)
+        console.log(`🎯 Navigation Filter: ${item.name} (${item.component}) -> ${hasPermission ? '✅ ALLOW' : '❌ DENY'}`)
+        return hasPermission
+      })
+      
+      console.log('🔍 Navigation: Gefilterte Core-Items:', filteredCoreNav.map(i => `${i.name} (${i.component})`))
       
       // Plugin-Navigation filtern
       const filteredPluginNav = state.pluginNavigation.filter(item => 
@@ -36,7 +42,10 @@ export const useNavigationStore = defineStore('navigation', {
       )
       
       // Navigation hierarchisch strukturieren
-      return state.structureNavigation([...filteredCoreNav, ...filteredPluginNav])
+      const structured = state.structureNavigation([...filteredCoreNav, ...filteredPluginNav])
+      console.log('🏗️ Navigation: Strukturierte Navigation:', structured.map(i => `${i.name} (${i.component}) - Children: ${i.items?.length || 0}`))
+      
+      return structured
     },
 
     /**
@@ -66,8 +75,15 @@ export const useNavigationStore = defineStore('navigation', {
      * Erweiterte Permission-Prüfung mit RBAC, ABAC und ACL
      */
     checkNavigationPermission(item, auth) {
+      console.log(`🔍 Checking permission for: ${item.name} (${item.component})`)
+      console.log(`   - Permission: ${Array.isArray(item.permission) ? item.permission.join(', ') : item.permission}`)
+      console.log(`   - User permissions: ${auth.user?.permissions}`)
+      
       // Öffentliche Items (ohne Permission) immer anzeigen
-      if (!item.permission) return true
+      if (!item.permission) {
+        console.log(`✅ ${item.name}: No permission required`)
+        return true
+      }
       
       // Super-Admin-Überschreibung (basierend auf Permission, nicht Rolle)
       // Super-Admin mit "**" Permission umgeht ALLE Einschränkungen (RBAC, ABAC, ACL)
@@ -78,16 +94,20 @@ export const useNavigationStore = defineStore('navigation', {
       
       // RBAC - Role-Based Access Control
       const rbacCheck = this.checkRBAC(item, auth)
+      console.log(`   - RBAC check result: ${rbacCheck}`)
       if (!rbacCheck) return false
       
       // ABAC - Attribute-Based Access Control
       const abacCheck = this.checkABAC(item, auth)
+      console.log(`   - ABAC check result: ${abacCheck}`)
       if (!abacCheck) return false
       
       // ACL - Access Control Lists (für spezifische Ressourcen)
       const aclCheck = this.checkACL(item, auth)
+      console.log(`   - ACL check result: ${aclCheck}`)
       if (!aclCheck) return false
       
+      console.log(`✅ ${item.name}: All checks passed`)
       return true
     },
     
