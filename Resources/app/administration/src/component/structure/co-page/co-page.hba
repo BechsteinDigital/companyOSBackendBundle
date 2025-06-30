@@ -1,0 +1,21 @@
+<template>
+    <div class="co-page" :class="pageClasses">
+        <div class="page-header" v-if="showHeader">
+            <div class="page-title-section">
+                <h1 class="page-title">{{ title }}</h1>
+                <p v-if="subtitle" class="page-subtitle">{{ subtitle }}</p>
+            </div>
+            <div class="page-actions" v-if="$slots.actions">
+                <slot name="actions"></slot>
+            </div>
+        </div>
+        
+        <div class="page-content">
+            <slot></slot>
+        </div>
+        
+        <div class="page-footer" v-if="$slots.footer">
+            <slot name="footer"></slot>
+        </div>
+    </div>
+</template> 

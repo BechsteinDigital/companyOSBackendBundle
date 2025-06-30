@@ -1,0 +1,14 @@
+<template>
+    <button 
+        :class="buttonClasses"
+        :disabled="disabled"
+        :type="type"
+        @click="handleClick"
+    >
+        <i v-if="icon" :class="icon" class="button-icon"></i>
+        <span v-if="$slots.default" class="button-text">
+            <slot></slot>
+        </span>
+        <i v-if="loading" class="icon icon-spinner button-spinner"></i>
+    </button>
+</template> 

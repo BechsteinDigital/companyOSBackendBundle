@@ -409,3 +409,11 @@
 - [M] Resources/app/administration/src/styles/index.scss
 - [M] composer.json
 - [D] postcss.config.js
+
+## [0.1.180-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/src/core/companyos...
+- [M] Resources/app/administration/src/core/companyos.ts
+- [M] Resources/app/administration/src/module/co-dashboard/page/co-dashboard-index.hba
+- [M] Resources/app/administration/src/module/co-users/page/co-users-list.ts
+- [M] composer.json

@@ -1,0 +1,221 @@
+<template>
+    <div class="co-settings-index">
+        <div class="settings-header">
+            <h1 class="settings-title">System-Einstellungen</h1>
+            <div class="settings-actions">
+                <button class="btn btn-primary" @click="saveSettings">
+                    <i class="icon icon-save"></i>
+                    Einstellungen speichern
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-content">
+            <div class="settings-tabs">
+                <button 
+                    v-for="tab in tabs" 
+                    :key="tab.id"
+                    class="tab-button" 
+                    :class="{ active: activeTab === tab.id }"
+                    @click="activeTab = tab.id"
+                >
+                    <i :class="tab.icon"></i>
+                    {{ tab.name }}
+                </button>
+            </div>
+
+            <div class="settings-panel">
+                <!-- Allgemeine Einstellungen -->
+                <div v-if="activeTab === 'general'" class="settings-section">
+                    <h2>Allgemeine Einstellungen</h2>
+                    
+                    <div class="form-group">
+                        <label for="siteName">Website-Name</label>
+                        <input 
+                            type="text" 
+                            id="siteName" 
+                            v-model="settings.general.siteName"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siteDescription">Website-Beschreibung</label>
+                        <textarea 
+                            id="siteDescription" 
+                            v-model="settings.general.siteDescription"
+                            class="form-control"
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timezone">Zeitzone</label>
+                        <select id="timezone" v-model="settings.general.timezone" class="form-select">
+                            <option value="Europe/Berlin">Europe/Berlin</option>
+                            <option value="UTC">UTC</option>
+                            <option value="America/New_York">America/New_York</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="language">Standard-Sprache</label>
+                        <select id="language" v-model="settings.general.language" class="form-select">
+                            <option value="de">Deutsch</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- E-Mail-Einstellungen -->
+                <div v-if="activeTab === 'email'" class="settings-section">
+                    <h2>E-Mail-Einstellungen</h2>
+                    
+                    <div class="form-group">
+                        <label for="smtpHost">SMTP-Host</label>
+                        <input 
+                            type="text" 
+                            id="smtpHost" 
+                            v-model="settings.email.smtpHost"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtpPort">SMTP-Port</label>
+                        <input 
+                            type="number" 
+                            id="smtpPort" 
+                            v-model="settings.email.smtpPort"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtpUsername">SMTP-Benutzername</label>
+                        <input 
+                            type="text" 
+                            id="smtpUsername" 
+                            v-model="settings.email.smtpUsername"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtpPassword">SMTP-Passwort</label>
+                        <input 
+                            type="password" 
+                            id="smtpPassword" 
+                            v-model="settings.email.smtpPassword"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fromEmail">Absender-E-Mail</label>
+                        <input 
+                            type="email" 
+                            id="fromEmail" 
+                            v-model="settings.email.fromEmail"
+                            class="form-control"
+                        >
+                    </div>
+                </div>
+
+                <!-- Sicherheitseinstellungen -->
+                <div v-if="activeTab === 'security'" class="settings-section">
+                    <h2>Sicherheitseinstellungen</h2>
+                    
+                    <div class="form-group">
+                        <label for="sessionTimeout">Session-Timeout (Minuten)</label>
+                        <input 
+                            type="number" 
+                            id="sessionTimeout" 
+                            v-model="settings.security.sessionTimeout"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxLoginAttempts">Maximale Login-Versuche</label>
+                        <input 
+                            type="number" 
+                            id="maxLoginAttempts" 
+                            v-model="settings.security.maxLoginAttempts"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input 
+                                type="checkbox" 
+                                id="twoFactorAuth" 
+                                v-model="settings.security.twoFactorAuth"
+                            >
+                            <label for="twoFactorAuth">Zwei-Faktor-Authentifizierung aktivieren</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input 
+                                type="checkbox" 
+                                id="forceHttps" 
+                                v-model="settings.security.forceHttps"
+                            >
+                            <label for="forceHttps">HTTPS erzwingen</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup-Einstellungen -->
+                <div v-if="activeTab === 'backup'" class="settings-section">
+                    <h2>Backup-Einstellungen</h2>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input 
+                                type="checkbox" 
+                                id="autoBackup" 
+                                v-model="settings.backup.autoBackup"
+                            >
+                            <label for="autoBackup">Automatische Backups aktivieren</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="backupFrequency">Backup-Häufigkeit</label>
+                        <select id="backupFrequency" v-model="settings.backup.frequency" class="form-select">
+                            <option value="daily">Täglich</option>
+                            <option value="weekly">Wöchentlich</option>
+                            <option value="monthly">Monatlich</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="backupRetention">Backup-Aufbewahrung (Tage)</label>
+                        <input 
+                            type="number" 
+                            id="backupRetention" 
+                            v-model="settings.backup.retention"
+                            class="form-control"
+                        >
+                    </div>
+
+                    <div class="backup-actions">
+                        <button class="btn btn-outline" @click="createBackup">
+                            <i class="icon icon-download"></i>
+                            Backup erstellen
+                        </button>
+                        <button class="btn btn-outline" @click="restoreBackup">
+                            <i class="icon icon-upload"></i>
+                            Backup wiederherstellen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template> 

@@ -14,9 +14,21 @@ export interface CompanyOSPlugin {
   install: (companyOS: CompanyOS) => void
 }
 
+export interface TemplateBlock {
+  name: string
+  content: string
+  priority?: number
+}
+
+export interface TemplateExtension {
+  templateName: string
+  blocks: TemplateBlock[]
+}
+
 class CompanyOS {
   private modules: Map<string, CompanyOSModule> = new Map()
   private plugins: Map<string, CompanyOSPlugin> = new Map()
+  private templateExtensions: Map<string, TemplateBlock[]> = new Map()
   private app: App | null = null
 
   constructor() {
@@ -83,10 +95,29 @@ class CompanyOS {
     return this.app
   }
 
-  // Template extension system
-  public extendTemplate(templateName: string, extension: string): void {
-    // Template extension logic will be implemented here
-    console.log(`Template ${templateName} extended with: ${extension}`)
+  // Template extension system with blocks
+  public extendTemplate(templateName: string, extension: TemplateExtension): void {
+    if (!this.templateExtensions.has(templateName)) {
+      this.templateExtensions.set(templateName, [])
+    }
+
+    const blocks = this.templateExtensions.get(templateName)!
+    blocks.push(...extension.blocks)
+    
+    // Sort blocks by priority (higher priority first)
+    blocks.sort((a, b) => (b.priority || 0) - (a.priority || 0))
+    
+    console.log(`Template ${templateName} extended with ${extension.blocks.length} blocks`)
+  }
+
+  public getTemplateBlocks(templateName: string, blockName: string): TemplateBlock[] {
+    const extensions = this.templateExtensions.get(templateName) || []
+    return extensions.filter(block => block.name === blockName)
+  }
+
+  public renderTemplateBlock(templateName: string, blockName: string): string {
+    const blocks = this.getTemplateBlocks(templateName, blockName)
+    return blocks.map(block => block.content).join('\n')
   }
 
   // Component extension system
@@ -104,6 +135,12 @@ class CompanyOS {
   public extendService(serviceName: string, service: any): void {
     // Service extension logic will be implemented here
     console.log(`Service ${serviceName} extended`)
+  }
+
+  // Block rendering helper for templates
+  public renderBlock(blockName: string): string {
+    // This will be called from templates to render blocks
+    return `<!-- BLOCK:${blockName} -->`
   }
 }
 
