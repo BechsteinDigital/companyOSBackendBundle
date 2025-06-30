@@ -39,7 +39,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../../../../../../public/build',
+    outDir: '../../../public/build',
     emptyOutDir: true,
     // Performance optimizations
     target: 'es2015',

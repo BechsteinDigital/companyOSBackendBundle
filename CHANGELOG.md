@@ -506,3 +506,9 @@
 - Commit: feat: Release – Änderungen: M vite.config.ts; ...
 - [M] composer.json
 - [M] vite.config.ts
+
+## [0.1.194-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M vite.config.ts; ...
+- [M] composer.json
+- [M] vite.config.ts
