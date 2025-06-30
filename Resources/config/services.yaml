@@ -13,3 +13,4 @@ services:
     CompanyOS\Bundle\BackendBundle\Controller\BackendController:
         tags:
             - { name: 'controller.service_arguments' } 
+            
