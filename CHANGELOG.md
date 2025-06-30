@@ -475,3 +475,10 @@
 - Commit: feat: Release – Änderungen: M Resources/config/services.yaml; ...
 - [M] Resources/config/services.yaml
 - [M] composer.json
+
+## [0.1.189-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/vite.config.js; M ...
+- [M] Resources/app/administration/vite.config.js
+- [M] composer.json
+- [M] package.json
