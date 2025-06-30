@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import { symfonyPlugin } from 'vite-plugin-symfony'
+import symfonyPlugin from '@symfony/vite-plugin'
 
 export default defineConfig({
   plugins: [
