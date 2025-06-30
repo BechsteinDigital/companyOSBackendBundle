@@ -439,3 +439,14 @@
 - [M] Resources/config/services.yaml
 - [M] composer.json
 - [M] src/CompanyOSBackendBundle.php
+
+## [0.1.184-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/config/routes.yaml; M Resources/confi...
+- [M] Resources/config/routes.yaml
+- [M] Resources/config/services.yaml
+- [M] composer.json
+- [M] package.json
+- [M] src/CompanyOSBackendBundle.php
+- [D] src/Controller/AssetController.php
+- [D] src/Twig/ViteExtension.php
