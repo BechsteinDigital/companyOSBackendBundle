@@ -6,6 +6,9 @@
     <title>{% block title %}CompanyOS Administration{% endblock %}</title>
 
     {% block stylesheets %}
+        <!-- Debug: Test ob Assets direkt erreichbar sind -->
+        <link rel="stylesheet" href="/build/css/app.DJmviL5L.css">
+        <!-- Vite Bundle Ausgabe: -->
         {{ vite_entry_link_tags('vendor/companyos/backend/Resources/app/administration/src/index.ts') }}
     {% endblock %}
 
@@ -15,10 +18,15 @@
     <div id="companyos-admin">
         {% block content %}
             <!-- Vue.js Administration wird hier gemountet -->
+            <h1>Test ob CSS geladen wird</h1>
         {% endblock %}
     </div>
 
     {% block javascripts %}
+        <!-- Debug: Test ob JS direkt erreichbar ist -->
+        <script type="module" src="/build/js/app.zSYo-ZEb.js"></script>
+        <script type="module" src="/build/js/vue.BVKzG7pL.js"></script>
+        <!-- Vite Bundle Ausgabe: -->
         {{ vite_entry_script_tags('vendor/companyos/backend/Resources/app/administration/src/index.ts') }}
     {% endblock %}
 
