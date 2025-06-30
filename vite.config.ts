@@ -57,7 +57,7 @@ export default defineConfig({
     },
     rollupOptions: {
       input: {
-        app: resolve(__dirname, 'Resources/app/app.js'),
+        app: resolve(__dirname, 'Resources/app/administration/src/index.ts'),
       },
       output: {
         entryFileNames: 'js/[name].[hash].js',
