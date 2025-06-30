@@ -6,11 +6,7 @@
     <title>{% block title %}CompanyOS Administration{% endblock %}</title>
 
     {% block stylesheets %}
-        <!-- Debug: Versuche Assets zu laden -->
-        <style>body { background: red !important; }</style>
         {{ vite_entry_link_tags('vendor/companyos/backend/Resources/app/administration/src/index.ts') }}
-        <!-- Fallback CSS direkt einbinden -->
-        <link rel="stylesheet" href="/build/css/app.DJmviL5L.css">
     {% endblock %}
 
     {% block head %}{% endblock %}
@@ -19,15 +15,11 @@
     <div id="companyos-admin">
         {% block content %}
             <!-- Vue.js Administration wird hier gemountet -->
-            <h1>DEBUG: Template wird geladen</h1>
-            <div>Manifest-Key: vendor/companyos/backend/Resources/app/administration/src/index.ts</div>
         {% endblock %}
     </div>
 
     {% block javascripts %}
         {{ vite_entry_script_tags('vendor/companyos/backend/Resources/app/administration/src/index.ts') }}
-        <!-- Fallback JS direkt einbinden -->
-        <script src="/build/js/app.zSYo-ZEb.js"></script>
     {% endblock %}
 
     {% block scripts %}{% endblock %}
