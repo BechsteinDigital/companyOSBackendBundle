@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { symfonyPlugin } from 'vite-plugin-symfony'
 import { resolve } from 'path'
 import { fileURLToPath, URL } from 'node:url'
 
@@ -8,6 +9,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 export default defineConfig({
   plugins: [
     vue(),
+    symfonyPlugin(),
     {
       name: 'handlebars-loader',
       transform(code, id) {
@@ -41,6 +43,7 @@ export default defineConfig({
   build: {
     outDir: '../../../public/build',
     emptyOutDir: true,
+    manifest: true,
     // Performance optimizations
     target: 'es2015',
     minify: 'terser',

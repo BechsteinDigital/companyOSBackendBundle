@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}CompanyOS Administration{% endblock %}</title>
-    
+
     {% block stylesheets %}
-        {% if app.environment == 'dev' %}
-            <script type="module" src="http://localhost:3001/@vite/client"></script>
-            <script type="module" src="http://localhost:3001/admin"></script>
-        {% else %}
-            {{ vite_entry_link_tags('admin') }}
-        {% endif %}
+        {{ vite_entry_link_tags('build/app.css') }}
     {% endblock %}
-    
+
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -24,11 +19,9 @@
     </div>
 
     {% block javascripts %}
-        {% if app.environment != 'dev' %}
-            {{ vite_entry_script_tags('admin') }}
-        {% endif %}
+        {{ vite_entry_script_tags('build/app.js') }}
     {% endblock %}
-    
+
     {% block scripts %}{% endblock %}
 </body>
-</html> 
+</html>
