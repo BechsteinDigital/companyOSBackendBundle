@@ -482,3 +482,9 @@
 - [M] Resources/app/administration/vite.config.js
 - [M] composer.json
 - [M] package.json
+
+## [0.1.190-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M package.json; ...
+- [M] composer.json
+- [M] package.json
