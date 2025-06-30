@@ -596,3 +596,9 @@
 - Commit: feat: Release – Änderungen: M Resources/app/administration/src/styles/index.s...
 - [M] Resources/app/administration/src/styles/index.scss
 - [M] composer.json
+
+## [0.1.209-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/src/styles/index.s...
+- [M] Resources/app/administration/src/styles/index.scss
+- [M] composer.json
