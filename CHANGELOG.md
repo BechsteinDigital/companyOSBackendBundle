@@ -354,3 +354,9 @@
 - [M] Resources/views/backend/base.html.twig
 - [M] composer.json
 - [M] src/Controller/BackendController.php
+
+## [0.1.171-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: D vite.config.js; ...
+- [M] composer.json
+- [D] vite.config.js
