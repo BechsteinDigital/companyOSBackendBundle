@@ -6,16 +6,11 @@ const SettingsModule: CompanyOSModule = {
     {
       path: '/settings',
       name: 'settings',
-      component: () => import('./page/co-settings-index')
+      component: () => import('./page/co-settings-index.ts')
     }
   ],
-  components: {
-    'co-settings-form': () => import('./component/co-settings-form'),
-    'co-settings-tabs': () => import('./component/co-settings-tabs')
-  },
-  services: {
-    'settingsService': () => import('./service/settings-service')
-  },
+  components: {},
+  services: {},
   init() {
     console.log('Settings module initialized')
   }

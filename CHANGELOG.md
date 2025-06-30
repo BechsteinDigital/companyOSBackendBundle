@@ -422,3 +422,12 @@
 
 - Commit: feat: Verschiedene Verbesserungen...
 - [M] composer.json
+
+## [0.1.182-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/src/module/co-dash...
+- [M] Resources/app/administration/src/module/co-dashboard/index.ts
+- [M] Resources/app/administration/src/module/co-plugins/index.ts
+- [M] Resources/app/administration/src/module/co-settings/index.ts
+- [M] Resources/app/administration/src/module/co-users/index.ts
+- [M] composer.json

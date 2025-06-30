@@ -1,0 +1,169 @@
+<div class="co-user-form">
+  <form @submit.prevent="submitForm" class="user-form">
+    <div class="form-grid">
+      <!-- Basic Information -->
+      <div class="form-section">
+        <h3 class="form-section-title">Grundinformationen</h3>
+        
+        <div class="form-group">
+          <label for="firstName" class="form-label">Vorname *</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            v-model="form.firstName"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">Nachname *</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            v-model="form.lastName"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">E-Mail *</label>
+          <input 
+            type="email" 
+            id="email" 
+            v-model="form.email"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="username" class="form-label">Benutzername *</label>
+          <input 
+            type="text" 
+            id="username" 
+            v-model="form.username"
+            class="form-control"
+            required
+          >
+        </div>
+      </div>
+
+      <!-- Security -->
+      <div class="form-section">
+        <h3 class="form-section-title">Sicherheit</h3>
+        
+        <div class="form-group">
+          <label for="password" class="form-label">
+            {{ isEditMode ? 'Neues Passwort' : 'Passwort' }} {{ isEditMode ? '' : '*' }}
+          </label>
+          <input 
+            type="password" 
+            id="password" 
+            v-model="form.password"
+            class="form-control"
+            :required="!isEditMode"
+          >
+          <small class="form-help">
+            {{ isEditMode ? 'Leer lassen, um das Passwort nicht zu ändern' : 'Mindestens 8 Zeichen' }}
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordConfirm" class="form-label">
+            {{ isEditMode ? 'Neues Passwort bestätigen' : 'Passwort bestätigen' }} {{ isEditMode ? '' : '*' }}
+          </label>
+          <input 
+            type="password" 
+            id="passwordConfirm" 
+            v-model="form.passwordConfirm"
+            class="form-control"
+            :required="!isEditMode"
+          >
+        </div>
+      </div>
+
+      <!-- Role & Status -->
+      <div class="form-section">
+        <h3 class="form-section-title">Rolle & Status</h3>
+        
+        <div class="form-group">
+          <label for="role" class="form-label">Rolle *</label>
+          <select id="role" v-model="form.role" class="form-select" required>
+            <option value="">Rolle auswählen</option>
+            <option value="admin">Administrator</option>
+            <option value="user">Benutzer</option>
+            <option value="guest">Gast</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="status" class="form-label">Status *</label>
+          <select id="status" v-model="form.status" class="form-select" required>
+            <option value="active">Aktiv</option>
+            <option value="inactive">Inaktiv</option>
+            <option value="suspended">Gesperrt</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="emailVerified" 
+              v-model="form.emailVerified"
+            >
+            <label for="emailVerified">E-Mail verifiziert</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="form-section">
+        <h3 class="form-section-title">Zusätzliche Informationen</h3>
+        
+        <div class="form-group">
+          <label for="phone" class="form-label">Telefon</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            v-model="form.phone"
+            class="form-control"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="department" class="form-label">Abteilung</label>
+          <input 
+            type="text" 
+            id="department" 
+            v-model="form.department"
+            class="form-control"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="notes" class="form-label">Notizen</label>
+          <textarea 
+            id="notes" 
+            v-model="form.notes"
+            class="form-control"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline" @click="cancel">
+        Abbrechen
+      </button>
+      <button type="submit" class="btn btn-primary" :disabled="loading">
+        <i v-if="loading" class="icon icon-spinner"></i>
+        {{ isEditMode ? 'Aktualisieren' : 'Erstellen' }}
+      </button>
+    </div>
+  </form>
+</div> 

@@ -6,12 +6,12 @@ const UsersModule: CompanyOSModule = {
     {
       path: '/users',
       name: 'users',
-      component: () => import('./page/co-users-list')
+      component: () => import('./page/co-users-list.ts')
     }
   ],
   components: {
-    'co-users-table': () => import('./component/co-users-table'),
-    'co-user-form': () => import('./component/co-user-form')
+    'co-users-table': () => import('./component/co-users-table/index'),
+    'co-user-form': () => import('./component/co-user-form/index')
   },
   services: {
     'userService': () => import('./service/user-service')
