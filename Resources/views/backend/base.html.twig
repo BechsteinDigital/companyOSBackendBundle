@@ -8,9 +8,9 @@
     {% block stylesheets %}
         {% if app.environment == 'dev' %}
             <script type="module" src="http://localhost:3001/@vite/client"></script>
-            <script type="module" src="http://localhost:3001/administration"></script>
+            <script type="module" src="http://localhost:3001/admin"></script>
         {% else %}
-            {{ vite_entry_link_tags('administration') }}
+            {{ vite_entry_link_tags('admin') }}
         {% endif %}
     {% endblock %}
     
@@ -25,7 +25,7 @@
 
     {% block javascripts %}
         {% if app.environment != 'dev' %}
-            {{ vite_entry_script_tags('administration') }}
+            {{ vite_entry_script_tags('admin') }}
         {% endif %}
     {% endblock %}
     
