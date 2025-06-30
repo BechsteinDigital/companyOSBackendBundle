@@ -373,3 +373,9 @@
 - [M] Resources/config/routes.yaml
 - [M] composer.json
 - [M] src/Controller/BackendController.php
+
+## [0.1.174-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M package.json; ...
+- [M] composer.json
+- [M] package.json
