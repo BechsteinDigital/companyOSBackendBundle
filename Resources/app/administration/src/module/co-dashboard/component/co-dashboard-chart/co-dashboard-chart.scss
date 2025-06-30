@@ -1,0 +1,72 @@
+.co-dashboard-chart {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .chart-controls {
+            select {
+                padding: 0.5rem 0.75rem;
+                border: 1px solid #d1d5db;
+                border-radius: 6px;
+                background: #fff;
+                font-size: 0.875rem;
+                color: #374151;
+                cursor: pointer;
+
+                &:focus {
+                    outline: none;
+                    border-color: #3b82f6;
+                    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                }
+            }
+        }
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+
+    // Responsive Design
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .chart-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+
+            .chart-controls {
+                width: 100%;
+
+                select {
+                    width: 100%;
+                }
+            }
+        }
+
+        .chart-container {
+            height: 250px;
+        }
+    }
+} 

@@ -1,0 +1,21 @@
+<template>
+    <div class="co-dashboard-recent-activity">
+        <div class="activity-header">
+            <h3 class="activity-title">Letzte Aktivitäten</h3>
+            <button class="refresh-btn" @click="refreshActivities">
+                <i class="icon icon-refresh"></i>
+            </button>
+        </div>
+        <div class="activity-list">
+            <div v-for="activity in activities" :key="activity.id" class="activity-item">
+                <div class="activity-icon">
+                    <i :class="getActivityIcon(activity.type)"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-message">{{ activity.message }}</div>
+                    <div class="activity-time">{{ formatTime(activity.timestamp) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template> 

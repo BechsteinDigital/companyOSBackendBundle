@@ -1,0 +1,45 @@
+<template>
+    <div class="co-dashboard-stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="icon icon-users"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.totalUsers }}</div>
+                    <div class="stat-label">Benutzer</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="icon icon-apps"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.totalApps }}</div>
+                    <div class="stat-label">Apps</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="icon icon-shopping-cart"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.totalOrders }}</div>
+                    <div class="stat-label">Bestellungen</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="icon icon-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.revenue }}</div>
+                    <div class="stat-label">Umsatz</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template> 

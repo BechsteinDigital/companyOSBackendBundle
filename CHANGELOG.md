@@ -397,3 +397,8 @@
 - Commit: feat: Release – Änderungen: M postcss.config.js; ...
 - [M] composer.json
 - [M] postcss.config.js
+
+## [0.1.178-alpha] - 2025-06-30
+
+- Commit: feat: Verschiedene Verbesserungen...
+- [M] composer.json
