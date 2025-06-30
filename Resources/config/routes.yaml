@@ -13,3 +13,10 @@ companyos_backend:
   resource: '../../src/Controller/'
   type: attribute
   prefix: /admin
+
+# Bundle Assets
+companyos_backend_assets:
+    path: /bundles/companyosbackend/{path}
+    controller: CompanyOS\Bundle\BackendBundle\Controller\AssetController::serve
+    requirements:
+        path: ".*"

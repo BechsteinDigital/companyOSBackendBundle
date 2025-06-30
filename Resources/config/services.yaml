@@ -5,11 +5,11 @@ services:
         public: false
 
     CompanyOS\Bundle\BackendBundle\:
-        resource: '../../src/'
+        resource: '../src/'
         exclude:
-            - '../../src/DependencyInjection/'
-            - '../../src/Resources/'
-            - '../../src/Tests/'
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
 
     # Security Headers Listener
     CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener:
@@ -21,4 +21,12 @@ services:
     # CSRF Token Manager
     CompanyOS\Bundle\BackendBundle\Controller\BackendController:
         tags:
-            - { name: 'controller.service_arguments' } 
+            - { name: 'controller.service_arguments' }
+
+    CompanyOS\Bundle\BackendBundle\Twig\ViteExtension:
+        arguments:
+            $buildPath: '/bundles/companyosbackend/build'
+            $isDev: '%kernel.debug%'
+            $projectDir: '%kernel.project_dir%'
+        tags:
+            - { name: twig.extension } 

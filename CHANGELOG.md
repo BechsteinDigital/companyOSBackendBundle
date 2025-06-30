@@ -431,3 +431,11 @@
 - [M] Resources/app/administration/src/module/co-settings/index.ts
 - [M] Resources/app/administration/src/module/co-users/index.ts
 - [M] composer.json
+
+## [0.1.183-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/config/routes.yaml; M Resources/confi...
+- [M] Resources/config/routes.yaml
+- [M] Resources/config/services.yaml
+- [M] composer.json
+- [M] src/CompanyOSBackendBundle.php
