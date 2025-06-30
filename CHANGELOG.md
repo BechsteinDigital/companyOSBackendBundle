@@ -614,3 +614,9 @@
 - Commit: feat: Release – Änderungen: M tailwind.config.js; ...
 - [M] composer.json
 - [M] tailwind.config.js
+
+## [0.1.212-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/src/index.ts; ...
+- [M] Resources/app/administration/src/index.ts
+- [M] composer.json
