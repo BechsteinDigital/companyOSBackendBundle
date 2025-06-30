@@ -572,3 +572,9 @@
 - Commit: feat: Release – Änderungen: M Resources/app/administration/src/index.ts; ...
 - [M] Resources/app/administration/src/index.ts
 - [M] composer.json
+
+## [0.1.205-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/src/index.ts; ...
+- [M] Resources/app/administration/src/index.ts
+- [M] composer.json
