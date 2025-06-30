@@ -366,3 +366,10 @@
 - Commit: feat: Release – Änderungen: M Resources/config/services.yaml; ...
 - [M] Resources/config/services.yaml
 - [M] composer.json
+
+## [0.1.173-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/config/routes.yaml; M src/Controller/...
+- [M] Resources/config/routes.yaml
+- [M] composer.json
+- [M] src/Controller/BackendController.php
