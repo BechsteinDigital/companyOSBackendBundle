@@ -450,3 +450,9 @@
 - [M] src/CompanyOSBackendBundle.php
 - [D] src/Controller/AssetController.php
 - [D] src/Twig/ViteExtension.php
+
+## [0.1.185-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/config/services.yaml; ...
+- [M] Resources/config/services.yaml
+- [M] composer.json

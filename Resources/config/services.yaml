@@ -4,13 +4,6 @@ services:
         autoconfigure: true
         public: false
 
-    CompanyOS\Bundle\BackendBundle\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-
     # Security Headers Listener
     CompanyOS\Bundle\BackendBundle\EventListener\SecurityHeadersListener:
         tags:
