@@ -360,3 +360,9 @@
 - Commit: feat: Release – Änderungen: D vite.config.js; ...
 - [M] composer.json
 - [D] vite.config.js
+
+## [0.1.172-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/config/services.yaml; ...
+- [M] Resources/config/services.yaml
+- [M] composer.json
