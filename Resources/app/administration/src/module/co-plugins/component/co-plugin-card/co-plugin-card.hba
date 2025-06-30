@@ -1,0 +1,53 @@
+<div class="co-plugin-card">
+  <div class="plugin-card">
+    <div class="plugin-header">
+      <div class="plugin-icon">
+        <img src="{{plugin.icon}}" alt="{{plugin.name}}" class="plugin-icon-img">
+      </div>
+      <div class="plugin-info">
+        <h3 class="plugin-name">{{plugin.name}}</h3>
+        <p class="plugin-description">{{plugin.description}}</p>
+        <div class="plugin-meta">
+          <span class="plugin-version">v{{plugin.version}}</span>
+          <span class="plugin-author">von {{plugin.author}}</span>
+        </div>
+      </div>
+      <div class="plugin-status">
+        <span class="status-badge status-{{plugin.status}}">
+          {{plugin.status}}
+        </span>
+      </div>
+    </div>
+    
+    <div class="plugin-actions">
+      <button 
+        v-if="plugin.status === 'inactive'"
+        class="btn btn-success btn-sm" 
+        @click="activatePlugin(plugin)"
+      >
+        <i class="icon icon-play"></i>
+        Aktivieren
+      </button>
+      <button 
+        v-if="plugin.status === 'active'"
+        class="btn btn-warning btn-sm" 
+        @click="deactivatePlugin(plugin)"
+      >
+        <i class="icon icon-pause"></i>
+        Deaktivieren
+      </button>
+      <button class="btn btn-outline btn-sm" @click="configurePlugin(plugin)">
+        <i class="icon icon-cog"></i>
+        Konfigurieren
+      </button>
+      <button class="btn btn-outline btn-sm" @click="updatePlugin(plugin)">
+        <i class="icon icon-download"></i>
+        Update
+      </button>
+      <button class="btn btn-outline btn-danger btn-sm" @click="uninstallPlugin(plugin)">
+        <i class="icon icon-trash"></i>
+        Deinstallieren
+      </button>
+    </div>
+  </div>
+</div> 

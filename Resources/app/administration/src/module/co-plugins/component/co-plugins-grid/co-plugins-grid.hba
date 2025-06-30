@@ -1,0 +1,29 @@
+<div class="co-plugins-grid">
+  <div class="plugins-grid-container">
+    {{#each plugins}}
+      <div class="plugin-card-wrapper">
+        <co-plugin-card 
+          :plugin="{
+            id: '{{id}}',
+            name: '{{name}}',
+            description: '{{description}}',
+            version: '{{version}}',
+            author: '{{author}}',
+            status: '{{status}}',
+            icon: '{{icon}}'
+          }"
+        ></co-plugin-card>
+      </div>
+    {{/each}}
+  </div>
+  
+  {{#if (eq plugins.length 0)}}
+    <div class="plugins-empty">
+      <div class="empty-state">
+        <i class="icon icon-package text-4xl text-gray-400 mb-4"></i>
+        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Keine Plugins gefunden</h3>
+        <p class="text-gray-500 dark:text-gray-400">Es wurden keine Plugins gefunden, die Ihren Suchkriterien entsprechen.</p>
+      </div>
+    </div>
+  {{/if}}
+</div> 

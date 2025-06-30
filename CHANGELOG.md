@@ -417,3 +417,8 @@
 - [M] Resources/app/administration/src/module/co-dashboard/page/co-dashboard-index.hba
 - [M] Resources/app/administration/src/module/co-users/page/co-users-list.ts
 - [M] composer.json
+
+## [0.1.181-alpha] - 2025-06-30
+
+- Commit: feat: Verschiedene Verbesserungen...
+- [M] composer.json
