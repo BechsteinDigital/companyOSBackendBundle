@@ -1,0 +1,105 @@
+.co-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 70px;
+  
+  &__left {
+    .co-header__title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+  }
+  
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  &__notifications {
+    position: relative;
+    
+    .co-header__notification-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      transition: all 0.2s ease;
+      position: relative;
+      
+      &:hover {
+        background: #f8f9fa;
+      }
+      
+      .co-header__notification-icon {
+        display: block;
+      }
+      
+      .co-header__notification-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: #dc3545;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.125rem 0.375rem;
+        border-radius: 1rem;
+        min-width: 1.25rem;
+        text-align: center;
+      }
+    }
+  }
+  
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    
+    &:hover {
+      background: #f8f9fa;
+    }
+    
+    .co-header__user-avatar {
+      font-size: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e9ecef;
+      border-radius: 50%;
+    }
+    
+    .co-header__user-info {
+      display: flex;
+      flex-direction: column;
+      
+      .co-header__user-name {
+        font-weight: 600;
+        color: #212529;
+        font-size: 0.875rem;
+        line-height: 1.2;
+      }
+      
+      .co-header__user-email {
+        color: #6c757d;
+        font-size: 0.75rem;
+        line-height: 1.2;
+      }
+    }
+  }
+} 

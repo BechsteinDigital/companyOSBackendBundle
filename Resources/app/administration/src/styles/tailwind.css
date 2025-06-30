@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Custom CSS für CompanyOS Administration */
+@layer base {
+  /* Custom CSS-Variablen für Theme-System */
+  :root {
+    --companyos-primary: #007bff;
+    --companyos-secondary: #6c757d;
+    --companyos-success: #28a745;
+    --companyos-danger: #dc3545;
+    --companyos-warning: #ffc107;
+    --companyos-info: #17a2b8;
+  }
+  
+  /* Dark mode Variablen */
+  .dark {
+    --companyos-primary: #0ea5e9;
+    --companyos-secondary: #94a3b8;
+  }
+}
+
+@layer components {
+  /* Custom Komponenten-Klassen */
+  .co-btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .co-btn-primary {
+    @apply co-btn bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+  
+  .co-btn-secondary {
+    @apply co-btn bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+  }
+  
+  .co-btn-success {
+    @apply co-btn bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+  
+  .co-btn-danger {
+    @apply co-btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+  
+  .co-card {
+    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm;
+  }
+  
+  .co-card-header {
+    @apply px-6 py-4 border-b border-gray-200 dark:border-gray-700;
+  }
+  
+  .co-card-body {
+    @apply px-6 py-4;
+  }
+  
+  .co-card-footer {
+    @apply px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 rounded-b-lg;
+  }
+}
+
+@layer utilities {
+  /* Custom Utility-Klassen */
+  .text-brand {
+    color: var(--companyos-primary);
+  }
+  
+  .bg-brand {
+    background-color: var(--companyos-primary);
+  }
+  
+  .border-brand {
+    border-color: var(--companyos-primary);
+  }
+} 

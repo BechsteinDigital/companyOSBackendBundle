@@ -1,0 +1,38 @@
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  tr:hover {
+    background: #f8f9fa;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  
+  &--active {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  &--inactive {
+    background: #f8d7da;
+    color: #721c24;
+  }
+} 

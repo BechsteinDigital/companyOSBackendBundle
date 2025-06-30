@@ -1,0 +1,21 @@
+<div class="co-card {{#if shadow}}shadow-{{shadow}}{{/if}} {{#if border}}border{{/if}}">
+  {{#if title}}
+    <div class="co-card-header">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{title}}</h3>
+      {{#if subtitle}}
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{subtitle}}</p>
+      {{/if}}
+      {{#block "card_header_extensions"}}{{/block}}
+    </div>
+  {{/if}}
+  
+  <div class="co-card-body" style="padding: {{padding}};">
+    {{#block "card_content"}}
+      <!-- Default content -->
+    {{/block}}
+  </div>
+  
+  {{#block "card_footer"}}
+    <!-- Footer content -->
+  {{/block}}
+</div> 

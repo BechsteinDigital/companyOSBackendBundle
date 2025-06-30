@@ -1,0 +1,44 @@
+<header class="sticky top-0 flex w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 z-40 h-[70px]">
+  <!-- Left side -->
+  <div class="flex items-center justify-between grow lg:flex-row lg:px-6">
+    <div class="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-gray-200 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">CompanyOS Administration</h2>
+      {{#block "header_left_extensions"}}{{/block}}
+    </div>
+  </div>
+  
+  <!-- Right side -->
+  <div class="flex items-center gap-4 px-6">
+    <!-- Notifications -->
+    <div class="relative">
+      <button class="flex items-center justify-center w-10 h-10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 relative">
+        <span class="text-xl">🔔</span>
+        {{#if notifications.length}}
+          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center">
+            {{notifications.length}}
+          </span>
+        {{/if}}
+      </button>
+      {{#block "header_notifications_extensions"}}{{/block}}
+    </div>
+    
+    <!-- User menu -->
+    <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
+      <span class="flex items-center justify-center w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full text-xl">
+        {{user.avatar}}
+      </span>
+      <div class="flex flex-col">
+        <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+          {{user.name}}
+        </span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+          {{user.email}}
+        </span>
+      </div>
+      {{#block "header_user_extensions"}}{{/block}}
+    </div>
+    
+    <!-- Plugin extensions -->
+    {{#block "header_right_extensions"}}{{/block}}
+  </div>
+</header> 

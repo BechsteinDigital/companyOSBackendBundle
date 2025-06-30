@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompanyOS Admin</title>
+    <title>{% block title %}CompanyOS Administration{% endblock %}</title>
     
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        {% if app.environment == 'dev' %}
+            <script type="module" src="http://localhost:3001/@vite/client"></script>
+            <script type="module" src="http://localhost:3001/administration"></script>
+        {% else %}
+            {{ vite_entry_link_tags('administration') }}
+        {% endif %}
     {% endblock %}
+    
+    {% block head %}{% endblock %}
 </head>
 <body>
-    <div id="app"></div>
-    
+    <div id="companyos-admin">
+        {% block content %}
+            <!-- Vue.js Administration wird hier gemountet -->
+        {% endblock %}
+    </div>
+
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {% if app.environment != 'dev' %}
+            {{ vite_entry_script_tags('administration') }}
+        {% endif %}
     {% endblock %}
+    
+    {% block scripts %}{% endblock %}
 </body>
 </html> 

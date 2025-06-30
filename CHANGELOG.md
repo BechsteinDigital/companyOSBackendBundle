@@ -307,3 +307,50 @@
 - Commit: feat: Release – Änderungen: M Resources/app/views/Plugins.vue; ...
 - [M] Resources/app/views/Plugins.vue
 - [M] composer.json
+
+## [0.1.170-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: D Resources/app/.gitkeep; D Resources/app/_nav.js...
+- [D] Resources/app/.gitkeep
+- [D] Resources/app/_nav.js
+- [D] Resources/app/app.js
+- [D] Resources/app/assets/brand/logo.js
+- [D] Resources/app/assets/brand/sygnet.js
+- [D] Resources/app/components/.gitkeep
+- [D] Resources/app/components/AccessControlDebugger.vue
+- [D] Resources/app/components/AppBreadcrumb.vue
+- [D] Resources/app/components/AppFooter.vue
+- [D] Resources/app/components/AppHeader.vue
+- [D] Resources/app/components/AppHeaderDropdownAccnt.vue
+- [D] Resources/app/components/AppSidebar.vue
+- [D] Resources/app/components/AppSidebarNav.js
+- [D] Resources/app/components/PluginStoreExample.vue
+- [D] Resources/app/components/UserListHybridExample.vue
+- [D] Resources/app/components/index.js
+- [D] Resources/app/icons.js
+- [D] Resources/app/layout/App.vue
+- [D] Resources/app/stores/auth.js
+- [D] Resources/app/stores/auth.js.broken
+- [D] Resources/app/stores/navigation.js
+- [D] Resources/app/stores/sidebar.js
+- [D] Resources/app/stores/theme.js
+- [D] Resources/app/styles/app.css
+- [D] Resources/app/styles/style.scss
+- [D] Resources/app/styles/vendors/simplebar.scss
+- [D] Resources/app/utils/permissions-debug.js
+- [D] Resources/app/views/ApiDocs.vue
+- [D] Resources/app/views/Dashboard.vue
+- [D] Resources/app/views/Login.vue
+- [D] Resources/app/views/Permissions.vue
+- [D] Resources/app/views/Plugins.vue
+- [D] Resources/app/views/Profile.vue
+- [D] Resources/app/views/Roles.vue
+- [D] Resources/app/views/Settings.vue
+- [D] Resources/app/views/SystemStatus.vue
+- [D] Resources/app/views/Users.vue
+- [D] Resources/app/views/Webhooks.vue
+- [M] Resources/config/routes.yaml
+- [M] Resources/config/services.yaml
+- [M] Resources/views/backend/base.html.twig
+- [M] composer.json
+- [M] src/Controller/BackendController.php

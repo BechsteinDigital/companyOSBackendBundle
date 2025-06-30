@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["Resources/app/*"],
+      "@admin/*": ["Resources/app/administration/src/*"]
+    }
+  },
+  "include": [
+    "Resources/app/administration/src/**/*.ts",
+    "Resources/app/administration/src/**/*.d.ts",
+    "Resources/app/administration/src/**/*.tsx",
+    "Resources/app/administration/src/**/*.vue"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
+} 
