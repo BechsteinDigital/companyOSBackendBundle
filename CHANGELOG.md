@@ -566,3 +566,9 @@
 - Commit: feat: Release – Änderungen: M Resources/views/backend/base.html.twig; ...
 - [M] Resources/views/backend/base.html.twig
 - [M] composer.json
+
+## [0.1.204-alpha] - 2025-06-30
+
+- Commit: feat: Release – Änderungen: M Resources/app/administration/src/index.ts; ...
+- [M] Resources/app/administration/src/index.ts
+- [M] composer.json

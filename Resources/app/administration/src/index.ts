@@ -21,14 +21,12 @@ import SettingsModule from './module/co-settings'
 // Create Vue App
 const app = createApp({
   template: `
-    <div id="companyos-admin">
-      <co-sidebar />
-      <div class="admin-content">
-        <co-header />
-        <main class="admin-main">
-          <router-view />
-        </main>
-      </div>
+    <co-sidebar />
+    <div class="admin-content">
+      <co-header />
+      <main class="admin-main">
+        <router-view />
+      </main>
     </div>
   `
 })
