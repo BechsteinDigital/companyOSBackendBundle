@@ -1,5 +1,7 @@
-/* Tailwind CSS Import */
-@import './tailwind.css';
+/* Tailwind CSS Direktiven */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Custom SCSS für spezielle Anpassungen */
 @layer base {
