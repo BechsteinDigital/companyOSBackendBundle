@@ -56,20 +56,44 @@
 /* Custom SCSS für komplexe Animationen oder Layouts */
 @layer components {
   .co-sidebar {
-    @apply fixed top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-50 transition-all duration-300;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: white;
+    border-right: 1px solid #e5e7eb;
+    z-index: 50;
+    transition: all 0.3s ease;
     
     &--collapsed {
-      @apply w-16;
+      width: 4rem; /* 64px */
     }
     
     &--expanded {
-      @apply w-72;
+      width: 18rem; /* 288px */
     }
   }
   
   .co-header {
-    @apply sticky top-0 flex w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 z-40;
+    position: sticky;
+    top: 0;
+    display: flex;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    z-index: 40;
     height: 70px;
+  }
+  
+  /* Dark mode */
+  .dark .co-sidebar {
+    background: #111827;
+    border-right-color: #374151;
+  }
+  
+  .dark .co-header {
+    background: #111827;
+    border-bottom-color: #374151;
   }
 }
 
